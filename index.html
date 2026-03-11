@@ -15,7 +15,6 @@
     }
     .container { max-width: 800px; margin: 0 auto; }
     
-    /* Header */
     .header {
       display: flex;
       justify-content: space-between;
@@ -34,10 +33,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .lang-toggle {
-      display: flex;
-      gap: 8px;
-    }
+    .lang-toggle { display: flex; gap: 8px; }
     .lang-btn {
       padding: 8px 16px;
       border: 1px solid rgba(255,255,255,0.3);
@@ -46,27 +42,20 @@
       color: rgba(255,255,255,0.6);
       cursor: pointer;
       font-size: 14px;
-      transition: all 0.3s;
     }
     .lang-btn.active {
       background: rgba(0,210,255,0.2);
       color: #00d2ff;
       border-color: #00d2ff;
     }
-    .date {
-      color: #00d2ff;
-      font-size: 16px;
-      text-align: center;
-      margin-top: 8px;
-    }
+    .date { color: #00d2ff; font-size: 16px; text-align: center; margin-top: 8px; }
     
-    /* Sections */
     .section {
       background: rgba(255,255,255,0.95);
       border-radius: 16px;
       padding: 24px;
       margin-bottom: 20px;
-      box-shadow: 0 8px 32,0,0px rgba(0,0.3);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
     }
     .section-title {
       font-size: 18px;
@@ -82,114 +71,38 @@
     .section-title.try { color: #4caf50; }
     .section-title.news { color: #1e88e5; }
     
-    /* Thoughts Section */
     .thought-item {
       padding: 16px;
       background: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%);
       border-radius: 12px;
       border-left: 4px solid #9c27b0;
     }
-    .thought-item .question {
-      font-size: 16px;
-      color: #333;
-      line-height: 1.6;
-      font-style: italic;
-    }
+    .thought-item .question { font-size: 16px; color: #333; line-height: 1.6; font-style: italic; }
     
-    /* Try Section */
     .try-item {
       padding: 16px;
       background: linear-gradient(135deg, #e8f5e9 0%, #e3f2fd 100%);
       border-radius: 12px;
       border-left: 4px solid #4caf50;
     }
-    .try-item .name {
-      font-size: 16px;
-      font-weight: 600;
-      color: #2e7d32;
-      margin-bottom: 8px;
-    }
-    .try-item .desc {
-      font-size: 14px;
-      color: #555;
-      line-height: 1.5;
-    }
-    .try-item .tag {
-      display: inline-block;
-      margin-top: 8px;
-      padding: 4px 12px;
-      background: #4caf50;
-      color: white;
-      border-radius: 12px;
-      font-size: 12px;
-    }
+    .try-item .name { font-size: 16px; font-weight: 600; color: #2e7d32; margin-bottom: 8px; }
+    .try-item .desc { font-size: 14px; color: #555; line-height: 1.5; }
+    .try-item .tag { display: inline-block; margin-top: 8px; padding: 4px 12px; background: #4caf50; color: white; border-radius: 12px; font-size: 12px; }
     
-    /* News Section */
-    .news-category {
-      margin-bottom: 24px;
-    }
-    .news-category-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: #666;
-      margin-bottom: 16px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .news-item {
-      padding: 16px;
-      border-bottom: 1px solid #eee;
-    }
+    .news-category { margin-bottom: 24px; }
+    .news-category-title { font-size: 14px; font-weight: 600; color: #666; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
+    .news-item { padding: 16px; border-bottom: 1px solid #eee; }
     .news-item:last-child { border-bottom: none; }
-    .news-item .title {
-      font-size: 15px;
-      font-weight: 600;
-      color: #1a1a2e;
-      line-height: 1.4;
-      margin-bottom: 8px;
-    }
-    .news-item .summary {
-      font-size: 14px;
-      color: #555;
-      line-height: 1.6;
-      margin-bottom: 10px;
-      padding-left: 12px;
-      border-left: 3px solid #00d2ff;
-    }
-    .news-item .meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-    }
-    .news-item .source {
-      color: #1e88e5;
-      font-weight: 500;
-    }
-    .news-item .date-tag {
-      background: #e8f5e9;
-      color: #2e7d32;
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-size: 11px;
-    }
-    .news-item .link {
-      color: #666;
-      text-decoration: none;
-    }
-    .news-item .link:hover {
-      text-decoration: underline;
-    }
+    .news-item .title { font-size: 15px; font-weight: 600; color: #1a1a2e; line-height: 1.4; margin-bottom: 8px; }
+    .news-item .summary { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 10px; padding-left: 12px; border-left: 3px solid #00d2ff; }
+    .news-item .meta { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+    .news-item .source { color: #1e88e5; font-weight: 500; }
+    .news-item .date-tag { background: #e8f5e9; color: #2e7d32; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
+    .news-item .link { color: #666; text-decoration: none; }
+    .news-item .link:hover { text-decoration: underline; }
     
-    /* Footer */
-    .footer {
-      text-align: center;
-      color: rgba(255,255,255,0.6);
-      font-size: 14px;
-      margin-top: 20px;
-    }
+    .footer { text-align: center; color: rgba(255,255,255,0.6); font-size: 14px; margin-top: 20px; }
     
-    /* Language Toggle Logic */
     .zh { display: block; }
     .en { display: none; }
     body.show-en .zh { display: none; }
@@ -211,7 +124,6 @@
 </head>
 <body>
   <div class="container">
-    <!-- Header -->
     <div class="header">
       <div>
         <h1>🤖 Daily AI News Digest</h1>
@@ -223,7 +135,6 @@
       </div>
     </div>
     
-    <!-- Thoughts Section -->
     <div class="section">
       <div class="section-title thoughts">
         <span class="zh">💭 今日思考</span>
@@ -235,7 +146,6 @@
       </div>
     </div>
     
-    <!-- Try Section -->
     <div class="section">
       <div class="section-title try">
         <span class="zh">🛠️ 今日上手推荐</span>
@@ -243,20 +153,18 @@
       </div>
       <div class="try-item">
         <div class="name">🔵 Manus - 通用型AI Agent</div>
-        <div class="desc zh">2026年3月6日发布的全球首款通用型AI Agent，能自主规划和执行复杂任务，在性能上超越OpenAI。可用于市场分析、软件开发，旅游规划等场景。</div>
-        <div class="desc en">World's first general-purpose AI Agent released on March 6, 2026. Can autonomously plan and execute complex tasks. Surpasses OpenAI in benchmark tests.</div>
+        <div class="desc zh">2026年3月6日发布的全球首款通用型AI Agent，能自主规划和执行复杂任务。</div>
+        <div class="desc en">World's first general-purpose AI Agent released on March 6, 2026.</div>
         <span class="tag">3月6日新发布</span>
       </div>
     </div>
     
-    <!-- News Section -->
     <div class="section">
       <div class="section-title news">
         <span class="zh">📰 今日新闻（7天内）</span>
         <span class="en">📰 Today's News (Within 7 Days)</span>
       </div>
       
-      <!-- International -->
       <div class="news-category">
         <div class="news-category-title">
           <span class="zh">🌍 国际动态</span>
@@ -266,8 +174,8 @@
         <div class="news-item">
           <div class="title zh">OpenAI发布GPT-5.4：迄今最强大专业模型</div>
           <div class="title en">OpenAI releases GPT-5.4</div>
-          <div class="summary zh">OpenAI发布GPT-5.4，被描述为"迄今最强大且高效的专业工作前沿模型"。具备最先进的编程能力、计算机使用能力、工具搜索和100万token上下文支持。在SWE-Bench Pro测试中达到57.7%准确率。</div>
-          <div class="summary en">OpenAI releases GPT-5.4, described as the company's most capable and efficient frontier model for professional work. Features state-of-the-art coding, computer use, tool search, and 1M-token context.</div>
+          <div class="summary zh">OpenAI发布GPT-5.4，具备最先进的编程能力、计算机使用能力和100万token上下文支持。在SWE-Bench Pro测试中达到57.7%准确率。</div>
+          <div class="summary en">OpenAI releases GPT-5.4 with state-of-the-art coding, computer use, and 1M-token context.</div>
           <div class="meta">
             <span class="date-tag">3月5日</span>
             <span class="source">OpenAI</span>
@@ -278,8 +186,8 @@
         <div class="news-item">
           <div class="title zh">OpenAI/Google员工声援Anthropic起诉国防部</div>
           <div class="title en">OpenAI and Google employees support Anthropic</div>
-          <div class="summary zh">超过30名OpenAI和Google DeepMind员工签署声明，支持Anthropic起诉美国国防部。Anthropic此前因被标记为"关键供应链"而提起诉讼，引发科技行业广泛关注。</div>
-          <div class="summary en">Over 30 OpenAI and Google DeepMind employees signed a statement supporting Anthropic's lawsuit against the US Department of Defense.</div>
+          <div class="summary zh">超过30名OpenAI和Google DeepMind员工签署声明，支持Anthropic起诉美国国防部。</div>
+          <div class="summary en">Over 30 OpenAI and Google employees signed statement supporting Anthropic's lawsuit.</div>
           <div class="meta">
             <span class="date-tag">3月9日</span>
             <span class="source">TechCrunch</span>
@@ -290,29 +198,16 @@
         <div class="news-item">
           <div class="title zh">科技巨头承诺承担AI数据中心能源成本</div>
           <div class="title en">Tech giants pledge AI data center energy costs</div>
-          <div class="summary zh">包括OpenAI、微软、Google、亚马逊、Meta和Oracle在内的主要科技公司宣布，将承担与AI数据中心相关的能源和基础设施成本，以应对日益增长的电力需求。</div>
-          <div class="summary en">Major tech companies including OpenAI, Microsoft, Google, Amazon, Meta, and Oracle pledge to cover energy and infrastructure costs for AI data centers.</div>
+          <div class="summary zh">OpenAI、微软、Google、亚马逊、Meta和Oracle宣布将承担AI数据中心的能源和基础设施成本。</div>
+          <div class="summary en">Major tech companies pledge to cover AI data center energy and infrastructure costs.</div>
           <div class="meta">
             <span class="date-tag">3月5日</span>
             <span class="source">Fortune</span>
             <a class="link" href="https://fortune.com/2026/03/05/anthropic-openai-feud-pentagon-dispute-ai-safety-dilemma-personalities/">原文链接</a>
           </div>
         </div>
-        
-        <div class="news-item">
-          <div class="title zh">xAI推出Grok 4 Fast新模型</div>
-          <div class="title en">xAI releases Grok 4 Fast</div>
-          <div class="summary zh">xAI推出Grok 4 Fast，这是一款全新的模型，现在可以通过模型选择器在Grok网页界面上使用。Grok系列持续迭代，在多项测试中表现优异。</div>
-          <div class="summary en">xAI releases Grok 4 Fast, a new model now available through the Grok web interface. The Grok series continues to improve and performs well in various benchmarks.</div>
-          <div class="meta">
-            <span class="date-tag">3月</span>
-            <span class="source">知乎</span>
-            <a class="link" href="https://www.zhihu.com/question/1951307604119749537">原文链接</a>
-          </div>
-        </div>
       </div>
       
-      <!-- China -->
       <div class="news-category">
         <div class="news-category-title">
           <span class="zh">🇨🇳 国内动态</span>
@@ -322,8 +217,8 @@
         <div class="news-item">
           <div class="title zh">字节跳动2026年AI投资1600亿元</div>
           <div class="title en">ByteDance to invest 160B RMB in AI</div>
-          <div class="summary zh">据英国金融时报报道，字节跳动初步计划2026年资本支出达1600亿元人民币，较今年增长。其中约一半资金将用于采购先进AI芯片，以开发AI模型和应用。</div>
-          <div class="summary en">ByteDance plans 160 billion RMB capital expenditure in 2026, with half for AI chip procurement.</div>
+          <div class="summary zh">字节跳动初步计划2026年资本支出达1600亿元人民币，约一半用于采购先进AI芯片。</div>
+          <div class="summary en">ByteDance plans 160 billion RMB capital expenditure in 2026, half for AI chips.</div>
           <div class="meta">
             <span class="date-tag">3月</span>
             <span class="source">华尔街见闻</span>
@@ -334,8 +229,8 @@
         <div class="news-item">
           <div class="title zh">豆包内测AI电商功能</div>
           <div class="title en">Doubao testing AI e-commerce</div>
-          <div class="summary zh">字节跳动旗下AI应用豆包正在进行"购物下单"功能的内测，预计本月正式上线。豆包DAU已突破1.45亿，此举标志着字节跳动首次将AI电商能力深度集成至主应用。</div>
-          <div class="summary en">ByteDance's AI app Doubao is testing in-app shopping, expected to launch this month. Doubao's DAU exceeds 145 million.</div>
+          <div class="summary zh">字节跳动旗下AI应用豆包正在进行"购物下单"功能内测，预计本月正式上线。豆包DAU已突破1.45亿。</div>
+          <div class="summary en">ByteDance's Doubao is testing in-app shopping. DAU exceeds 145 million.</div>
           <div class="meta">
             <span class="date-tag">3月9日</span>
             <span class="source">搜狐</span>
@@ -346,8 +241,8 @@
         <div class="news-item">
           <div class="title zh">字节腾讯联手扩招1.7万AI人才</div>
           <div class="title en">ByteDance and Tencent recruit 17,000 AI talents</div>
-          <div class="summary zh">字节跳动与腾讯同日宣布启动2026年实习生招聘计划，双方拟招募人数合计超1.7万人，均将AI及技术研发作为核心扩招方向。</div>
-          <div class="summary en">ByteDance and Tencent announce 2026 internship recruitment, jointly recruiting over 17,000 talents with focus on AI.</div>
+          <div class="summary zh">字节跳动与腾讯同日宣布启动2026年实习生招聘计划，双方拟招募人数合计超1.7万人。</div>
+          <div class="summary en">ByteDance and Tencent announce 2026 internship recruitment, 17,000+ talents.</div>
           <div class="meta">
             <span class="date-tag">3月6日</span>
             <span class="source">腾讯新闻</span>
@@ -358,18 +253,17 @@
         <div class="news-item">
           <div class="title zh">多所高校毕业论文将检测AI率</div>
           <div class="title en">Universities to implement AI detection</div>
-          <div class="summary zh">西南大学、中国人民大学等国内多所高校陆续发布通知，将在本科毕业论文（设计）中引入AI率检测，引发关于学术诚信的讨论。</div>
-          <div class="summary en">Multiple Chinese universities announce AI detection for undergraduate theses.</div>
+          <div class="summary zh">西南大学、中国人民大学等高校发布通知，将在本科毕业论文中引入AI率检测。</div>
+          <div class="summary en">Chinese universities announce AI detection for undergraduate theses.</div>
           <div class="meta">
             <span class="date-tag">3月</span>
-            <span class="source">知乎</span>
-            <a class="link" href="https://www.zhihu.com/question/15169887147">原文链接</a>
+            <span class="source">IT之家</span>
+            <a class="link" href="https://www.ithome.com/0/783/537.htm">原文链接</a>
           </div>
         </div>
       </div>
     </div>
     
-    <!-- Footer -->
     <div class="footer">
       每天早上9点自动生成 | 由OpenClaw AI News Digest生成<br>
       <span style="font-size:12px;opacity:0.7;">*所有新闻均为7天内发布</span>
