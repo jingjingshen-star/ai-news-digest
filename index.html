@@ -84,10 +84,18 @@
       background: linear-gradient(135deg, #e8f5e9 0%, #e3f2fd 100%);
       border-radius: 12px;
       border-left: 4px solid #4caf50;
+      margin-bottom: 12px;
     }
+    .try-item:last-child { margin-bottom: 0; }
     .try-item .name { font-size: 16px; font-weight: 600; color: #2e7d32; margin-bottom: 8px; }
-    .try-item .desc { font-size: 14px; color: #555; line-height: 1.5; }
-    .try-item .tag { display: inline-block; margin-top: 8px; padding: 4px 12px; background: #4caf50; color: white; border-radius: 12px; font-size: 12px; }
+    .try-item .desc { font-size: 14px; color: #555; line-height: 1.5; margin-bottom: 8px; }
+    .try-item .link-item { display: inline-block; margin-right: 12px; }
+    .try-item .link-item a {
+      color: #1e88e5;
+      text-decoration: none;
+      font-size: 13px;
+    }
+    .try-item .link-item a:hover { text-decoration: underline; }
     
     .news-category { margin-bottom: 24px; }
     .news-category-title { font-size: 14px; font-weight: 600; color: #666; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
@@ -151,11 +159,32 @@
         <span class="zh">🛠️ 今日上手推荐</span>
         <span class="en">🛠️ You Should Try</span>
       </div>
+      
       <div class="try-item">
         <div class="name">🔵 Manus - 通用型AI Agent</div>
         <div class="desc zh">全球首款通用型AI Agent，能自主规划和执行复杂任务。</div>
         <div class="desc en">World's first general-purpose AI Agent. Autonomously plan and execute complex tasks.</div>
-        <span class="tag">3月6日</span>
+        <div class="link-item">
+          <a href="https://manus.im/" target="_blank">官网</a>
+        </div>
+      </div>
+      
+      <div class="try-item">
+        <div class="name">🔵 OpenClaw - 开源AI Agent</div>
+        <div class="desc zh">开源AI Agent框架，支持自定义工作流和工具集成。</div>
+        <div class="desc en">Open source AI Agent framework with customizable workflows.</div>
+        <div class="link-item">
+          <a href="https://github.com/openclaw/ai-agents" target="_blank">GitHub</a>
+        </div>
+      </div>
+      
+      <div class="try-item">
+        <div class="name">🔵 Claude Code - AI编程助手</div>
+        <div class="desc zh">Anthropic推出的AI编程工具，专注代码生成和调试。</div>
+        <div class="desc en">Anthropic's AI coding tool focused on code generation and debugging.</div>
+        <div class="link-item">
+          <a href="https://claude.com/claude-code" target="_blank">官网</a>
+        </div>
       </div>
     </div>
     
@@ -226,7 +255,7 @@
           <div class="summary en">OpenAI rolls out interactive visual explanations for 70+ math and science concepts in ChatGPT.</div>
           <div class="meta">
             <span class="date-tag">3月10日</span>
-            <span name="source">The Decoder</span>
+            <span class="source">The Decoder</span>
             <a class="link" href="https://the-decoder.com/chatgpt-now-explains-math-and-physics-with-interactive-visualizations/">原文链接</a>
           </div>
         </div>
