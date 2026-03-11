@@ -86,15 +86,13 @@
       border-left: 4px solid #4caf50;
     }
     .try-item .name { font-size: 16px; font-weight: 600; color: #2e7d32; margin-bottom: 8px; }
-    .try-item .reason { font-size: 14px; color: #555; line-height: 1.5; }
-    .try-item .link-item a span, .news-item .link span {
+    .try-item .reason { font-size: 14px; color: #555; line-height: 1.5; margin-bottom: 8px; }
+    .try-item .link-item a, .news-item .link a {
       color: #1e88e5;
       text-decoration: none;
       font-size: 13px;
     }
-    .try-item .link-item a:hover, .news-item .link:hover {
-      text-decoration: underline;
-    }
+    .try-item .link-item a:hover, .news-item .link a:hover { text-decoration: underline; }
     
     .news-category { margin-bottom: 24px; }
     .news-category-title { font-size: 14px; font-weight: 600; color: #666; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
@@ -102,24 +100,17 @@
     .news-item:last-child { border-bottom: none; }
     .news-item .title { font-size: 15px; font-weight: 600; color: #1a1a2e; line-height: 1.4; margin-bottom: 8px; }
     .news-item .summary { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 10px; padding-left: 12px; border-left: 3px solid #00d2ff; }
-    .news-item .meta { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+    .news-item .meta { display: flex; align-items: center; gap: 8px; font-size: 12px; flex-wrap: wrap; }
     .news-item .source { color: #1e88e5; font-weight: 500; }
     .news-item .date-tag { background: #e8f5e9; color: #2e7d32; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
-    .news-item .link { color: #666; text-decoration: none; }
-    .news-item .link:hover { text-decoration: underline; }
+    .news-item .link { margin-left: auto; }
     
     .footer { text-align: center; color: rgba(255,255,255,0.6); font-size: 14px; margin-top: 20px; }
     
-    .zh { display: block; }
+    .zh { display: inline; }
     .en { display: none; }
     body.show-en .zh { display: none; }
-    body.show-en .en { display: block; }
-    
-    /* Language toggle for links */
-    .try-item .link-item .zh, .news-item .link .zh { display: inline; }
-    .try-item .link-item .en, .news-item .link .en { display: none; }
-    body.show-en .try-item .link-item .zh, body.show-en .news-item .link .zh { display: none; }
-    body.show-en .try-item .link-item .en, body.show-en .news-item .link .en { display: inline; }
+    body.show-en .en { display: inline; }
   </style>
   <script>
     function toggleLang(en) {
@@ -195,7 +186,7 @@
           <div class="meta">
             <span class="date-tag">3月11日</span>
             <span class="source">Anthropic</span>
-            <a class="link" href="https://www.anthropic.com/news/the-anthropic-institute"><span class="zh">原文链接</span><span class="en">Link</span></a>
+            <span class="link"><a href="https://www.anthropic.com/news/the-anthropic-institute"><span class="zh">原文链接</span><span class="en">Link</span></a></span>
           </div>
         </div>
         
@@ -207,7 +198,7 @@
           <div class="meta">
             <span class="date-tag">3月5日</span>
             <span class="source">OpenAI</span>
-            <a class="link" href="https://openai.com/index/introducing-gpt-5-4/"><span class="zh">原文链接</span><span class="en">Link</span></a>
+            <span class="link"><a href="https://openai.com/index/introducing-gpt-5-4/"><span class="zh">原文链接</span><span class="en">Link</span></a></span>
           </div>
         </div>
         
@@ -219,7 +210,7 @@
           <div class="meta">
             <span class="date-tag">3月10日</span>
             <span class="source">Anthropic</span>
-            <a class="link" href="https://www.anthropic.com/news/sydney-fourth-office-asia-pacific"><span class="zh">原文链接</span><span class="en">Link</span></a>
+            <span class="link"><a href="https://www.anthropic.com/news/sydney-fourth-office-asia-pacific"><span class="zh">原文链接</span><span class="en">Link</span></a></span>
           </div>
         </div>
         
@@ -231,7 +222,7 @@
           <div class="meta">
             <span class="date-tag">3月10日</span>
             <span class="source">The Decoder</span>
-            <a class="link" href="https://the-decoder.com/amazon-gets-court-order-blocking-perplexitys-ai-shopping-agent/"><span class="zh">原文链接</span><span class="en">Link</span></a>
+            <span class="link"><a href="https://the-decoder.com/amazon-gets-court-order-blocking-perplexitys-ai-shopping-agent/"><span class="zh">原文链接</span><span class="en">Link</span></a></span>
           </div>
         </div>
         
@@ -243,7 +234,7 @@
           <div class="meta">
             <span class="date-tag">3月10日</span>
             <span class="source">The Decoder</span>
-            <a class="link" href="https://the-decoder.com/chatgpt-now-explains-math-and-physics-with-interactive-visualizations/"><span class="zh">原文链接</span><span class="en">Link</span></a>
+            <span class="link"><a href="https://the-decoder.com/chatgpt-now-explains-math-and-physics-with-interactive-visualizations/"><span class="zh">原文链接</span><span class="en">Link</span></a></span>
           </div>
         </div>
       </div>
@@ -262,7 +253,7 @@
           <div class="meta">
             <span class="date-tag">3月11日</span>
             <span class="source">量子位</span>
-            <a class="link" href="https://www.qbitai.com/2026/03/386308.html"><span class="zh">原文链接</span><span class="en">Link</span></a>
+            <span class="link"><a href="https://www.qbitai.com/2026/03/386308.html"><span class="zh">原文链接</span><span class="en">Link</span></a></span>
           </div>
         </div>
         
@@ -274,7 +265,7 @@
           <div class="meta">
             <span class="date-tag">3月11日</span>
             <span class="source">量子位</span>
-            <a class="link" href="https://www.qbitai.com/2026/03/386485.html"><span class="zh">原文链接</span><span class="en">Link</span></a>
+            <span class="link"><a href="https://www.qbitai.com/2026/03/386485.html"><span class="zh">原文链接</span><span class="en">Link</span></a></span>
           </div>
         </div>
         
@@ -286,7 +277,7 @@
           <div class="meta">
             <span class="date-tag">3月10日</span>
             <span class="source">IT之家</span>
-            <a class="link" href="https://www.ithome.com/0/928/095.htm"><span class="zh">原文链接</span><span class="en">Link</span></a>
+            <span class="link"><a href="https://www.ithome.com/0/928/095.htm"><span class="zh">原文链接</span><span class="en">Link</span></a></span>
           </div>
         </div>
         
@@ -298,7 +289,7 @@
           <div class="meta">
             <span class="date-tag">3月10日</span>
             <span class="source">IT之家</span>
-            <a class="link" href="https://www.ithome.com/0/928/009.htm"><span class="zh">原文链接</span><span class="en">Link</span></a>
+            <span class="link"><a href="https://www.ithome.com/0/928/009.htm"><span class="zh">原文链接</span><span class="en">Link</span></a></span>
           </div>
         </div>
       </div>
