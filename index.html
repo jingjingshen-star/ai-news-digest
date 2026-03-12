@@ -33,6 +33,27 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .history-btn {
+      padding: 8px 16px;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.8);
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .history-btn:hover {
+      background: rgba(0,210,255,0.2);
+      border-color: #00d2ff;
+      color: #00d2ff;
+    }
     .lang-toggle { display: flex; gap: 8px; }
     .lang-btn {
       padding: 8px 16px;
@@ -100,7 +121,7 @@
     .news-item:last-child { border-bottom: none; }
     .news-item .title { font-size: 15px; font-weight: 600; color: #1a1a2e; line-height: 1.4; margin-bottom: 8px; }
     .news-item .summary { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 10px; padding-left: 12px; border-left: 3px solid #00d2ff; }
-    .news-item .meta { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+    .news-item .meta { display: flex; align-items: center; gap: 8px; font-size: 12px; flex-wrap: wrap; }
     .news-item .source { color: #1e88e5; font-weight: 500; }
     .news-item .date-tag { background: #e8f5e9; color: #2e7d32; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
     .news-item .link { color: #666; text-decoration: none; }
@@ -130,9 +151,12 @@
 <body>
   <div class="container">
     <div class="header">
-      <div>
-        <h1>🤖 Daily AI News Digest</h1>
-        <div class="date">2026年3月12日 / March 12, 2026</div>
+      <div class="header-left">
+        <a href="history.html" class="history-btn">📜 查看历史简报</a>
+        <div>
+          <h1>🤖 Daily AI News Digest</h1>
+          <div class="date">2026年3月12日 / March 12, 2026</div>
+        </div>
       </div>
       <div class="lang-toggle">
         <button class="lang-btn active" onclick="toggleLang(false)">中文</button>
@@ -182,11 +206,9 @@
         <div class="news-item">
           <div class="title zh">Anthropic发布Anthropic Institute</div>
           <div class="title en">Anthropic launches The Anthropic Institute</div>
-          <div class="summary zh">Anthropic宣布推出Anthropic Institute，旨在推动AI安全和负责任发展。</div>
-          <div class="summary en">Anthropic announces The Anthropic Institute to advance AI safety and responsible development.</div>
           <div class="meta">
             <span class="date-tag">3月11日</span>
-            <span class="source">Anthropic</span>>
+            <span class="source">Anthropic</span>
             <a class="link" href="https://www.anthropic.com/news/the-anthropic-institute"><span class="zh">原文链接</span><span class="en">Link</span></a>
           </div>
         </div>
@@ -194,11 +216,9 @@
         <div class="news-item">
           <div class="title zh">Google发布Gemini Embedding 2</div>
           <div class="title en">Google releases Gemini Embedding 2</div>
-          <div class="summary zh">Google发布首个原生多模态嵌入模型，将文本、图像、视频、音频统一到单一向量空间。</div>
-          <div class="summary en">Google releases first native multimodal embedding model, unifying text, image, video, audio in one vector space.</div>
           <div class="meta">
             <span class="date-tag">3月11日</span>
-            <span class="source">The Decoder</span>>
+            <span class="source">The Decoder</span>
             <a class="link" href="https://the-decoder.com/google-unifies-text-image-video-and-audio-in-a-single-vector-space-with-gemini-embedding-2/"><span class="zh">原文链接</span><span class="en">Link</span></a>
           </div>
         </div>
@@ -206,11 +226,9 @@
         <div class="news-item">
           <div class="title zh">新研究：半数通过测试的AI代码会被开发者拒绝</div>
           <div class="title en">Study: Half of AI code passing tests would be rejected</div>
-          <div class="summary zh">新研究显示，半数通过行业测试的AI代码在实际开发中会被真人开发者拒绝。</div>
-          <div class="summary en">New research reveals half of AI-written code passing industry tests would get rejected by real developers.</div>
           <div class="meta">
             <span class="date-tag">3月11日</span>
-            <span class="source">The Decoder</span>>
+            <span class="source">The Decoder</span>
             <a class="link" href="https://the-decoder.com/half-of-ai-written-code-that-passes-industry-test-would-get-rejected-by-real-developers-new-study-finds/"><span class="zh">原文链接</span><span class="en">Link</span></a>
           </div>
         </div>
@@ -218,11 +236,9 @@
         <div class="news-item">
           <div class="title zh">Claude插件更新：Excel和PowerPoint支持跨应用共享上下文</div>
           <div class="title en">Claude adds cross-app context for Office</div>
-          <div class="summary zh">Anthropic更新Claude的Excel和PowerPoint插件，支持跨应用共享上下文和可复用工作流。</div>
-          <div class="summary en">Anthropic updates Claude for Excel and PowerPoint with shared context and reusable workflows.</div>
           <div class="meta">
             <span class="date-tag">3月11日</span>
-            <span class="source">The Decoder</span>>
+            <span class="source">The Decoder</span>
             <a class="link" href="https://the-decoder.com/claudes-excel-and-powerpoint-add-ins-now-share-context-across-apps/"><span class="zh">原文链接</span><span class="en">Link</span></a>
           </div>
         </div>
@@ -237,8 +253,6 @@
         <div class="news-item">
           <div class="title zh">微信独立AI模型曝光，可接入小程序生态</div>
           <div class="title en">WeChat's independent AI model exposed</div>
-          <div class="summary zh">微信独立自有AI模型曝光，可接入小程序生态，计划年内落地。</div>
-          <div class="summary en">WeChat's independent AI model exposed, can integrate with mini-program ecosystem, launching within 2026.</div>
           <div class="meta">
             <span class="date-tag">3月11日</span>
             <span class="source">IT之家</span>
@@ -249,8 +263,6 @@
         <div class="news-item">
           <div class="title zh">新报告：超60%企业无法终止失控AI智能体</div>
           <div class="title en">Report: 60% of enterprises cannot terminate AI agents</div>
-          <div class="summary zh">新报告揭露企业AI治理断层，超60%企业无法终止失控的AI智能体。</div>
-          <div class="summary en">New report reveals enterprise AI governance gaps - over 60% of companies cannot terminate uncontrolled AI agents.</div>
           <div class="meta">
             <span class="date-tag">3月11日</span>
             <span class="source">IT之家</span>
@@ -261,8 +273,6 @@
         <div class="news-item">
           <div class="title zh">中国AI Token调用量4.19万亿，超美国</div>
           <div class="title en">China AI token usage surpasses US</div>
-          <div class="summary zh">国内AI大模型Token调用量达4.19万亿，增长34.9%，超越美国。</div>
-          <div class="summary en">Domestic AI model token usage reaches 4.19 trillion, up 34.9%, surpassing the US.</div>
           <div class="meta">
             <span class="date-tag">3月</span>
             <span class="source">量子位</span>
@@ -273,8 +283,6 @@
         <div class="news-item">
           <div class="title zh">英伟达发布最强开源权重模型Nemotron 3 Super</div>
           <div class="title en">Nvidia releases Nemotron 3 Super</div>
-          <div class="summary zh">英伟达发布Nemotron 3 Super，120B参数，吞吐量飙升5倍。</div>
-          <div class="summary en">Nvidia releases Nemotron 3 Super with 120B parameters and 5x throughput increase.</div>
           <div class="meta">
             <span class="date-tag">3月11日</span>
             <span class="source">IT之家</span>

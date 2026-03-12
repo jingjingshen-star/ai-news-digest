@@ -1,0 +1,66 @@
+[
+  {
+    "date": "2026-03-12",
+    "title_zh": "Anthropic发布Anthropic Institute",
+    "title_en": "Anthropic launches The Anthropic Institute",
+    "source": "Anthropic",
+    "url": "https://www.anthropic.com/news/the-anthropic-institute",
+    "category": "international"
+  },
+  {
+    "date": "2026-03-12",
+    "title_zh": "Google发布Gemini Embedding 2",
+    "title_en": "Google releases Gemini Embedding 2",
+    "source": "The Decoder",
+    "url": "https://the-decoder.com/google-unifies-text-image-video-and-audio-in-a-single-vector-space-with-gemini-embedding-2/",
+    "category": "international"
+  },
+  {
+    "date": "2026-03-12",
+    "title_zh": "新研究：半数通过测试的AI代码会被开发者拒绝",
+    "title_en": "Study: Half of AI code passing tests would be rejected",
+    "source": "The Decoder",
+    "url": "https://the-decoder.com/half-of-ai-written-code-that-passes-industry-test-would-get-rejected-by-real-developers-new-study-finds/",
+    "category": "international"
+  },
+  {
+    "date": "2026-03-12",
+    "title_zh": "Claude插件更新：Excel和PowerPoint支持跨应用共享上下文",
+    "title_en": "Claude adds cross-app context for Office",
+    "source": "The Decoder",
+    "url": "https://the-decoder.com/claudes-excel-and-powerpoint-add-ins-now-share-context-across-apps/",
+    "category": "international"
+  },
+  {
+    "date": "2026-03-12",
+    "title_zh": "微信独立AI模型曝光，可接入小程序生态",
+    "title_en": "WeChat's independent AI model exposed",
+    "source": "IT之家",
+    "url": "https://www.ithome.com/0/928/203.htm",
+    "category": "china"
+  },
+  {
+    "date": "2026-03-12",
+    "title_zh": "新报告：超60%企业无法终止失控AI智能体",
+    "title_en": "Report: 60% of enterprises cannot terminate AI agents",
+    "source": "IT之家",
+    "url": "https://www.ithome.com/0/928/211.htm",
+    "category": "china"
+  },
+  {
+    "date": "2026-03-12",
+    "title_zh": "中国AI Token调用量4.19万亿，超美国",
+    "title_en": "China AI token usage surpasses US",
+    "source": "量子位",
+    "url": "https://www.qbitai.com/2026/03/386183.html",
+    "category": "china"
+  },
+  {
+    "date": "2026-03-12",
+    "title_zh": "英伟达发布最强开源权重模型Nemotron 3 Super",
+    "title_en": "Nvidia releases Nemotron 3 Super",
+    "source": "IT之家",
+    "url": "https://www.ithome.com/0/928/184.htm",
+    "category": "china"
+  }
+]
