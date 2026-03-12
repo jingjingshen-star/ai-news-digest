@@ -86,13 +86,13 @@
       border-left: 4px solid #4caf50;
     }
     .try-item .name { font-size: 16px; font-weight: 600; color: #2e7d32; margin-bottom: 8px; }
-    .try-item .reason { font-size: 14px; color: #555; line-height: 1.5; margin-bottom: 8px; }
-    .try-item .link-item a, .news-item .link a {
+    .try-item .reason { font-size: 14px; color: #555; line-height: 1.5; }
+    .try-item .link-item a {
       color: #1e88e5;
       text-decoration: none;
       font-size: 13px;
     }
-    .try-item .link-item a:hover, .news-item .link a:hover { text-decoration: underline; }
+    .try-item .link-item a:hover { text-decoration: underline; }
     
     .news-category { margin-bottom: 24px; }
     .news-category-title { font-size: 14px; font-weight: 600; color: #666; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
@@ -100,17 +100,18 @@
     .news-item:last-child { border-bottom: none; }
     .news-item .title { font-size: 15px; font-weight: 600; color: #1a1a2e; line-height: 1.4; margin-bottom: 8px; }
     .news-item .summary { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 10px; padding-left: 12px; border-left: 3px solid #00d2ff; }
-    .news-item .meta { display: flex; align-items: center; gap: 8px; font-size: 12px; flex-wrap: wrap; }
+    .news-item .meta { display: flex; align-items: center; gap: 8px; font-size: 12px; }
     .news-item .source { color: #1e88e5; font-weight: 500; }
     .news-item .date-tag { background: #e8f5e9; color: #2e7d32; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
-    .news-item .link { margin-left: auto; }
+    .news-item .link { color: #666; text-decoration: none; }
+    .news-item .link:hover { text-decoration: underline; }
     
     .footer { text-align: center; color: rgba(255,255,255,0.6); font-size: 14px; margin-top: 20px; }
     
-    .zh { display: inline; }
+    .zh { display: block; }
     .en { display: none; }
     body.show-en .zh { display: none; }
-    body.show-en .en { display: inline; }
+    body.show-en .en { display: block; }
   </style>
   <script>
     function toggleLang(en) {
@@ -145,8 +146,8 @@
         <span class="en">💭 Thoughts and Takeaways</span>
       </div>
       <div class="thought-item">
-        <div class="question zh">当Claude日活突破1130万、GPT-5.4在83%任务上超越人类，AI正在从"工具"进化为"同事"。下一个问题不再是"AI能做什么"，而是"人类如何与AI协同"。</div>
-        <div class="question en">With Claude hitting 11.3M DAU and GPT-5.4 outperforming humans in 83% of tasks, AI is evolving from "tool" to "colleague". The question is no longer "what can AI do" but "how do humans collaborate with AI".</div>
+        <div class="question zh">当AI模型能力越来越强，企业如何平衡效率提升与代码质量控制？</div>
+        <div class="question en">As AI models become more capable, how can enterprises balance efficiency gains with code quality control?</div>
       </div>
     </div>
     
@@ -157,11 +158,11 @@
       </div>
       
       <div class="try-item">
-        <div class="name">🟣 Claude Code - AI编程助手</div>
-        <div class="reason zh">Anthropic发布的2026趋势报告显示，Claude Code正在引领"人类指挥官+AI Agent"的新编程范式，建议开发者尝试。</div>
-        <div class="reason en">Anthropic's 2026 trend report shows Claude Code leading the new "human commander + AI Agent" programming paradigm. Worth trying for developers.</div>
+        <div class="name">🔵 Claude for Excel/PowerPoint</div>
+        <div class="reason zh">据The Decoder报道，Claude推出Excel和PowerPoint插件，支持跨应用共享上下文，适合办公场景。</div>
+        <div class="reason en">According to The Decoder, Claude launches Excel and PowerPoint add-ins with shared context across apps.</div>
         <div class="link-item">
-          <a href="https://www.anthropic.com/claude-code" target="_blank"><span class="zh">官网</span><span class="en">Homepage</span></a>
+          <a href="https://claude.com/claude-code" target="_blank"><span class="zh">官网</span><span class="en">App Homepage</span></a>
         </div>
       </div>
     </div>
@@ -174,110 +175,110 @@
       
       <div class="news-category">
         <div class="news-category-title">
-          <span class="zh">🌍 国际动态</span>
-          <span class="en">🌍 International</span>
+          <span class="zh">🌍 国际动态（来自国际信息源）</span>
+          <span class="en">🌍 International (From Int'l Sources)</span>
         </div>
         
         <div class="news-item">
-          <div class="title zh">OpenAI发布GPT-5.4：83%任务上超越人类专业人士</div>
-          <div class="title en">OpenAI releases GPT-5.4: outperforms humans in 83% of tasks</div>
-          <div class="summary zh">GPT-5.4在测试中展现惊人性能，83%情况下匹配或超越人类专业人士工作表现，错误率降低18%，幻觉率下降25%。</div>
-          <div class="summary en">GPT-5.4 demonstrates remarkable performance, matching or outperforming human professionals in 83% of tasks, with 18% lower error rate and 25% reduction in hallucinations.</div>
+          <div class="title zh">Anthropic发布Anthropic Institute</div>
+          <div class="title en">Anthropic launches The Anthropic Institute</div>
+          <div class="summary zh">Anthropic宣布推出Anthropic Institute，旨在推动AI安全和负责任发展。</div>
+          <div class="summary en">Anthropic announces The Anthropic Institute to advance AI safety and responsible development.</div>
           <div class="meta">
-            <span class="date-tag">3月12日</span>
-            <span class="source">OpenAI</span>
-            <a href="https://openai.com/index/introducing-gpt-5-4/"><span class="zh">原文链接</span><span class="en">Link</span></a>
+            <span class="date-tag">3月11日</span>
+            <span class="source">Anthropic</span>>
+            <a class="link" href="https://www.anthropic.com/news/the-anthropic-institute"><span class="zh">原文链接</span><span class="en">Link</span></a>
           </div>
         </div>
         
         <div class="news-item">
-          <div class="title zh">Anthropic Claude日活突破1130万，同比暴涨298%</div>
-          <div class="title en">Claude DAU hits 11.3M, up 298% YoY</div>
-          <div class="summary zh">Claude在iOS和安卓端的日活跃用户达到1130万，较年初400万增长183%，3月2日首次登顶美国应用商店总榜。</div>
-          <div class="summary en">Claude reaches 11.3M daily active users on iOS and Android, up 183% from 4M at start of year, topped US App Store on March 2.</div>
+          <div class="title zh">Google发布Gemini Embedding 2</div>
+          <div class="title en">Google releases Gemini Embedding 2</div>
+          <div class="summary zh">Google发布首个原生多模态嵌入模型，将文本、图像、视频、音频统一到单一向量空间。</div>
+          <div class="summary en">Google releases first native multimodal embedding model, unifying text, image, video, audio in one vector space.</div>
           <div class="meta">
-            <span class="date-tag">3月8日</span>
-            <span class="source">新浪财经</span>
-            <a href="https://finance.sina.com.cn/tech/roll/2026-03-08/doc-inhqhuhc7433361.shtml"><span class="zh">原文链接</span><span class="en">Link</span></a>
+            <span class="date-tag">3月11日</span>
+            <span class="source">The Decoder</span>>
+            <a class="link" href="https://the-decoder.com/google-unifies-text-image-video-and-audio-in-a-single-vector-space-with-gemini-embedding-2/"><span class="zh">原文链接</span><span class="en">Link</span></a>
           </div>
         </div>
         
         <div class="news-item">
-          <div class="title zh">Anthropic发布2026趋势报告：人类不再写代码，改当Agent指挥官</div>
-          <div class="title en">Anthropic 2026 Report: Humans become Agent commanders</div>
-          <div class="summary zh">报告预测软件开发生命周期将发生结构性剧变，未来的软件开发是人类作为"指挥官"编排AI Agent团队完成战术执行。</div>
-          <div class="summary en">Report predicts structural transformation in software development lifecycle - future development involves humans as "commanders" orchestrating AI Agent teams.</div>
+          <div class="title zh">新研究：半数通过测试的AI代码会被开发者拒绝</div>
+          <div class="title en">Study: Half of AI code passing tests would be rejected</div>
+          <div class="summary zh">新研究显示，半数通过行业测试的AI代码在实际开发中会被真人开发者拒绝。</div>
+          <div class="summary en">New research reveals half of AI-written code passing industry tests would get rejected by real developers.</div>
           <div class="meta">
-          <span class="date-tag">3月12日</span>
-            <span class="source">CSDN</span>
-            <a href="https://blog.csdn.net/weixin_43886614/article/details/157993405"><span class="zh">原文链接</span><span class="en">Link</span></a>
+            <span class="date-tag">3月11日</span>
+            <span class="source">The Decoder</span>>
+            <a class="link" href="https://the-decoder.com/half-of-ai-written-code-that-passes-industry-test-would-get-rejected-by-real-developers-new-study-finds/"><span class="zh">原文链接</span><span class="en">Link</span></a>
           </div>
         </div>
         
         <div class="news-item">
-          <div class="title zh">xAI发布Grok 4.2：每周进化的AI模型</div>
-          <div class="title en">xAI releases Grok 4.2 with weekly evolution</div>
-          <div class="summary zh">Grok 4.2具备"快速学习能力"，能每周持续迭代，附带详细发布笔记，首次采用四专业代理并行思考架构。</div>
-          <div class="summary en">Grok 4.2 features "rapid learning" with weekly iterations and detailed release notes, first to use 4-agent parallel thinking architecture.</div>
+          <div class="title zh">Claude插件更新：Excel和PowerPoint支持跨应用共享上下文</div>
+          <div class="title en">Claude adds cross-app context for Office</div>
+          <div class="summary zh">Anthropic更新Claude的Excel和PowerPoint插件，支持跨应用共享上下文和可复用工作流。</div>
+          <div class="summary en">Anthropic updates Claude for Excel and PowerPoint with shared context and reusable workflows.</div>
           <div class="meta">
-            <span class="date-tag">3月10日</span>
-            <span class="source">DoNews</span>
-            <a href="https://www.donews.com/news/detail/8/6430860.html"><span class="zh">原文链接</span><span class="en">Link</span></a>
-          </div>
-        </div>
-        
-        <div class="news-item">
-          <div class="title zh">Grok将于2026年接入美国国防部AI平台</div>
-          <div class="title en">Grok to integrate with US Department of Defense AI platform</div>
-          <div class="summary zh">美国国防部宣布将于2026年初将xAI的Grok系列模型整合至GenAI.mil军用AI服务平台，所有军方人员可在IL5安全等级下使用。</div>
-          <div class="summary en">US DoD announces Grok integration into GenAI.mil platform by early 2026, available to all military personnel at IL5 security level.</div>
-          <div class="meta">
-            <span class="date-tag">3月12日</span>
-            <span class="source">企鹅号</span>
-            <a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_492694b8c0243352"><span class="zh">原文链接</span><span class="en">Link</span></a>
-          </div>
-        </div>
-        
-        <div class="news-item">
-          <div class="title zh">Anthropic最强Claude Opus 4.6发布</div>
-          <div class="title en">Anthropic releases Claude Opus 4.6</div>
-          <div class="summary zh">Claude Opus 4.6在编程和项目创建方面表现更加出色，一次性完成的成功率更高。</div>
-          <div class="summary en">Claude Opus 4.6 shows improved programming and project creation capabilities with higher success rate.</div>
-          <div class="meta">
-            <span class="date-tag">3月12日</span>
-            <span class="source">Anthropic</span>
-            <a href="https://www.anthropic.com/news/claude-opens-4-6"><span class="zh">原文链接</span><span class="en">Link</span></a>
+            <span class="date-tag">3月11日</span>
+            <span class="source">The Decoder</span>>
+            <a class="link" href="https://the-decoder.com/claudes-excel-and-powerpoint-add-ins-now-share-context-across-apps/"><span class="zh">原文链接</span><span class="en">Link</span></a>
           </div>
         </div>
       </div>
       
       <div class="news-category">
         <div class="news-category-title">
-          <span class="zh">🇨🇳 国内动态</span>
-          <span class="en">🇨🇳 China</span>
+          <span class="zh">🇨🇳 国内动态（来自国内信息源）</span>
+          <span class="en">🇨🇳 China (From China Sources)</span>
         </div>
         
         <div class="news-item">
-          <div class="title zh">Anthropic预测：强大AI系统将在2026年末或2027年初问世</div>
-          <div class="title en">Anthropic predicts powerful AI by late 2026/early 2027</div>
-          <div class="summary zh">Anthropic向美国白宫提交建议，透露强大AI系统预计将在2026年末或2027年初问世。</div>
-          <div class="summary en">Anthropic submits recommendations to US White House, predicting powerful AI systems will emerge by late 2026 or early 2027.</div>
+          <div class="title zh">微信独立AI模型曝光，可接入小程序生态</div>
+          <div class="title en">WeChat's independent AI model exposed</div>
+          <div class="summary zh">微信独立自有AI模型曝光，可接入小程序生态，计划年内落地。</div>
+          <div class="summary en">WeChat's independent AI model exposed, can integrate with mini-program ecosystem, launching within 2026.</div>
           <div class="meta">
-            <span class="date-tag">3月12日</span>
-            <span class="source">AI前沿快讯</span>
-            <a href="https://www.jvyan.cn/news/detail/1321"><span class="zh">原文链接</span><span class="en">Link</span></a>
+            <span class="date-tag">3月11日</span>
+            <span class="source">IT之家</span>
+            <a class="link" href="https://www.ithome.com/0/928/203.htm"><span class="zh">原文链接</span><span class="en">Link</span></a>
           </div>
         </div>
         
         <div class="news-item">
-          <div class="title zh">Anthropic Claude医疗版发布</div>
-          <div class="title en">Anthropic launches Claude for Healthcare</div>
-          <div class="summary zh">美国地区的Claude Pro和Max订阅用户可连接HealthEx和Function平台安全访问化验结果和健康记录。</div>
-          <div class="summary en">Claude Pro and Max subscribers in US can securely access test results and health records via HealthEx and Function platforms.</div>
+          <div class="title zh">新报告：超60%企业无法终止失控AI智能体</div>
+          <div class="title en">Report: 60% of enterprises cannot terminate AI agents</div>
+          <div class="summary zh">新报告揭露企业AI治理断层，超60%企业无法终止失控的AI智能体。</div>
+          <div class="summary en">New report reveals enterprise AI governance gaps - over 60% of companies cannot terminate uncontrolled AI agents.</div>
           <div class="meta">
-            <span class="date-tag">3月12日</span>
-            <span class="source">企鹅号</span>
-            <a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_96169661a5071652"><span class="zh">原文链接</span><span class="en">Link</span></a>
+            <span class="date-tag">3月11日</span>
+            <span class="source">IT之家</span>
+            <a class="link" href="https://www.ithome.com/0/928/211.htm"><span class="zh">原文链接</span><span class="en">Link</span></a>
+          </div>
+        </div>
+        
+        <div class="news-item">
+          <div class="title zh">中国AI Token调用量4.19万亿，超美国</div>
+          <div class="title en">China AI token usage surpasses US</div>
+          <div class="summary zh">国内AI大模型Token调用量达4.19万亿，增长34.9%，超越美国。</div>
+          <div class="summary en">Domestic AI model token usage reaches 4.19 trillion, up 34.9%, surpassing the US.</div>
+          <div class="meta">
+            <span class="date-tag">3月</span>
+            <span class="source">量子位</span>
+            <a class="link" href="https://www.qbitai.com/2026/03/386183.html"><span class="zh">原文链接</span><span class="en">Link</span></a>
+          </div>
+        </div>
+        
+        <div class="news-item">
+          <div class="title zh">英伟达发布最强开源权重模型Nemotron 3 Super</div>
+          <div class="title en">Nvidia releases Nemotron 3 Super</div>
+          <div class="summary zh">英伟达发布Nemotron 3 Super，120B参数，吞吐量飙升5倍。</div>
+          <div class="summary en">Nvidia releases Nemotron 3 Super with 120B parameters and 5x throughput increase.</div>
+          <div class="meta">
+            <span class="date-tag">3月11日</span>
+            <span class="source">IT之家</span>
+            <a class="link" href="https://www.ithome.com/0/928/184.htm"><span class="zh">原文链接</span><span class="en">Link</span></a>
           </div>
         </div>
       </div>
