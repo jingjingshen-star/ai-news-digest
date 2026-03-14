@@ -1,5 +1,69 @@
 [
   {
+    "date": "2026-03-14",
+    "title_zh": "腾讯\"龙虾管家\"重磅上线，开启全国巡装",
+    "title_en": "Tencent \"Lobster Manager\" launches nationwide installation",
+    "source": "IT之家",
+    "url": "https://www.ithome.com/0/929/076.htm",
+    "category": "china"
+  },
+  {
+    "date": "2026-03-14",
+    "title_zh": "Claude上线百万Token上下文",
+    "title_en": "Claude launches million-token context",
+    "source": "IT之家",
+    "url": "https://www.ithome.com/0/929/062.htm",
+    "category": "china"
+  },
+  {
+    "date": "2026-03-14",
+    "title_zh": "前Anthropic研究员创立AI初创公司Mirendil",
+    "title_en": "Ex-Anthropic researchers launch AI startup Mirendil",
+    "source": "The Decoder",
+    "url": "https://the-decoder.com/ex-anthropic-researchers-launch-ai-startup-mirendil-to-tackle-scientific-research/",
+    "category": "international"
+  },
+  {
+    "date": "2026-03-14",
+    "title_zh": "Anthropic取消百万Token上下文窗口附加费",
+    "title_en": "Anthropic drops million-token context surcharge",
+    "source": "The Decoder",
+    "url": "https://the-decoder.com/anthropic-drops-the-surcharge-for-million-token-context-windows-making-opus-4-6-and-sonnet-4-6-far-cheaper/",
+    "category": "international"
+  },
+  {
+    "date": "2026-03-13",
+    "title_zh": "xAI启动全面重组",
+    "title_en": "xAI launches full restructuring",
+    "source": "The Decoder",
+    "url": "https://the-decoder.com/elon-musk-admits-xai-was-not-built-right-first-time-around-launches-full-restructuring/",
+    "category": "international"
+  },
+  {
+    "date": "2026-03-13",
+    "title_zh": "Perplexity推出\"个人电脑\"AI Agent",
+    "title_en": "Perplexity launches \"Personal Computer\" AI Agent",
+    "source": "The Decoder",
+    "url": "https://the-decoder.com/perplexitys-personal-computer-promises-a-tireless-ai-agent-for-200-a-month/",
+    "category": "international"
+  },
+  {
+    "date": "2026-03-13",
+    "title_zh": "华为与中国联通发布\"AI智慧盒\"",
+    "title_en": "China Unicom and Huawei release AI Smart Box",
+    "source": "IT之家",
+    "url": "https://www.ithome.com/0/929/073.htm",
+    "category": "china"
+  },
+  {
+    "date": "2026-03-13",
+    "title_zh": "美团CEO王兴：AI Agent对我的冲击比ChatGPT更大",
+    "title_en": "Meituan CEO: AI Agent impacts me more than ChatGPT",
+    "source": "IT之家",
+    "url": "https://www.ithome.com/0/928/801.htm",
+    "category": "china"
+  },
+  {
     "date": "2026-03-12",
     "title_zh": "Anthropic发布Anthropic Institute",
     "title_en": "Anthropic launches The Anthropic Institute",
