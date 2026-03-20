@@ -1,413 +1,287 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daily AI News Digest</title>
+  <title>AI 每日简报 | 2026年3月20日</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { 
-      font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+      background: #0d1117;
+      color: #e6edf3;
+      line-height: 1.7;
       min-height: 100vh;
-      padding: 40px;
+    }
+    .container { max-width: 860px; margin: 0 auto; padding: 40px 20px; }
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid #21262d;
+    }
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #238636, #2ea043);
       color: #fff;
-    }
-    .container { max-width: 800px; margin: 0 auto; }
-    
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-      padding: 20px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 16px;
-      backdrop-filter: blur(10px);
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-    .header h1 {
-      font-size: 28px;
-      background: linear-gradient(90deg, #00d2ff, #3a7bd5);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .history-btn {
-      padding: 8px 16px;
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 20px;
-      background: rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.8);
-      cursor: pointer;
-      font-size: 14px;
-      text-decoration: none;
-      transition: all 0.3s;
-    }
-    .history-btn:hover {
-      background: rgba(0,210,255,0.2);
-      border-color: #00d2ff;
-      color: #00d2ff;
-    }
-    .lang-toggle { display: flex; gap: 8px; }
-    .lang-btn {
-      padding: 8px 16px;
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 20px;
-      background: transparent;
-      color: rgba(255,255,255,0.6);
-      cursor: pointer;
-      font-size: 14px;
-    }
-    .lang-btn.active {
-      background: rgba(0,210,255,0.2);
-      color: #00d2ff;
-      border-color: #00d2ff;
-    }
-    .date { color: #00d2ff; font-size: 16px; text-align: center; margin-top: 8px; }
-    
-    .section {
-      background: rgba(255,255,255,0.95);
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 20px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    }
-    .section-title {
-      font-size: 18px;
+      font-size: 12px;
       font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
       margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding-bottom: 12px;
-      border-bottom: 2px solid #eee;
     }
-    .section-title.thoughts { color: #9c27b0; }
-    .section-title.try { color: #4caf50; }
-    .section-title.news { color: #1e88e5; }
-    
-    .thought-item {
-      padding: 16px;
-      background: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%);
+    h1 { font-size: 2.4rem; font-weight: 800; color: #f0f6fc; margin-bottom: 8px; }
+    .date { color: #8b949e; font-size: 14px; }
+    .summary-card {
+      background: linear-gradient(135deg, #161b22, #1c2128);
+      border: 1px solid #30363d;
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 40px;
+    }
+    .summary-card h2 { font-size: 1rem; color: #8b949e; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+    .summary-card p { font-size: 1.05rem; color: #c9d1d9; }
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #f0f6fc;
+      margin: 40px 0 20px;
+      padding-left: 16px;
+      border-left: 4px solid #2ea043;
+    }
+    .en-title { color: #58a6ff; border-left-color: #58a6ff; }
+    .news-item {
+      background: #161b22;
+      border: 1px solid #21262d;
       border-radius: 12px;
-      border-left: 4px solid #9c27b0;
+      padding: 24px;
+      margin-bottom: 16px;
+      transition: border-color 0.2s;
     }
-    .thought-item .question { font-size: 16px; color: #333; line-height: 1.6; font-style: italic; }
-    
-    .try-item {
-      padding: 16px;
-      background: linear-gradient(135deg, #e8f5e9 0%, #e3f2fd 100%);
+    .news-item:hover { border-color: #30363d; }
+    .news-item h3 { font-size: 1.05rem; color: #f0f6fc; margin-bottom: 8px; font-weight: 700; }
+    .news-item p { color: #8b949e; font-size: 0.92rem; margin-bottom: 12px; }
+    .news-item .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-size: 11px;
+      padding: 3px 10px;
       border-radius: 12px;
-      border-left: 4px solid #4caf50;
+      font-weight: 600;
     }
-    .try-item .name { font-size: 16px; font-weight: 600; color: #2e7d32; margin-bottom: 8px; }
-    .try-item .reason { font-size: 14px; color: #555; line-height: 1.5; }
-    .try-item .link-item a {
-      color: #1e88e5;
-      text-decoration: none;
+    .tag-red { background: rgba(248,81,73,0.15); color: #ff7b72; border: 1px solid rgba(248,81,73,0.3); }
+    .tag-blue { background: rgba(56,139,253,0.15); color: #79c0ff; border: 1px solid rgba(56,139,253,0.3); }
+    .tag-green { background: rgba(46,160,67,0.15); color: #56d364; border: 1px solid rgba(46,160,67,0.3); }
+    .tag-yellow { background: rgba(210,153,34,0.15); color: #e3b341; border: 1px solid rgba(210,153,34,0.3); }
+    .tag-purple { background: rgba(163,113,247,0.15); color: #d2a8ff; border: 1px solid rgba(163,113,247,0.3); }
+    .tag-orange { background: rgba(219,157,67,0.15); color: #ffa657; border: 1px solid rgba(219,157,67,0.3); }
+    .tag-pink { background: rgba(255,111,181,0.15); color: #ff9bce; border: 1px solid rgba(255,111,181,0.3); }
+    .news-item.zh h3 { color: #e6edf3; }
+    .source { font-size: 11px; color: #484f58; margin-top: 8px; }
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid #21262d;
+      color: #484f58;
       font-size: 13px;
     }
-    .try-item .link-item a:hover { text-decoration: underline; }
-    
-    .news-category { margin-bottom: 24px; }
-    .news-category-title { font-size: 14px; font-weight: 600; color: #666; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
-    .news-item { padding: 16px; border-bottom: 1px solid #eee; }
-    .news-item:last-child { border-bottom: none; }
-    .news-item .title { font-size: 15px; font-weight: 600; color: #1a1a2e; line-height: 1.4; margin-bottom: 8px; }
-    .news-item .summary { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 10px; padding-left: 12px; border-left: 3px solid #00d2ff; }
-    .news-item .meta { display: flex; align-items: center; gap: 8px; font-size: 12px; flex-wrap: wrap; }
-    .news-item .source { color: #1e88e5; font-weight: 500; }
-    .news-item .date-tag { background: #e8f5e9; color: #2e7d32; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
-    .news-item .link { color: #666; text-decoration: none; }
-    .news-item .link:hover { text-decoration: underline; }
-    
-    .hot-tag {
-      display: inline-block;
-      background: linear-gradient(90deg, #ff6b6b, #ee5a24);
-      color: white;
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-size: 11px;
-      font-weight: 600;
-      margin-left: 8px;
+    footer a { color: #58a6ff; text-decoration: none; }
+    .divider { height: 1px; background: #21262d; margin: 32px 0; }
+    .lang-badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 6px; margin-right: 8px; font-weight: 600; }
+    .lang-en { background: rgba(88,166,255,0.15); color: #58a6ff; }
+    .lang-zh { background: rgba(46,160,67,0.15); color: #56d364; }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.7rem; }
+      .news-item { padding: 18px; }
+      .container { padding: 24px 16px; }
     }
-    .new-tag {
-      display: inline-block;
-      background: linear-gradient(90deg, #00d2ff, #3a7bd5);
-      color: white;
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-size: 11px;
-      font-weight: 600;
-      margin-left: 8px;
-    }
-    
-    .footer { text-align: center; color: rgba(255,255,255,0.6); font-size: 14px; margin-top: 20px; }
-    
-    .zh { display: block; }
-    .en { display: none; }
-    body.show-en .zh { display: none; }
-    body.show-en .en { display: block; }
   </style>
-  <script>
-    function toggleLang(en) {
-      if (en) {
-        document.body.classList.add('show-en');
-        document.querySelectorAll('.lang-btn')[0].classList.remove('active');
-        document.querySelectorAll('.lang-btn')[1].classList.add('active');
-      } else {
-        document.body.classList.remove('show-en');
-        document.querySelectorAll('.lang-btn')[0].classList.add('active');
-        document.querySelectorAll('.lang-btn')[1].classList.remove('active');
-      }
-    }
-  </script>
 </head>
 <body>
   <div class="container">
-    <div class="header">
-      <div class="header-left">
-        <a href="history.html" class="history-btn">📜 查看历史简报</a>
-        <div>
-          <h1>🤖 Daily AI News Digest</h1>
-          <div class="date">2026年3月19日 / March 19, 2026</div>
-        </div>
-      </div>
-      <div class="lang-toggle">
-        <button class="lang-btn active" onclick="toggleLang(false)">中文</button>
-        <button class="lang-btn" onclick="toggleLang(true)">En</button>
-      </div>
+    <header>
+      <div class="badge">🤖 AI News Digest</div>
+      <h1>AI 每日简报</h1>
+      <p class="date">📅 2026年3月20日 星期五 &nbsp;|&nbsp; 🕘 早间版</p>
+    </header>
+
+    <div class="summary-card">
+      <h2>📋 今日概览</h2>
+      <p>小米发布 MiMo-V2 三款大模型强势入局，MiMo-V2-Pro 以万亿参数登顶 OpenRounter 榜单；英伟达 GTC 2026 黄仁勋预言 AI 芯片需求将接近万亿美元；马斯克 xAI 回应落后 7 个月：2026 年底追平，2029 年遥遥领先；Anthropic、OpenAI、谷歌稳居全球 AI 排行榜前三；Meta Llama 4、字节 Seedance 2.0 持续迭代；3·15 晚会曝光 GEO"AI投毒"灰色产业链。</p>
     </div>
-    
-    <div class="section">
-      <div class="section-title thoughts">
-        <span class="zh">💭 今日思考</span>
-        <span class="en">💭 Thoughts and Takeaways</span>
+
+    <!-- English Section -->
+    <h2 class="section-title en-title"><span class="lang-badge lang-en">🇺🇸 EN</span>Top AI Stories — March 20, 2026</h2>
+
+    <div class="news-item">
+      <h3>🔬 Xiaomi Unveils MiMo-V2 Series: 1T Parameters, Ranks #8 Globally</h3>
+      <p>Xiaomi launched three flagship models at midnight March 19 — <strong>MiMo-V2-Pro</strong>, <strong>MiMo-V2-Omni</strong>, and <strong>MiMo-V2-TTS</strong>. The Pro variant features a MoE architecture with 1 trillion total parameters (42B active), 1M token context, and ranks <strong>#8 globally</strong> and <strong>#2 in China</strong> on the Artificial Analysis leaderboard. CEO Lei Jun announced it also topped the OpenRounter daily and weekly charts.</p>
+      <div class="tags">
+        <span class="tag tag-red">Xiaomi</span>
+        <span class="tag tag-blue">LLM</span>
+        <span class="tag tag-green">Ranking</span>
       </div>
-      <div class="thought-item">
-        <div class="question zh">中国AI大模型调用量连续两周超越美国，云服务商纷纷涨价——算力战争正在从"谁能买到更多芯片"转向"谁能把算力卖得更好"。与此同时，马斯克的xAI与Anthropic、OpenAI、谷歌的差距被量化，一场关于"时间窗口"的豪赌正式开启。</div>
-        <div class="question en">China's AI model usage exceeds the US for two consecutive weeks, while cloud providers raise prices — the compute war is shifting from "who buys more chips" to "who sells compute better." Meanwhile, Musk's xAI gap vs Anthropic, OpenAI, and Google is quantified, kicking off a high-stakes gamble on the "time window."</div>
-      </div>
+      <div class="source">Source: Sina Tech · March 20, 2026</div>
     </div>
-    
-    <div class="section">
-      <div class="section-title news">
-        <span class="zh">📰 今日新闻（7天内）</span>
-        <span class="en">📰 Today's News (Within 7 Days)</span>
+
+    <div class="news-item">
+      <h3>💰 NVIDIA GTC 2026: $1T AI Chip Market by 2027?</h3>
+      <p>At NVIDIA GTC 2026 in San Jose, CEO Jensen Huang announced that demand for current Blackwell chips and the next-gen Vera Rubin could approach <strong>$1 trillion</strong> by 2027. Huang also revealed the 1000-day "token king" award and confirmed NVIDIA's $30B investment in OpenAI — possibly the last before its IPO. He noted OpenAI's IPO may make the previously disclosed $100B infrastructure deal unlikely to materialize.</p>
+      <div class="tags">
+        <span class="tag tag-yellow">NVIDIA</span>
+        <span class="tag tag-purple">GTC 2026</span>
+        <span class="tag tag-orange">Investment</span>
       </div>
-      
-      <div class="news-category">
-        <div class="news-category-title">
-          <span class="zh">🔥 焦点热榜</span>
-          <span class="en">🔥 Hot Topics</span>
-        </div>
-        
-        <div class="news-item">
-          <div class="title zh">全球首搭千问大模型！智己LS8即将预售，宣告"专属司机助理"时代到来 <span class="new-tag">NEW</span></div>
-          <div class="title en">World's first Qwen-powered car! IM LS8 presale kicks off <span class="new-tag">NEW</span></div>
-          <div class="summary zh">3月18日，智己汽车发布行业首个超级智能体IMUltraAgent，全球首搭千问大模型，宣告"全域代劳的专属司机助理"时代正式到来。跨时代科技旗舰SUV——智己LS8将于3月26日正式开启预售。《连线》杂志评论："2026年将属于AI定义出行的新时代。"</div>
-          <div class="summary en">IM Motors launched IMUltraAgent on March 18, the world's first mass-produced car powered by Alibaba's Qwen LLM. The flagship SUV LS8 opens presale March 26. Wired commented: "2026 will belong to the era where AI defines mobility."</div>
-          <div class="meta">
-            <span class="date-tag">3月18日</span>
-            <span class="source">同花顺财经</span>
-            <a class="link" href="http://news.10jqka.com.cn/20260318/c675388745.shtml" target="_blank"><span class="zh">原文链接</span><span class="en">Link</span></a>
-          </div>
-        </div>
-
-        <div class="news-item">
-          <div class="title zh">阿里云、百度云宣布涨价：因全球AI算力需求激增，最高涨幅34% <span class="new-tag">NEW</span></div>
-          <div class="title en">Alibaba Cloud & Baidu Cloud raise prices amid surging AI demand, up to 34% <span class="new-tag">NEW</span></div>
-          <div class="summary zh">3月18日，百度智能云宣布对AI算力、存储等产品进行调价。阿里云随后宣布4月18日起，AI算力、存储等产品最高涨价34%，原因是全球AI需求爆发、供应链涨价。云服务商利润空间显著改善，大模型推理成本转移至下游。</div>
-          <div class="summary en">On March 18, Baidu Cloud announced price adjustments for AI compute and storage products. Alibaba Cloud followed with up to 34% price hikes from April 18, citing surging global AI demand and supply chain cost increases.</div>
-          <div class="meta">
-            <span class="date-tag">3月18日</span>
-            <span class="source">东方财富网</span>
-            <a class="link" href="http://finance.eastmoney.com/a/202603193676445430.html" target="_blank"><span class="zh">原文链接</span><span class="en">Link</span></a>
-          </div>
-        </div>
-
-        <div class="news-item">
-          <div class="title zh">黄仁勋：仅英伟达当前Blackwell和下一代Vera Rubin芯片，市场需求或接近1万亿美元</div>
-          <div class="title en">Huang: NVIDIA Blackwell + Vera Rubin chip demand could reach ~$1 trillion</div>
-          <div class="summary zh">在NVIDIA GTC 2026大会上，黄仁勋表示，仅英伟达当前的Blackwell AI芯片以及下一代Vera Rubin AI芯片所对应的市场需求规模，就可能接近1万亿美元。他同时表示，对OpenAI的300亿美元投资"可能是最后一次"，OpenAI预计年底前启动IPO。</div>
-          <div class="summary en">At NVIDIA GTC 2026, Jensen Huang stated that Blackwell and next-gen Vera Rubin chip demand alone could reach approximately $1 trillion. He also noted the $30B investment in OpenAI "may be the last," with OpenAI expected to IPO by year-end.</div>
-          <div class="meta">
-            <span class="date-tag">3月17日</span>
-            <span class="source">新浪财经</span>
-            <a class="link" href="https://finance.sina.com.cn/tech/roll/2026-03-17/doc-inhrhxzk5305792.shtml" target="_blank"><span class="zh">原文链接</span><span class="en">Link</span></a>
-          </div>
-        </div>
-
-        <div class="news-item">
-          <div class="title zh">马斯克回应xAI落后：2026年底追平Anthropic/谷歌/OpenAI，2029年遥遥领先</div>
-          <div class="title en">Musk: xAI will catch up by end of 2026, dominate by 2029</div>
-          <div class="summary zh">预测师彼得·威尔德福德报告显示，Anthropic、谷歌和OpenAI并列AI第一梯队，xAI与Meta落后约7个月，中国企业（月之暗面、DeepSeek、阿里）落后约9个月。马斯克在X平台回应：xAI将在2026年底抹平差距，2029年"遥遥领先所有对手"。</div>
-          <div class="summary en">Analyst Peter Wildford ranked Anthropic, Google, OpenAI as Tier 1; xAI and Meta lag ~7 months; Chinese companies ~9 months. Musk responded: xAI will close the gap by end of 2026 and "dominate all competitors" by 2029.</div>
-          <div class="meta">
-            <span class="date-tag">3月17日</span>
-            <span class="source">IT之家 / 新浪</span>
-            <a class="link" href="https://k.sina.com.cn/article_5952915720_162d2490806703hwyo.html" target="_blank"><span class="zh">原文链接</span><span class="en">Link</span></a>
-          </div>
-        </div>
-
-        <div class="news-item">
-          <div class="title zh">全球AI前20名单（2026年3月）：OpenAI第一，谷歌DeepMind第二，阿里第十</div>
-          <div class="title en">Global AI Top 20 (March 2026): OpenAI #1, Google DeepMind #2, Alibaba #10</div>
-          <div class="summary zh">全球AI公司最新排名：OpenAI第一，谷歌DeepMind第二，Anthropic第三，NVIDIA第四，微软第五，Meta第六，xAI第七，DeepSeek第八，字节跳动第九，阿里巴巴第十。第十一至二十名依次为：Mistral AI、百度、月之暗面、智谱AI、腾讯、MiniMax、Amazon、Tesla、IBM、Cohere。</div>
-          <div class="summary en">Global AI ranking: OpenAI #1, Google DeepMind #2, Anthropic #3, NVIDIA #4, Microsoft #5, Meta #6, xAI #7, DeepSeek #8, ByteDance #9, Alibaba #10. #11-20: Mistral AI, Baidu, Moonshot, Zhipu, Tencent, MiniMax, Amazon, Tesla, IBM, Cohere.</div>
-          <div class="meta">
-            <span class="date-tag">3月18日</span>
-            <span class="source">今日头条</span>
-            <a class="link" href="https://www.toutiao.com/w/1859088068174915/" target="_blank"><span class="zh">原文链接</span><span class="en">Link</span></a>
-          </div>
-        </div>
-      </div>
-      
-      <div class="news-category">
-        <div class="news-category-title">
-          <span class="zh">🌍 国际动态</span>
-          <span class="en">🌍 International</span>
-        </div>
-        
-        <div class="news-item">
-          <div class="title zh">苹果CEO库克现身成都：AI战略持续深化</div>
-          <div class="title en">Apple CEO Tim Cook visits Chengdu: AI strategy deepens</div>
-          <div class="summary zh">苹果CEO蒂姆·库克近期现身成都，引发市场对苹果AI战略在中国落地的猜测。苹果在AI领域持续加码，其Apple Intelligence功能正逐步扩展国际市场。</div>
-          <div class="summary en">Apple CEO Tim Cook recently visited Chengdu, sparking speculation about Apple's AI strategy expansion in China. Apple continues to invest heavily in AI with Apple Intelligence features gradually expanding to international markets.</div>
-          <div class="meta">
-            <span class="date-tag">3月18日</span>
-            <span class="source">东方财富网</span>
-            <a class="link" href="http://finance.eastmoney.com/a/202603193676445430.html" target="_blank"><span class="zh">原文链接</span><span class="en">Link</span></a>
-          </div>
-        </div>
-
-        <div class="news-item">
-          <div class="title zh">中国AI大模型调用量连续两周超美国：周调用量达4.69万亿Token</div>
-          <div class="title en">China AI model usage exceeds US for second consecutive week: 4.69T tokens</div>
-          <div class="summary zh">OpenRouter数据显示，上周（3月9日至15日）中国AI大模型周调用量升至4.69万亿Token，环比上涨11.83%；美国为3.29万亿Token，环比下滑9.33%。中国AI大模型周调用量连续两周超过美国，中美AI应用市场格局正在改变。</div>
-          <div class="summary en">OpenRouter data: China's weekly AI model usage reached 4.69 trillion tokens (up 11.83%) in the week of March 9-15; US usage dropped to 3.29 trillion (down 9.33%). China leads for two consecutive weeks, signaling a shifting AI app market.</div>
-          <div class="meta">
-            <span class="date-tag">3月17日</span>
-            <span class="source">东方财富网</span>
-            <a class="link" href="http://finance.eastmoney.com/a/202603173673601818.html" target="_blank"><span class="zh">原文链接</span><span class="en">Link</span></a>
-          </div>
-        </div>
-
-        <div class="news-item">
-          <div class="title zh">OpenAI发布GPT-5.4 mini与nano：提升代码与多模态效率</div>
-          <div class="title en">OpenAI releases GPT-5.4 mini and nano: improved code and multimodal efficiency</div>
-          <div class="summary zh">OpenAI正式发布两款轻量模型——GPT-5.4 mini与nano，专注于提升代码与多模态处理效率。两款模型面向低延迟、低成本场景，标志着OpenAI在端侧AI市场加大布局。</div>
-          <div class="summary en">OpenAI released two lightweight models — GPT-5.4 mini and nano — focused on code and multimodal efficiency. Aimed at low-latency, low-cost scenarios, signaling OpenAI's push into edge AI markets.</div>
-          <div class="meta">
-            <span class="date-tag">3月14日</span>
-            <span class="source">Alldu</span>
-            <a class="link" href="https://alldu.cn/" target="_blank"><span class="zh">原文链接</span><span class="en">Link</span></a>
-          </div>
-        </div>
-
-        <div class="news-item">
-          <div class="title zh">谷歌推出Gemini 3.1 Flash-Lite：Gemini 3系列性价比最高版本</div>
-          <div class="title en">Google launches Gemini 3.1 Flash-Lite: most cost-effective Gemini 3 model</div>
-          <div class="summary zh">谷歌推出Gemini 3.1 Flash-Lite，这是Gemini 3系列中速度最快、性价比最高的版本，定价为每百万输入令牌0.25美元，每百万输出令牌1.50美元。</div>
-          <div class="summary en">Google launched Gemini 3.1 Flash-Lite, the fastest and most cost-effective Gemini 3 variant, priced at $0.25/million input tokens and $1.50/million output tokens.</div>
-          <div class="meta">
-            <span class="date-tag">3月5日</span>
-            <span class="source">CSDN</span>
-            <a class="link" href="https://blog.csdn.net/qq_26423361/article/details/158649947" target="_blank"><span class="zh">原文链接</span><span class="en">Link</span></a>
-          </div>
-        </div>
-
-        <div class="news-item">
-          <div class="title zh">黄仁勋长文展望AI"五层架构"：传统软件和APP形态或将消失</div>
-          <div class="title en">Huang's AI "5-layer architecture": traditional software and apps may disappear</div>
-          <div class="summary zh">英伟达CEO黄仁勋发表长文，系统阐释AI产业的"五层架构"：自下而上依次为能源、芯片、基础设施、模型和应用。黄仁勋预测，随着AI智能体全面普及，传统的软件和APP形态将逐渐消失。</div>
-          <div class="summary en">NVIDIA CEO Jensen Huang published a long-form essay outlining the AI "5-layer architecture": energy, chips, infrastructure, models, and applications from bottom to top. He predicts traditional software and apps will gradually disappear as AI agents proliferate.</div>
-          <div class="meta">
-            <span class="date-tag">3月11日</span>
-            <span class="source">新浪新闻</span>
-            <a class="link" href="https://news.sina.com.cn/zx/ds/2026-03-11/doc-inhqrmmh5470808.shtml" target="_blank"><span class="zh">原文链接</span><span class="en">Link</span></a>
-          </div>
-        </div>
-      </div>
-      
-      <div class="news-category">
-        <div class="news-category-title">
-          <span class="zh">🇨🇳 国内动态</span>
-          <span class="en">🇨🇳 China</span>
-        </div>
-
-        <div class="news-item">
-          <div class="title zh">京东将建成全球最大具身数据采集中心：两年内积累1000万小时数据</div>
-          <div class="title en">JD.com building world's largest embodied AI data center: 10M hours in 2 years</div>
-          <div class="summary zh">京东将建成全球规模最大、场景最全的具身智能数据采集中心。依托零售、物流、健康、工业、家政等海量真实业务场景，一年内积累500万小时人类真实场景视频数据，两年内突破1000万小时，同时采集机器人本体数据100万小时。</div>
-          <div class="summary en">JD.com will build the world's largest embodied AI data collection center using retail, logistics, health, industrial, and household scenarios. 5M hours in year one, 10M hours in year two, plus 1M hours of robot本体 data — a potential industry game-changer.</div>
-          <div class="meta">
-            <span class="date-tag">3月17日</span>
-            <span class="source">京东黑板报</span>
-            <a class="link" href="http://finance.eastmoney.com/a/202603173673601818.html" target="_blank"><span class="zh">原文链接</span><span class="en">Link</span></a>
-          </div>
-        </div>
-        
-        <div class="news-item">
-          <div class="title zh">荣耀发布MagicAgent：首个MoE大模型，300亿参数超越千亿级商用模型</div>
-          <div class="title en">Honor launches MagicAgent: first MoE LLM, 30B params outperforms 100B+ models</div>
-          <div class="summary zh">荣耀推出MagicAgent——行业首个面向全场景泛化规划的智能体基础模型，也是荣耀首个MoE（混合专家型）大模型。300亿轻量参数规模，在规划能力上跨代际超越GPT-5.2等千亿级商用模型，面向全球开源。</div>
-          <div class="summary en">Honor launched MagicAgent — the industry's first agent foundation model for omniscene planning, and Honor's first MoE (Mixture of Experts) LLM. With 30B parameters, it outperforms GPT-5.2-class 100B+ commercial models in planning — open-sourced globally.</div>
-          <div class="meta">
-            <span class="date-tag">3月5日</span>
-            <span class="source">CSDN</span>
-            <a class="link" href="https://blog.csdn.net/qq_26423361/article/details/158649947" target="_blank"><span class="zh">原文链接</span><span class="en">Link</span></a>
-          </div>
-        </div>
-
-        <div class="news-item">
-          <div class="title zh">阿里开源4款Qwen3.5小尺寸模型：0.8B/2B/4B/9B全系列</div>
-          <div class="title en">Alibaba open-sources 4 Qwen3.5 compact models: 0.8B/2B/4B/9B series</div>
-          <div class="summary zh">阿里千问宣布开源4款Qwen3.5小尺寸模型：Qwen3.5-0.8B、Qwen3.5-2B、Qwen3.5-4B、Qwen3.5-9B，全系列向开发者开放下载与商用，进一步完善开源AI生态。</div>
-          <div class="summary en">Alibaba's Qwen team open-sourced 4 Qwen3.5 compact models: 0.8B, 2B, 4B, and 9B parameter variants, all available for download and commercial use — further enriching the open-source AI ecosystem.</div>
-          <div class="meta">
-            <span class="date-tag">3月5日</span>
-            <span class="source">CSDN</span>
-            <a class="link" href="https://blog.csdn.net/qq_26423361/article/details/158649947" target="_blank"><span class="zh">原文链接</span><span class="en">Link</span></a>
-          </div>
-        </div>
-
-        <div class="news-item">
-          <div class="title zh">阿里CEO吴泳铭表态：Qwen是集团"第一优先级"</div>
-          <div class="title en">Alibaba CEO Wu Yongming: Qwen is group's "top priority"</div>
-          <div class="summary zh">阿里CEO吴泳铭在千问负责人林俊旻卸任后的内部沟通会上明确表态，Qwen是集团第一优先级，其发展是集团整体事务，标志着阿里对AI大模型战略的持续深化。</div>
-          <div class="summary en">Alibaba CEO Wu Yongming stated at an internal meeting following Qwen head Lin Juny's departure that Qwen is the group's top priority and a group-wide strategic matter — signaling deeper commitment to the AI foundation model strategy.</div>
-          <div class="meta">
-            <span class="date-tag">3月5日</span>
-            <span class="source">新浪新闻</span>
-            <a class="link" href="http://news.sina.com.cn/zx/ds/2026-03-05/doc-inhpwrac3418275.shtml" target="_blank"><span class="zh">原文链接</span><span class="en">Link</span></a>
-          </div>
-        </div>
-        
-        <div class="news-item">
-          <div class="title zh">实测4个大模型回答央视315曝光问题：仅一个正确，有AI称"晚会还没办"</div>
-          <div class="title en">Test of 4 AI models on CCTV 3·15 exposures: only one correct; one said gala "hasn't happened yet"</div>
-          <div class="summary zh">2026年央视"3·15"晚会于3月15日晚播出后，记者测试4个主流AI大模型，仅有一个正确回答"曝光了哪些品牌"，其余有的混合往年案例，有的竟回答"晚会目前并未举办"，大模型信息时效性短板暴露。</div>
-          <div class="summary en">After CCTV's 3·15 Gala aired on March 15, testing 4 major AI models on "what brands were exposed" — only one answered correctly; another claimed the gala "hasn't happened yet." The时效性 limitations of LLMs were fully exposed.</div>
-          <div class="meta">
-            <span class="date-tag">3月17日</span>
-            <span class="source">中国宁波网</span>
-            <a class="link" href="http://news.cnnb.com.cn/system/2026/03/17/030754769.shtml" target="_blank"><span class="zh">原文链接</span><span class="en">Link</span></a>
-          </div>
-        </div>
-      </div>
+      <div class="source">Source: Sina AI Hourly Report · March 17–20, 2026</div>
     </div>
-    
-    <div class="footer">
-      每天早上9点自动生成 | 由OpenClaw AI News Digest生成<br>
-      <span style="font-size:12px;opacity:0.7;">*所有新闻均为7天内发布</span>
+
+    <div class="news-item">
+      <h3>🚀 Musk Responds: xAI to Catch Up by End of 2026, Lead by 2029</h3>
+      <p>Responding to analyst Peter Wildford's ranking placing xAI 7 months behind Anthropic, Google, and OpenAI, Elon Musk posted on X (March 14): xAI will close the gap this year and "leave all competitors far behind by 2029." The Wildford report placed Anthropic, Google, and OpenAI tied for #1, with xAI and Meta 7 months back; Chinese firms (DeepSeek, Moonshot, Alibaba) ~9 months behind; Mistral ~18 months behind.</p>
+      <div class="tags">
+        <span class="tag tag-orange">xAI</span>
+        <span class="tag tag-blue">Musk</span>
+        <span class="tag tag-pink">Ranking</span>
+      </div>
+      <div class="source">Source: IT Home · March 17, 2026</div>
     </div>
+
+    <div class="news-item">
+      <h3>🌐 Global AI Top 20 Ranking (March 2026)</h3>
+      <p>The latest global AI landscape ranking places <strong>OpenAI</strong> at #1, followed by <strong>Google DeepMind</strong> (#2), <strong>Anthropic</strong> (#3), <strong>NVIDIA</strong> (#4), <strong>Microsoft</strong> (#5), <strong>Meta</strong> (#6), <strong>xAI</strong> (#7), <strong>DeepSeek</strong> (#8), <strong>ByteDance</strong> (#9), and <strong>Alibaba</strong> (#10). Chinese firms Baidu (#12), Moonshot (#13), Zhipu AI (#14), and MiniMax (#16) also appear in the top 20.</p>
+      <div class="tags">
+        <span class="tag tag-pink">Ranking</span>
+        <span class="tag tag-blue">Industry</span>
+      </div>
+      <div class="source">Source: Toutiao · March 2026</div>
+    </div>
+
+    <div class="news-item">
+      <h3>📹 ByteDance Seedance 2.0: ~1 Yuan/Second Video Generation</h3>
+      <p>ByteDance's Volcano Engine released pricing for the Seedance 2.0 video generation model: <strong>46 yuan per million tokens</strong> — approximately <strong>1 yuan (~14 cents) per second</strong> of generated video (15s clip ≈ 308,880 tokens). The API is currently limited to ByteDance internal use and select partners; public access not yet open.</p>
+      <div class="tags">
+        <span class="tag tag-purple">ByteDance</span>
+        <span class="tag tag-yellow">Video AI</span>
+        <span class="tag tag-blue">Pricing</span>
+      </div>
+      <div class="source">Source: Sina Tech · March 5, 2026</div>
+    </div>
+
+    <div class="news-item">
+      <h3>⚠️ GEO "AI Poisoning" Exposed at 3·15 Gala</h3>
+      <p>China's 3·15 Consumer Rights Gala exposed <strong>GEO (Generative Engine Optimization)</strong> — a gray-market industry where companies flood the internet with fake reviews and fabricated expert endorsements to manipulate AI search results and recommendations. Goldman Sachs estimates the global GEO market at <strong>$24B</strong> in 2026, with China's domestic market exceeding <strong>11.1 billion RMB</strong>. Journalists testing 4 major LLMs found most gave incorrect or hallucinated answers when asked about the 3·15 Gala exposé.</p>
+      <div class="tags">
+        <span class="tag tag-red">Security</span>
+        <span class="tag tag-yellow">GEO</span>
+        <span class="tag tag-blue">Policy</span>
+      </div>
+      <div class="source">Source: 央视 3·15 ·同花顺财经 · March 16–17, 2026</div>
+    </div>
+
+    <div class="news-item">
+      <h3>🤖 Anthropic Claude: "Almost as Proficient as Humans at Computer Use"</h3>
+      <p>Anthropic announced a landmark achievement — its AI agent can operate computers with near-human proficiency, completing complex multi-step tasks that require understanding interfaces, navigating menus, and adapting to unexpected errors. This positions Claude as a strong contender for enterprise automation and computer-use agent applications.</p>
+      <div class="tags">
+        <span class="tag tag-blue">Anthropic</span>
+        <span class="tag tag-green">Agent</span>
+        <span class="tag tag-purple">Breakthrough</span>
+      </div>
+      <div class="source">Source: NetEase · October 2025 (recurring coverage)</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Chinese Section -->
+    <h2 class="section-title"><span class="lang-badge lang-zh">🇨🇳 中文</span>今日 AI 要闻 — 2026年3月20日</h2>
+
+    <div class="news-item zh">
+      <h3>🔬 小米深夜三连发：MiMo-V2系列大模型强势登场</h3>
+      <p><strong>3月19日凌晨</strong>，小米一口气发布三款自研大模型——<strong>MiMo-V2-Pro</strong>、<strong>MiMo-V2-Omni</strong>、<strong>MiMo-V2-TTS</strong>，覆盖文本推理、全模态理解、语音合成完整能力栈。MiMo-V2-Pro 采用万亿参数 MoE 架构（激活42B参数），支持100万 token 超长上下文，在 Artificial Analysis 榜单位列<strong>全球第八、国内第二</strong>。雷军宣布 MiMo-V2-Pro 已登顶 OpenRounter 日榜和周榜双第一。同时小米宣布 AI 领域投资已超<strong>160亿元</strong>。</p>
+      <div class="tags">
+        <span class="tag tag-red">小米</span>
+        <span class="tag tag-blue">大模型</span>
+        <span class="tag tag-green">万亿参数</span>
+      </div>
+      <div class="source">来源：新浪科技 · 2026年3月20日</div>
+    </div>
+
+    <div class="news-item zh">
+      <h3>💰 英伟达 GTC 2026：AI 芯片需求 2027 年或接近万亿美元</h3>
+      <p>英伟达 CEO 黄仁勋在美国圣何塞 NVIDIA GTC 2026 大会上表示，当前 Blackwell 芯片及下一代 Vera Rubin AI 芯片的市场需求规模<strong>2027年可能接近1万亿美元</strong>。黄仁勋举起"token之王"奖牌，强调英伟达是"加速计算公司"而非 GPU 公司。同时证实对 OpenAI 的<strong>300亿美元投资</strong>可能是上市前最后一次注资，并预计 OpenAI 年底前启动 IPO。</p>
+      <div class="tags">
+        <span class="tag tag-yellow">英伟达</span>
+        <span class="tag tag-purple">GTC 2026</span>
+        <span class="tag tag-orange">投资</span>
+      </div>
+      <div class="source">来源：新浪 AI 热点小时报 · 2026年3月17日</div>
+    </div>
+
+    <div class="news-item zh">
+      <h3>🚀 马斯克回应 xAI 落后7个月：2026年底追平，2029年遥遥领先</h3>
+      <p>预测师彼得·威尔德福德发布 AI 厂商排名，将 Anthropic、谷歌、OpenAI 并列第一，xAI 与 Meta 落后约7个月，中国厂商（月之暗面、DeepSeek、阿里）落后9个月，法国 Mistral 落后约一年半。马斯克随即在 X 平台回应，称 xAI 将于<strong>2026年底迎头赶上</strong>，并放话 <strong>2029年遥遥领先所有对手</strong>。</p>
+      <div class="tags">
+        <span class="tag tag-orange">xAI</span>
+        <span class="tag tag-blue">马斯克</span>
+        <span class="tag tag-pink">行业排名</span>
+      </div>
+      <div class="source">来源：IT之家 · 2026年3月17日</div>
+    </div>
+
+    <div class="news-item zh">
+      <h3>🏆 全球 AI 前20名榜单（2026年3月）：阿里第十</h3>
+      <p>最新全球 AI 格局排名：①OpenAI ②Google DeepMind ③Anthropic ④NVIDIA ⑤Microsoft ⑥Meta ⑦xAI ⑧DeepSeek ⑨字节跳动 ⑩阿里巴巴。11–20名依次为：Mistral AI、百度、月之暗面、智谱AI、腾讯、MiniMax、Amazon、Tesla、IBM、Cohere。</p>
+      <div class="tags">
+        <span class="tag tag-pink">排名</span>
+        <span class="tag tag-blue">行业</span>
+      </div>
+      <div class="source">来源：今日头条 · 2026年3月</div>
+    </div>
+
+    <div class="news-item zh">
+      <h3>🤖 阿里吴泳铭：Qwen 是集团第一优先级</h3>
+      <p>阿里 CEO 吴泳铭在千问负责人林俊旻卸任后的内部沟通会上明确表态：<strong>Qwen 是集团第一优先级</strong>，其发展是集团整体事务。此前林俊旻宣布卸任，由新负责人接棒，Qwen 系列开源模型持续迭代。</p>
+      <div class="tags">
+        <span class="tag tag-blue">阿里</span>
+        <span class="tag tag-green">Qwen</span>
+        <span class="tag tag-purple">战略</span>
+      </div>
+      <div class="source">来源：新浪科技 · 2026年3月5日</div>
+    </div>
+
+    <div class="news-item zh">
+      <h3>⚠️ 央视3·15晚会曝光 GEO"AI投毒"灰色产业链</h3>
+      <p>2026年央视"3·15"晚会曝光 <strong>GEO（生成式引擎优化）</strong>黑色产业链：部分公司批量制造虚假测评信息、伪造权威推荐内容，"投喂"给大模型，让 AI 给出"定制推荐"。国信证券预测，2026年全球 GEO 市场规模将达<strong>240亿美元</strong>，国内市场突破<strong>111亿元</strong>。记者实测4个大模型询问"3·15曝光品牌"，有模型竟回答"今年3·15晚会还没举行"。</p>
+      <div class="tags">
+        <span class="tag tag-red">安全</span>
+        <span class="tag tag-yellow">GEO</span>
+        <span class="tag tag-blue">监管</span>
+      </div>
+      <div class="source">来源：央视3·15晚会 · 2026年3月15日</div>
+    </div>
+
+    <div class="news-item zh">
+      <h3>🍵 大模型"深耕"垂直行业：茶业、农业、医疗加速落地</h3>
+      <p>安徽农业大学发布"陆羽茶业大模型"，以茶树基因组、茶叶化合物库等三大数据库为内核，比通用大模型更懂"茶"。西南最大菌包生产中心引入 AI 优化食用菌育种，AI 控制机器人制作菌包、调节生产环境，推动农业智能化。</p>
+      <div class="tags">
+        <span class="tag tag-green">垂直大模型</span>
+        <span class="tag tag-purple">农业AI</span>
+        <span class="tag tag-blue">落地</span>
+      </div>
+      <div class="source">来源：新华社 · 2026年2月–3月</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <footer>
+      <p>Generated by AI News Digest Agent &nbsp;|&nbsp; {{date}}</p>
+      <p style="margin-top: 8px;">
+        <a href="https://jingjingshen-star.github.io/ai-news-digest/">🌐 View Online</a>
+        &nbsp;|&nbsp;
+        <a href="https://github.com/jingjingshen-star/ai-news-digest">📂 GitHub Repo</a>
+      </p>
+    </footer>
   </div>
 </body>
 </html>
