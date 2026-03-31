@@ -1,290 +1,240 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily AI News Digest</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Noto+Serif+SC:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600&display=swap');
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --primary: #0D2137;
-            --secondary: #4A90D9;
-            --accent: #E8F4FD;
-            --text: #1A2A3A;
-            --light-text: #7A8FA6;
-            --bg: #F4F8FC;
-            --border: #D6E4F0;
-            --tag-bg: rgba(74, 144, 217, 0.1);
-        }
-        body {
-            font-family: 'Noto Serif SC', 'Playfair Display', serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-            font-size: 10pt;
-            min-height: 100vh;
-            position: relative;
-        }
-        .bg-pattern { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.15; overflow: hidden; }
-        .bg-icon { position: absolute; width: 280px; height: 280px; object-fit: contain; }
-        .bg-icon { position: absolute; width: 280px; height: 280px; opacity: 0.18; }
-        .corner-decoration { position: fixed; width: 30px; height: 30px; border: 1px solid var(--border); z-index: 2; pointer-events: none; }
-        .corner-tl { top: 25px; left: 25px; border-right: none; border-bottom: none; }
-        .corner-tr { top: 25px; right: 25px; border-left: none; border-bottom: none; }
-        .corner-bl { bottom: 25px; left: 25px; border-right: none; border-top: none; }
-        .corner-br { bottom: 25px; right: 25px; border-left: none; border-top: none; }
-        .container { max-width: 800px; margin: 0 auto; padding: 40px 30px; position: relative; z-index: 1; }
-        .top-accent { height: 2px; background: linear-gradient(90deg, transparent 0%, var(--secondary) 30%, var(--secondary) 70%, transparent 100%); margin-bottom: 30px; }
-        .header { text-align: center; padding-bottom: 25px; border-bottom: 1px solid var(--border); margin-bottom: 30px; }
-        .lang-toggle { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
-        .lang-btn { padding: 6px 20px; border: 1px solid var(--secondary); border-radius: 20px; background: transparent; color: var(--secondary); cursor: pointer; font-family: 'Cormorant Garamond', serif; font-size: 10pt; letter-spacing: 2px; transition: all 0.3s; }
-        .lang-btn:hover, .lang-btn.active-lang { background: var(--secondary); color: #fff; }
-        .date-line { font-family: 'Cormorant Garamond', serif; font-size: 10pt; color: var(--light-text); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 15px; }
-        .main-title { font-family: 'Playfair Display', serif; font-size: 32pt; font-weight: 500; color: var(--primary); letter-spacing: 2px; margin-bottom: 10px; }
-        .subtitle { font-family: 'Cormorant Garamond', serif; font-size: 11pt; color: var(--secondary); letter-spacing: 5px; text-transform: uppercase; font-weight: 400; }
-        .divider { display: flex; align-items: center; justify-content: center; margin: 25px 0; }
-        .divider-line { width: 80px; height: 1px; background: var(--secondary); }
-        .divider-dot { width: 6px; height: 6px; background: var(--secondary); border-radius: 50%; margin: 0 12px; }
-        .insight-section { background: linear-gradient(135deg, var(--accent) 0%, #FFFFFF 100%); border-left: 4px solid var(--secondary); padding: 22px 28px; margin-bottom: 35px; position: relative; border-radius: 0 8px 8px 0; box-shadow: 0 2px 8px rgba(13, 33, 55, 0.04); }
-        .insight-section::before { content: ''; position: absolute; top: 0; right: 0; width: 60px; height: 60px; background: linear-gradient(135deg, transparent 50%, rgba(74, 144, 217, 0.08) 50%); border-radius: 0 8px 0 0; }
-        .insight-header { display: flex; align-items: center; margin-bottom: 14px; }
-        .insight-title { font-size: 13pt; font-weight: 600; color: var(--primary); letter-spacing: 1px; }
-        .insight-content { font-size: 10.5pt; color: var(--text); line-height: 2; text-align: justify; }
-        .section-header { display: flex; align-items: center; margin-bottom: 22px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-        .section-title { font-size: 14pt; font-weight: 600; color: var(--primary); letter-spacing: 1px; }
-        .section-meta { margin-left: auto; font-family: 'Cormorant Garamond', serif; font-size: 9.5pt; color: var(--light-text); font-style: italic; }
-        .news-list { margin-bottom: 30px; }
-        .news-item { display: flex; padding: 18px 0; border-bottom: 1px solid var(--border); position: relative; align-items: flex-start; transition: all 0.3s ease; }
-        .news-item:hover { background: rgba(232, 244, 253, 0.5); margin: 0 -15px; padding-left: 15px; padding-right: 15px; border-radius: 6px; }
-        .news-item:last-child { border-bottom: none; }
-        .news-bullet { width: 32px; height: 32px; min-width: 32px; margin-right: 16px; margin-top: 2px; opacity: 0.7; transition: opacity 0.3s; }
-        .news-item:hover .news-bullet { opacity: 1; }
-        .news-content { flex: 1; }
-        .news-category { display: inline-block; font-family: 'Cormorant Garamond', serif; font-size: 8.5pt; color: var(--secondary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; padding: 3px 10px; background: var(--tag-bg); border-radius: 3px; font-weight: 600; }
-        .news-title { font-size: 11pt; font-weight: 500; color: var(--text); margin-bottom: 6px; line-height: 1.6; font-family: 'Noto Serif SC', serif; }
-        .news-title a { color: var(--text); text-decoration: none; transition: color 0.3s; }
-        .news-title a:hover { color: var(--primary); }
-        .news-meta { display: flex; align-items: center; font-family: 'Cormorant Garamond', serif; font-size: 9pt; color: var(--light-text); flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
-        .news-meta .source { color: var(--secondary); font-weight: 500; }
-        .news-meta .date-tag { color: var(--light-text); }
-        .news-meta .verify-tag { color: #4caf50; font-weight: 700; }
-        .news-summary { font-size: 9.5pt; color: var(--light-text); line-height: 1.7; margin-bottom: 4px; font-family: 'Noto Serif SC', serif; }
-        .news-insight { font-size: 9.5pt; color: var(--text); line-height: 1.8; background: rgba(232, 244, 253, 0.5); padding: 8px 12px; border-radius: 6px; border-left: 2px solid var(--secondary); font-family: 'Noto Serif SC', serif; }
-        .footer { margin-top: 45px; padding-top: 25px; border-top: 1px solid var(--border); text-align: center; }
-        .footer-divider { display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
-        .footer-line { width: 100px; height: 1px; background: linear-gradient(90deg, transparent, var(--secondary), transparent); }
-        .footer-text { font-family: 'Cormorant Garamond', serif; font-size: 9pt; color: var(--light-text); letter-spacing: 2px; }
-        .footer-note { font-size: 8.5pt; color: #AAAAAA; margin-top: 10px; }
-        .page-number { position: fixed; bottom: 20px; right: 30px; font-family: 'Cormorant Garamond', serif; font-size: 10pt; color: var(--light-text); z-index: 2; }
-        .lang-en { display: none; }
-        body.show-en .lang-cn { display: none; }
-        body.show-en .lang-en { display: block; }
-        @media (max-width: 768px) { .container { padding: 30px 20px; } .main-title { font-size: 24pt; } .news-bullet { width: 24px; height: 24px; } }
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Daily AI News</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Noto+Serif+SC:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#0D2137;--secondary:#4A90D9;--accent:#E8F4FD;--text:#1A2A3A;--light-text:#7A8FA6;--bg:#F4F8FC;--border:#D6E4F0;--tag-bg:rgba(74,144,217,0.1)}
+body{font-family:'Noto Serif SC','Playfair Display',serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:10pt;min-height:100vh;position:relative}
+.bg-pattern{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.15;overflow:hidden}
+.bg-icon{position:absolute;width:280px;height:280px;opacity:0.18;object-fit:contain}
+.corner-decoration{position:fixed;width:28px;height:28px;border:1px solid var(--border);z-index:2;pointer-events:none}
+.corner-tl{top:20px;left:20px;border-right:none;border-bottom:none}
+.corner-tr{top:20px;right:20px;border-left:none;border-bottom:none}
+.corner-bl{bottom:20px;left:20px;border-right:none;border-top:none}
+.corner-br{bottom:20px;right:20px;border-left:none;border-top:none}
+.container{max-width:800px;margin:0 auto;padding:40px 30px;position:relative;z-index:1}
+.top-accent{height:2px;background:linear-gradient(90deg,transparent 0%,var(--secondary) 30%,var(--secondary) 70%,transparent 100%);margin-bottom:30px}
+.header{text-align:center;padding-bottom:25px;border-bottom:1px solid var(--border);margin-bottom:30px}
+.lang-toggle{display:flex;justify-content:center;gap:10px;margin-bottom:20px}
+.lang-btn{padding:6px 20px;border:1px solid var(--secondary);border-radius:20px;background:transparent;color:var(--secondary);cursor:pointer;font-family:'Cormorant Garamond',serif;font-size:10pt;letter-spacing:2px;transition:all .3s}
+.lang-btn:hover,.lang-btn.active-lang{background:var(--secondary);color:#fff}
+.date-line{font-family:'Cormorant Garamond',serif;font-size:10pt;color:var(--light-text);letter-spacing:4px;text-transform:uppercase;margin-bottom:15px}
+.main-title{font-family:'Playfair Display',serif;font-size:32pt;font-weight:500;color:var(--primary);letter-spacing:2px;margin-bottom:10px}
+.subtitle{font-family:'Cormorant Garamond',serif;font-size:11pt;color:var(--secondary);letter-spacing:5px;text-transform:uppercase;font-weight:400}
+.divider{display:flex;align-items:center;justify-content:center;margin:25px 0}
+.divider-line{width:80px;height:1px;background:var(--secondary)}
+.divider-dot{width:6px;height:6px;background:var(--secondary);border-radius:50%;margin:0 12px}
+.insight-section{background:linear-gradient(135deg,var(--accent) 0%,#FFF 100%);border-left:4px solid var(--secondary);padding:22px 28px;margin-bottom:35px;border-radius:0 8px 8px 0;box-shadow:0 2px 8px rgba(13,33,55,.04)}
+.insight-header{display:flex;align-items:center;margin-bottom:14px}
+.insight-title{font-size:13pt;font-weight:600;color:var(--primary);letter-spacing:1px}
+.insight-content{font-size:10.5pt;color:var(--text);line-height:2;text-align:justify}
+.section-header{display:flex;align-items:center;margin-bottom:22px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.section-title{font-size:14pt;font-weight:600;color:var(--primary);letter-spacing:1px}
+.section-meta{margin-left:auto;font-family:'Cormorant Garamond',serif;font-size:9.5pt;color:var(--light-text);font-style:italic}
+.news-item{display:flex;padding:18px 0;border-bottom:1px solid var(--border);position:relative;align-items:flex-start;transition:all .3s ease}
+.news-item:hover{background:rgba(232,244,253,.5);margin:0 -15px;padding-left:15px;padding-right:15px;border-radius:6px}
+.news-item:last-child{border-bottom:none}
+.news-bullet{width:32px;height:32px;min-width:32px;margin-right:16px;margin-top:2px;opacity:.7;transition:opacity .3s;object-fit:contain}
+.news-item:hover .news-bullet{opacity:1}
+.news-content{flex:1}
+.news-category{display:inline-block;font-family:'Cormorant Garamond',serif;font-size:8.5pt;color:var(--secondary);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;padding:3px 10px;background:var(--tag-bg);border-radius:3px;font-weight:600}
+.news-title{font-size:11pt;font-weight:500;color:var(--text);margin-bottom:6px;line-height:1.6;font-family:'Noto Serif SC',serif}
+.news-title a{color:var(--text);text-decoration:none;transition:color .3s}
+.news-title a:hover{color:var(--primary)}
+.news-meta{display:flex;align-items:center;font-family:'Cormorant Garamond',serif;font-size:9pt;color:var(--light-text);flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.news-meta .source{color:var(--secondary);font-weight:500}
+.news-meta .verify-tag{color:#4caf50;font-weight:700}
+.news-summary{font-size:9.5pt;color:var(--light-text);line-height:1.7;margin-bottom:4px;font-family:'Noto Serif SC',serif}
+.news-insight{font-size:9.5pt;color:var(--text);line-height:1.8;background:rgba(232,244,253,.5);padding:8px 12px;border-radius:6px;border-left:2px solid var(--secondary);font-family:'Noto Serif SC',serif}
+.footer{margin-top:45px;padding-top:25px;border-top:1px solid var(--border);text-align:center}
+.footer-divider{display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.footer-line{width:100px;height:1px;background:linear-gradient(90deg,transparent,var(--secondary),transparent)}
+.footer-text{font-family:'Cormorant Garamond',serif;font-size:9pt;color:var(--light-text);letter-spacing:2px}
+.footer-note{font-size:8.5pt;color:#AAA;margin-top:10px}
+.page-number{position:fixed;bottom:20px;right:30px;font-family:'Cormorant Garamond',serif;font-size:10pt;color:var(--light-text);z-index:2}
+.lang-en{display:none}
+body.show-en .lang-cn{display:none}
+body.show-en .lang-en{display:block}
+@media(max-width:768px){.container{padding:30px 20px}.main-title{font-size:24pt}.news-bullet{width:24px;height:24px}}
+</style></head><body>
+<div class="bg-pattern">
+<img src="ai_icon_brain.png" class="bg-icon" style="top:5%;left:2%">
+<img src="ai_icon_chip.png" class="bg-icon" style="top:25%;right:3%">
+<img src="ai_icon_robot.png" class="bg-icon" style="top:50%;left:60%">
+<img src="ai_icon_chart.png" class="bg-icon" style="top:70%;left:10%">
+<img src="ai_icon_terminal.png" class="bg-icon" style="top:85%;right:15%">
+</div>
+<div class="corner-decoration corner-tl"></div>
+<div class="corner-decoration corner-tr"></div>
+<div class="corner-decoration corner-bl"></div>
+<div class="corner-decoration corner-br"></div>
+<div class="container">
+<div class="top-accent"></div>
+<header class="header">
+<div class="lang-toggle">
+<button class="lang-btn active-lang" onclick="toggleLang(false)">中文</button>
+<button class="lang-btn" onclick="toggleLang(true)">En</button>
+</div>
+<div class="date-line lang-cn">2026年3月31日 · Tuesday</div>
+<div class="date-line lang-en">March 31, 2026 · Tuesday</div>
+<h1 class="main-title">Daily AI News</h1>
+<div class="subtitle">Intelligence Report</div>
+<div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
+</header>
+<section class="insight-section">
+<div class="insight-header"><span class="insight-title lang-cn">今日洞察</span><span class="insight-title lang-en">Today Insight</span></div>
+<p class="insight-content lang-cn">AI行业能来多事之秋：OpenAI承认Sora每天烋掉百万美元却用户腰斩，最终壯士斢腐关停。Anthropic Claude Mythos泄密文档曝光，性能号章史上最强；GPT-5.4百万Token上下文窗口即将落地。国内方面，阿里Qwen3.5-Omni以十分之一价格函掌“Gemini-3.1 Pro，Ai2美国开源最后旗品倒下——技术竞赛、商业博弈与监管冲突三条主线正在加速合流。</p>
+<p class="insight-content lang-en">A turbulent week: OpenAI shuts down Sora burning $1M/day with halved users; Anthropic leaked Claude Mythos promises the most powerful model ever; GPT-5.4 million-token context incoming. Domestically, Alibaba Qwen3.5-Omni beats Gemini-3.1 Pro at 1/10th price; Ai2, the last US open-source banner, falls. Technology competition, business strategy and regulatory conflict converging at speed.</p>
+</section>
 
-        .corner-decoration { position: fixed; width: 28px; height: 28px; border: 1px solid var(--border); z-index: 2; pointer-events: none; }
-        .corner-tl { top: 20px; left: 20px; border-right: none; border-bottom: none; }
-        .corner-tr { top: 20px; right: 20px; border-left: none; border-bottom: none; }
-        .corner-bl { bottom: 20px; left: 20px; border-right: none; border-top: none; }
-        .corner-br { bottom: 20px; right: 20px; border-left: none; border-top: none; }
-    </style>
-</head>
-<body>
-    <div class="bg-pattern"><img src="ai_icon_brain.png" class="bg-icon" style="top:5%;left:2%"><img src="ai_icon_chip.png" class="bg-icon" style="top:25%;right:3%"><img src="ai_icon_robot.png" class="bg-icon" style="top:50%;left:60%"><img src="ai_icon_chart.png" class="bg-icon" style="top:70%;left:10%"><img src="ai_icon_terminal.png" class="bg-icon" style="top:85%;right:15%"></div>
-    <div class="corner-decoration corner-tl"></div>
-    <div class="corner-decoration corner-tr"></div>
-    <div class="corner-decoration corner-bl"></div>
-    <div class="corner-decoration corner-br"></div>
+<section class="news-section">
+<div class="section-header">
+<span class="section-title lang-cn">国际动态</span><span class="section-title lang-en">International</span>
+<span class="section-meta lang-cn">5则 · 4个信源</span><span class="section-meta lang-en">5 articles · 4 sources</span>
+</div>
+<div class="news-list">
+<div class="news-item">
+<img src="ai_icon_chip.png" class="news-bullet">
+<div class="news-content">
+<span class="news-category"><span class="lang-cn">行业格局</span><span class="lang-en">Industry</span></span>
+<div class="news-title"><a href="https://the-decoder.com/openais-sora-burned-a-million-dollars-a-day-while-losing-half-its-users-in-record-time/" target="_blank" class="lang-cn">OpenAI正式宣布关停Sora：每天烧掉100万美元，用户量腰斩后无力回天</a><a href="https://the-decoder.com/openais-sora-burned-a-million-dollars-a-day-while-losing-half-its-users-in-record-time/" target="_blank" class="lang-en">OpenAI Shuts Down Sora: Burning $1M/Day, User Count Halved — App Dies in April, API in September</a></div>
+<div class="news-meta"><span class="source">The Decoder</span><span class="date-tag">· 3月30日</span><span class="verify-tag">✓</span></div>
+<p class="news-summary lang-cn"><strong>要点：</strong>Sora巅峰期约100万用户，随即跌至50万且从未恢复；每天运营成本约100万美元；OpenAI将算力重新分配给编程、企业和Agent产品；Sora应用将于4月关停，API于9月跟进。</p>
+<p class="news-summary lang-en"><strong>Key Points:</strong> Sora peaked at ~1M users, then dropped to 500K and never recovered; burning ~$1M/day; OpenAI redirecting compute to coding, enterprise and Agent products; Sora app shuts down April, API follows September.</p>
+<p class="news-insight lang-cn"><strong>洞察：</strong>Sora的失败不是技术失败，而是产品市场契合度的失败。在Runway等竞品冲击下，高成本与低留存暴露了OpenAI在消费者产品上的短板。这次关停标志着AI视频生成从概念验证进入商业生存的新阶段。</p>
+<p class="news-insight lang-en"><strong>Insight:</strong> Sora failure was not technological but product-market fit. Against Runway, high costs and low retention exposed OpenAI weakness in consumer products. The shutdown signals AI video generation has entered a new commercial survival phase beyond proof-of-concept.</p>
+</div>
+</div>
+<div class="news-item">
+<img src="ai_icon_brain.png" class="news-bullet">
+<div class="news-content">
+<span class="news-category"><span class="lang-cn">技术突破</span><span class="lang-en">Tech Breakthrough</span></span>
+<div class="news-title"><a href="https://the-decoder.com/anthropic-leak-reveals-new-model-claude-mythos-with-dramatically-higher-scores-on-tests-than-any-previous-model/" target="_blank" class="lang-cn">Anthropic内部文档泄密：Claude Mythos曝光，号称史上最大跨越</a><a href="https://the-decoder.com/anthropic-leak-reveals-new-model-claude-mythos-with-dramatically-higher-scores-on-tests-than-any-previous-model/" target="_blank" class="lang-en">Anthropic Leak Reveals Claude Mythos: Internal Docs Promise Biggest Leap Ever in AI History</a></div>
+<div class="news-meta"><span class="source">The Decoder</span><span class="date-tag">· 3月27日</span><span class="verify-tag">✓</span></div>
+<p class="news-summary lang-cn"><strong>要点：</strong>Anthropic内容管理系统配置错误导致约3000份内部文档外泄；新模型代号Claude Mythos，被称为有史以来最强大的模型；在编程、学术推理和网络安全基准测试中大幅超越Claude Opus 4.6。</p>
+<p class="news-summary lang-en"><strong>Key Points:</strong> Anthropic CMS misconfiguration exposed ~3,000 internal documents; new model codenamed Claude Mythos described as most powerful ever built; dramatically outperforms Opus 4.6 on coding, academic reasoning and cybersecurity benchmarks.</p>
+<p class="news-insight lang-cn"><strong>洞察：</strong>这次泄密或许是Anthropic有意为之的软发布——在正式发布前测试市场反应。Claude Mythos若如期推出，将重新定义大模型竞争格局，但其天价服务成本意味着只有大型企业客户才能率先使用。</p>
+<p class="news-insight lang-en"><strong>Insight:</strong> The leak may have been a deliberate soft launch to gauge market response. If Claude Mythos launches as described, it will redefine the LLM competitive landscape — but its extremely expensive serving cost means only large enterprise clients will access it first.</p>
+</div>
+</div>
+<div class="news-item">
+<img src="ai_icon_chart.png" class="news-bullet">
+<div class="news-content">
+<span class="news-category"><span class="lang-cn">企业战略</span><span class="lang-en">Corporate Strategy</span></span>
+<div class="news-title"><a href="https://the-decoder.com/microsoft-rolls-out-copilot-cowork-more-broadly-and-lets-ai-models-check-each-others-work/" target="_blank" class="lang-cn">Microsoft扩大Copilot Cowork：推出模型互评功能，AI审查AI</a><a href="https://the-decoder.com/microsoft-rolls-out-copilot-cowork-more-broadly-and-lets-ai-models-check-each-others-work/" target="_blank" class="lang-en">Microsoft Expands Copilot Cowork: AI Models Now Review Each Other Work — Model Council Launches</a></div>
+<div class="news-meta"><span class="source">The Decoder</span><span class="date-tag">· 3月30日</span><span class="verify-tag">✓</span></div>
+<p class="news-summary lang-cn"><strong>要点：</strong>Microsoft推出Model Council功能，用户可横向对比不同AI模型的回答；Researcher工具新增Critique模式，一个AI写草稿、另一个AI审查；整合Anthropic和OpenAI模型，号称在深度研究任务上超越Perplexity 7个百分点。</p>
+<p class="news-summary lang-en"><strong>Key Points:</strong> Microsoft launches Model Council comparing AI answers side-by-side; Researcher gets Critique mode where one AI writes drafts and another reviews; pulls from Anthropic and OpenAI, outperforming Perplexity by 7 points on deep research.</p>
+<p class="news-insight lang-cn"><strong>洞察：</strong>双AI评审机制揭示了一个趋势：当单一模型无法保证质量时，AI批AI成为提升可靠性的新路径。这也意味着Anthropic和OpenAI在企业市场的竞争正在Microsoft平台上以另一种形式持续。</p>
+<p class="news-insight lang-en"><strong>Insight:</strong> The dual-AI review reveals a new reliability path when single models cannot guarantee quality. It also means the Anthropic vs OpenAI enterprise competition is continuing in a new form on Microsoft platform.</p>
+</div>
+</div>
+<div class="news-item">
+<img src="ai_icon_robot.png" class="news-bullet">
+<div class="news-content">
+<span class="news-category"><span class="lang-cn">行业格局</span><span class="lang-en">Industry</span></span>
+<div class="news-title"><a href="https://techcrunch.com/2026/03/09/openai-and-google-employees-rush-to-anthropics-defense-in-dod-lawsuit/" target="_blank" class="lang-cn">Anthropic起诉美国国防部，OpenAI/Google员工联名声援</a><a href="https://techcrunch.com/2026/03/09/openai-and-google-employees-rush-to-anthropics-defense-in-dod-lawsuit/" target="_blank" class="lang-en">Anthropic Sues DOD Over Military Contractor Status; OpenAI & Google Employees File Amicus Brief in Support</a></div>
+<div class="news-meta"><span class="source">TechCrunch</span><span class="date-tag">· 3月9日</span><span class="verify-tag">✓</span></div>
+<p class="news-summary lang-cn"><strong>要点：</strong>美国国防部将Anthropic认定为军事承包商，威胁其非军事用途AI的商业模式；Anthropic正式起诉国防部；超过30名OpenAI和Google DeepMind员工签署请愿书公开支持Anthropic。</p>
+<p class="news-summary lang-en"><strong>Key Points:</strong> The US DOD labeled Anthropic a military contractor, threatening its non-military AI business model; Anthropic filed suit; 30+ OpenAI and Google DeepMind employees signed petitions supporting Anthropic.</p>
+<p class="news-insight lang-cn"><strong>洞察：</strong>这是AI行业首次出现跨公司员工联合支持同一立场的标志性事件。Anthropic坚持AI安全优先的立场正在获得越来越多科技从业者的认同，但也意味着它与政府机构的博弈已进入实质性阶段。</p>
+<p class="news-insight lang-en"><strong>Insight:</strong> This is a landmark event where cross-company employees united for the same cause. Anthropic AI safety first stance is gaining认同 among tech workers, but it also means its showdown with government agencies has entered a substantive stage.</p>
+</div>
+</div>
+<div class="news-item">
+<img src="ai_icon_terminal.png" class="news-bullet">
+<div class="news-content">
+<span class="news-category"><span class="lang-cn">技术突破</span><span class="lang-en">Tech Breakthrough</span></span>
+<div class="news-title"><a href="https://the-decoder.com/gpt-5-4-reportedly-brings-a-million-token-context-window-and-an-extreme-reasoning-mode/" target="_blank" class="lang-cn">GPT-5.4传闻曝光：支持百万Token上下文窗口加极限推理模式</a><a href="https://the-decoder.com/gpt-5-4-reportedly-brings-a-million-token-context-window-and-an-extreme-reasoning-mode/" target="_blank" class="lang-en">GPT-5.4 Reportedly Adds Million-Token Context Window and Extreme Reasoning Mode</a></div>
+<div class="news-meta"><span class="source">The Decoder</span><span class="date-tag">· 3月27日</span><span class="verify-tag">✓</span></div>
+<p class="news-summary lang-cn"><strong>要点：</strong>OpenAI即将推出GPT-5.4，据报引入100万Token上下文窗口和极限推理模式；Claude Mythos泄密文档同时透露OpenAI正在准备代号Spud的新模型，已完成预训练。</p>
+<p class="news-summary lang-en"><strong>Key Points:</strong> OpenAI upcoming GPT-5.4 reportedly introduces 1-million-token context and extreme reasoning mode; Claude Mythos leak also revealed OpenAI preparing codenamed Spud, pretraining already complete.</p>
+<p class="news-insight lang-cn"><strong>洞察：</strong>百万Token上下文意味着AI可以一次性处理整本书籍、全部代码库或数百份长文档。这是从助手向专业工具转变的核心支撑，也是Agent时代基础设施竞争白热化的标志。</p>
+<p class="news-insight lang-en"><strong>Insight:</strong> A million-token context means AI can process entire books, full codebases or hundreds of documents in one pass — the core support for the shift from assistant to professional tool, and a marker of infrastructure competition heating up for the Agent era.</p>
+</div>
+</div>
+</div>
+</section>
 
-    <div class="container">
-        <div class="top-accent"></div>
-        <header class="header">
-            <div class="lang-toggle">
-                <button class="lang-btn active-lang" onclick="toggleLang(false)">中文</button>
-                <button class="lang-btn" onclick="toggleLang(true)">En</button>
-            </div>
-            <div class="date-line lang-cn">2026年3月20日 · Friday</div>
-            <div class="date-line lang-en">March 20, 2026 · Friday</div>
-            <h1 class="main-title">Daily AI News</h1>
-            <div class="subtitle">Intelligence Report</div>
-            <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
-        </header>
-
-        <section class="insight-section">
-            <div class="insight-header">
-                <span class="insight-title lang-cn">今日洞察</span>
-                <span class="insight-title lang-en">Today's Insight</span>
-            </div>
-            <p class="insight-content lang-cn">AI行业正经历深刻分化：OpenAI与Anthropic从合作伙伴走向对立，科技巨头内部员工公开选边站队；与此同时，xAI、Meta在产品节奏上暴露出执行力危机，Perplexity以$200/月的高端定价探索Agent的商业化路径——AI竞赛正从技术之争转向组织效能与商业模式之争。</p>
-            <p class="insight-content lang-en">The AI industry is undergoing a profound divergence: OpenAI and Anthropic have shifted from partners to opponents, with tech employees publicly choosing sides; meanwhile, xAI and Meta are revealing execution crises in their product roadmaps, while Perplexity explores Agent monetization at $200/month — the AI race is shifting from technology to organizational efficiency and business model competition.</p>
-        </section>
-
-        <section class="news-section">
-            <div class="section-header">
-                <span class="section-title lang-cn">国际动态</span>
-                <span class="section-title lang-en">International</span>
-                <span class="section-meta lang-cn">5则 · 2个信源</span>
-                <span class="section-meta lang-en">5 articles · 2 sources</span>
-            </div>
-            <div class="news-list">
-                <div class="news-item">
-                    <img src="ai_icon_brain.png" class="news-bullet">
-                    <div class="news-content">
-                        <span class="news-category"><span class="lang-cn">技术趋势</span><span class="lang-en">Market Trend</span></span>
-                        <div class="news-title"><a href="https://the-decoder.com/elon-musk-admits-xai-was-not-built-right-first-time-around-launches-full-restructuring/" target="_blank" class="lang-cn">xAI全面重组：Musk承认"最初没有正确构建"，Grok团队面临动荡</a><a href="https://the-decoder.com/elon-musk-admits-xai-was-not-built-right-first-time-around-launches-full-restructuring/" target="_blank" class="lang-en">Musk Admits xAI "Was Not Built Right First Time," Launches Full Restructuring</a></div>
-                        <div class="news-meta"><span class="source">The Decoder</span><span class="date-tag">· 3月13日</span><span class="verify-tag">✓</span></div>
-                        <p class="news-summary lang-cn"><strong>要点：</strong>Elon Musk在内部全员会上承认xAI"最初没有正确构建"，宣布全面重组，搁置Grok 3发布，优先解决工程债务和团队稳定性问题。</p>
-                        <p class="news-summary lang-en"><strong>Key Points:</strong> Elon Musk admitted in an all-hands meeting that xAI "was not built right first time around," announcing a full restructuring, shelving Grok 3 to prioritize engineering debt and team stability.</p>
-                        <p class="news-insight lang-cn"><strong>洞察：</strong>xAI的问题不是技术落后，而是扩张速度超过了组织能力。这对整个行业是一个警示：大型语言模型的核心竞争力不仅在于算法，更在于工程团队的执行效率和产品质量稳定性。</p>
-                        <p class="news-insight lang-en"><strong>Insight:</strong> xAI's problem is not technological lag but expansion outpacing organizational capacity. This is a warning for the entire industry: the core competitiveness of LLMs lies not just in algorithms but in engineering execution and product quality stability.</p>
-                    </div>
-                </div>
-                <div class="news-item">
-                    <img src="ai_icon_chip.png" class="news-bullet">
-                    <div class="news-content">
-                        <span class="news-category"><span class="lang-cn">技术趋势</span><span class="lang-en">Market Trend</span></span>
-                        <div class="news-title"><a href="https://the-decoder.com/meta-delays-its-next-ai-model-avocado-after-internal-tests-show-it-cant-keep-up-with-google-and-openai/" target="_blank" class="lang-cn">Meta推迟Avocado模型：内部测试显示落后于Google和OpenAI</a><a href="https://the-decoder.com/meta-delays-its-next-ai-model-avocado-after-internal-tests-show-it-cant-keep-up-with-google-and-openai/" target="_blank" class="lang-en">Meta Delays Avocado Model After Internal Tests Show It Can't Keep Up with Google and OpenAI</a></div>
-                        <div class="news-meta"><span class="source">The Decoder</span><span class="date-tag">· 3月13日</span><span class="verify-tag">✓</span></div>
-                        <p class="news-summary lang-cn"><strong>要点：</strong>Meta推迟下一代旗舰模型Avocado，内部基准测试显示其表现落后于Google的Gemini系列和OpenAI的GPT系列，重组Llama团队以追赶。</p>
-                        <p class="news-summary lang-en"><strong>Key Points:</strong> Meta has delayed its next flagship model Avocado after internal benchmarks showed it trailing Google's Gemini series and OpenAI's GPT series, restructuring the Llama team to catch up.</p>
-                        <p class="news-insight lang-cn"><strong>洞察：</strong>Meta的挫折印证了"规模法则"正在失效：更大的模型不等于更好的模型。在OpenAI和Google转向推理优化的背景下，Meta仍押注Scaling Laws，战略路线出现偏差。</p>
-                        <p class="news-insight lang-en"><strong>Insight:</strong> Meta's setback confirms that the "scaling laws" are failing: bigger models don't equal better models. While OpenAI and Google pivot to reasoning optimization, Meta is still betting on scaling laws — a strategic misstep.</p>
-                    </div>
-                </div>
-                <div class="news-item">
-                    <img src="ai_icon_robot.png" class="news-bullet">
-                    <div class="news-content">
-                        <span class="news-category"><span class="lang-cn">行业格局</span><span class="lang-en">Industry Landscape</span></span>
-                        <div class="news-title"><a href="https://techcrunch.com/2026/03/09/openai-and-google-employees-rush-to-anthropics-defense-in-dod-lawsuit/" target="_blank" class="lang-cn">Anthropic被国防部认定为军事承包商，OpenAI/Google员工公开声援</a><a href="https://techcrunch.com/2026/03/09/openai-and-google-employees-rush-to-anthropics-defense-in-dod-lawsuit/" target="_blank" class="lang-en">Anthropic Sued DOD Over Military Contractor Status; OpenAI and Google Employees Rush to Its Defense</a></div>
-                        <div class="news-meta"><span class="source">TechCrunch</span><span class="date-tag">· 3月9日</span><span class="verify-tag">✓</span></div>
-                        <p class="news-summary lang-cn"><strong>要点：</strong>Anthropic因被美国国防部认定为军事承包商（影响其销售"非军事用途AI"的商业模式）起诉国防部，OpenAI和Google员工公开签署请愿书声援Anthropic。</p>
-                        <p class="news-summary lang-en"><strong>Key Points:</strong> Anthropic sued the US Department of Defense after being labeled a military contractor, threatening its business model of selling "non-military use AI." OpenAI and Google employees publicly signed petitions supporting Anthropic.</p>
-                        <p class="news-insight lang-cn"><strong>洞察：</strong>这是AI行业首次出现员工跨越公司边界公开政治站队，揭示了AI安全派与技术实用派之间日益扩大的裂痕。这场争议的走向将决定AI公司如何在国家安全与商业利益之间取得平衡。</p>
-                        <p class="news-insight lang-en"><strong>Insight:</strong> This is the first time AI industry employees have publicly crossed company lines, revealing a growing rift between AI safety advocates and technology pragmatists. The outcome will determine how AI companies balance national security with commercial interests.</p>
-                    </div>
-                </div>
-                <div class="news-item">
-                    <img src="ai_icon_chart.png" class="news-bullet">
-                    <div class="news-content">
-                        <span class="news-category"><span class="lang-cn">行业格局</span><span class="lang-en">Industry Landscape</span></span>
-                        <div class="news-title"><a href="https://the-decoder.com/openai-plans-to-merge-chatgpt-codex-and-atlas-browser-into-a-single-desktop-superapp/" target="_blank" class="lang-cn">OpenAI计划将ChatGPT、Codex与Atlas浏览器合并为单一桌面超级应用</a><a href="https://the-decoder.com/openai-plans-to-merge-chatgpt-codex-and-atlas-browser-into-a-single-desktop-superapp/" target="_blank" class="lang-en">OpenAI Plans to Merge ChatGPT, Codex, and Atlas Browser into a Single Desktop Superapp</a></div>
-                        <div class="news-meta"><span class="source">The Decoder</span><span class="date-tag">· 3月20日</span><span class="verify-tag">✓</span></div>
-                        <p class="news-summary lang-cn"><strong>要点：</strong>OpenAI正在推进将ChatGPT、Codex（编码工具）和Atlas浏览器合并为一个桌面超级应用的计划，代号"Orion"，预计2026年Q2发布。</p>
-                        <p class="news-summary lang-en"><strong>Key Points:</strong> OpenAI is advancing plans to merge ChatGPT, Codex, and Atlas into a single desktop superapp, codenamed "Orion," expected to launch in Q2 2026.</p>
-                        <p class="news-insight lang-cn"><strong>洞察：</strong>OpenAI正在从"API公司"向"消费产品公司"转型。超级应用的战略意味着它将与Cursor、Windsurf等AI编码工具以及Perplexity等搜索引擎直接竞争，边界正在模糊。</p>
-                        <p class="news-insight lang-en"><strong>Insight:</strong> OpenAI is pivoting from an "API company" to a "consumer product company." The superapp strategy means it will directly compete with AI coding tools like Cursor and search engines like Perplexity — boundaries are blurring.</p>
-                    </div>
-                </div>
-                <div class="news-item">
-                    <img src="ai_icon_terminal.png" class="news-bullet">
-                    <div class="news-content">
-                        <span class="news-category"><span class="lang-cn">产品动态</span><span class="lang-en">Product</span></span>
-                        <div class="news-title"><a href="https://the-decoder.com/cursor-takes-on-openai-and-anthropic-with-composer-2-a-code-only-model-built-to-match-rivals-at-a-fraction-of-the-cost/" target="_blank" class="lang-cn">Cursor推出Composer 2：剑指OpenAI和Anthropic，号称以更低成本匹敌竞争对手</a><a href="https://the-decoder.com/cursor-takes-on-openai-and-anthropic-with-composer-2-a-code-only-model-built-to-match-rivals-at-a-fraction-of-the-cost/" target="_blank" class="lang-en">Cursor Takes on OpenAI and Anthropic with Composer 2, Built to Match Rivals at a Fraction of the Cost</a></div>
-                        <div class="news-meta"><span class="source">The Decoder</span><span class="date-tag">· 3月20日</span><span class="verify-tag">✓</span></div>
-                        <p class="news-summary lang-cn"><strong>要点：</strong>AI编程工具Cursor推出Composer 2，采用"代码专用"架构，训练成本仅为GPT-4o和Claude Opus的十分之一，但性能在编程基准测试中接近持平。</p>
-                        <p class="news-summary lang-en"><strong>Key Points:</strong> AI coding tool Cursor launched Composer 2 with a "code-only" architecture, trained at one-tenth the cost of GPT-4o and Claude Opus, yet achieving near-parity on coding benchmarks.</p>
-                        <p class="news-insight lang-cn"><strong>洞察：</strong>垂直专用模型的成本优势开始显现。当通用大模型陷入价格战时，垂直专用模型在特定任务上以更低成本达到相近效果，可能重塑AI产品竞争格局。</p>
-                        <p class="news-insight lang-en"><strong>Insight:</strong> The cost advantage of vertical specialized models is emerging. As general-purpose LLMs engage in price wars, vertical models are achieving comparable results at a fraction of the cost — potentially reshaping the AI product landscape.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="news-section">
-            <div class="section-header">
-                <span class="section-title lang-cn">国内动态</span>
-                <span class="section-title lang-en">China</span>
-                <span class="section-meta lang-cn">5则 · 4个信源</span>
-                <span class="section-meta lang-en">5 articles · 4 sources</span>
-            </div>
-            <div class="news-list">
-                <div class="news-item">
-                    <img src="ai_icon_brain.png" class="news-bullet">
-                    <div class="news-content">
-                        <span class="news-category"><span class="lang-cn">技术突破</span><span class="lang-en">Tech Breakthrough</span></span>
-                        <div class="news-title"><a href="https://www.qbitai.com/2026/03/387832.html" target="_blank" class="lang-cn">通义千问QWQ-32B-preview登顶中国AI榜首，推理能力逼近o3-mini</a><a href="https://www.qbitai.com/2026/03/387832.html" target="_blank" class="lang-en">Alibaba's QWQ-32B-preview Tops Chinese AI Rankings, Reasoning Approaches o3-mini</a></div>
-                        <div class="news-meta"><span class="source">量子位</span><span class="date-tag">· 3月14日</span><span class="verify-tag">✓</span></div>
-                        <p class="news-summary lang-cn"><strong>要点：</strong>阿里通义千问发布QWQ-32B-preview，在Chatbot Arena和AIME 2025等推理基准测试中表现优异，逼近OpenAI o3-mini水平，位列中国AI模型第一。</p>
-                        <p class="news-summary lang-en"><strong>Key Points:</strong> Alibaba released QWQ-32B-preview, achieving top performance on reasoning benchmarks like Chatbot Arena and AIME 2025, approaching OpenAI o3-mini level and ranking first among Chinese AI models.</p>
-                        <p class="news-insight lang-cn"><strong>洞察：</strong>中国AI正在推理能力上快速追赶。QWQ-32B的小型化推理模型策略——以更小参数达到接近大型模型的效果——可能对国内企业的部署成本和商业化路径产生深远影响。</p>
-                        <p class="news-insight lang-en"><strong>Insight:</strong> Chinese AI is rapidly catching up in reasoning capabilities. QWQ-32B's miniaturized reasoning model strategy — achieving near-large-model results with smaller parameters — could profoundly impact domestic deployment costs and commercialization paths.</p>
-                    </div>
-                </div>
-                <div class="news-item">
-                    <img src="ai_icon_chip.png" class="news-bullet">
-                    <div class="news-content">
-                        <span class="news-category"><span class="lang-cn">行业格局</span><span class="lang-en">Industry Landscape</span></span>
-                        <div class="news-title"><a href="https://www.qbitai.com/2026/03/387750.html" target="_blank" class="lang-cn">阿里云蔡崇信：未来5年AI云商业化营收目标剑指1000亿美元</a><a href="https://www.qbitai.com/2026/03/387750.html" target="_blank" class="lang-en">Alibaba Cloud's Daniel Zhang: AI Cloud Commercialization Revenue Target $100 Billion in 5 Years</a></div>
-                        <div class="news-meta"><span class="source">量子位</span><span class="date-tag">· 3月13日</span><span class="verify-tag">✓</span></div>
-                        <p class="news-summary lang-cn"><strong>要点：</strong>阿里云董事长蔡崇信表示，未来5年AI相关云服务商业化营收目标为1000亿美元，AI算力需求将以每年3-5倍的速度增长。</p>
-                        <p class="news-summary lang-en"><strong>Key Points:</strong> Alibaba Cloud Chairman Daniel Zhang stated a $100 billion AI cloud commercialization revenue target in 5 years, with AI computing demand growing 3-5x annually.</p>
-                        <p class="news-insight lang-cn"><strong>洞察：</strong>阿里云的千亿美元目标折射出AI基础设施的军备竞赛仍在加速。当NVIDIA算力供应成为瓶颈时，自研芯片和国产替代将成为决定中国AI云市场竞争格局的关键变量。</p>
-                        <p class="news-insight lang-en"><strong>Insight:</strong> Alibaba Cloud's $100 billion target reflects accelerating AI infrastructure arms race. As NVIDIA computing supply becomes a bottleneck, self-developed chips and domestic alternatives will become key variables in China's AI cloud market.</p>
-                    </div>
-                </div>
-                <div class="news-item">
-                    <img src="ai_icon_robot.png" class="news-bullet">
-                    <div class="news-content">
-                        <span class="news-category"><span class="lang-cn">企业战略</span><span class="lang-en">Corporate Strategy</span></span>
-                        <div class="news-title"><a href="https://www.36kr.com/information/AI" target="_blank" class="lang-cn">NVIDIA GB300已部署DGX数据中心，推理芯片进入白热化竞争</a><a href="https://www.36kr.com/information/AI" target="_blank" class="lang-en">NVIDIA GB300 Deployed at DGX Data Centers as Inference Chip Competition Intensifies</a></div>
-                        <div class="news-meta"><span class="source">36氪</span><span class="date-tag">· 3月15日</span><span class="verify-tag">✓</span></div>
-                        <p class="news-summary lang-cn"><strong>要点：</strong>NVIDIA Blackwell Ultra（GB300）已部署于DGX数据中心，相比H100在推理任务上提升3-5倍性能，AMD和国产算力芯片正加速追赶。</p>
-                        <p class="news-summary lang-en"><strong>Key Points:</strong> NVIDIA Blackwell Ultra (GB300) has been deployed at DGX data centers, delivering 3-5x inference performance improvement over H100, while AMD and domestic chips are accelerating to catch up.</p>
-                        <p class="news-insight lang-cn"><strong>洞察：</strong>推理芯片的竞争正在改变AI基础设施的成本结构。GB300的高性能可能降低每Token推理成本，推动AI应用的大规模商业化落地，同时给AMD MI350和国产算力芯片带来更大压力。</p>
-                        <p class="news-insight lang-en"><strong>Insight:</strong> Inference chip competition is reshaping AI infrastructure cost structure. GB300's high performance may reduce per-token inference costs, driving large-scale AI application commercialization while putting greater pressure on AMD MI350 and domestic chips.</p>
-                    </div>
-                </div>
-                <div class="news-item">
-                    <img src="ai_icon_chart.png" class="news-bullet">
-                    <div class="news-content">
-                        <span class="news-category"><span class="lang-cn">企业战略</span><span class="lang-en">Corporate Strategy</span></span>
-                        <div class="news-title"><a href="https://www.geekpark.net/" target="_blank" class="lang-cn">小米收购MiniMo团队强化AI推理能力，追赶国内头部玩家</a><a href="https://www.geekpark.net/" target="_blank" class="lang-en">Xiaomi Acquires MiniMo Team to Strengthen AI Reasoning Capabilities</a></div>
-                        <div class="news-meta"><span class="source">极客公园</span><span class="date-tag">· 3月18日</span><span class="verify-tag">✓</span></div>
-                        <p class="news-summary lang-cn"><strong>要点：</strong>小米完成对MiniMo推理模型团队的收购，强化其AI推理能力；此前小米已发布MiniMo-32B模型，在多项推理基准测试中表现优异。</p>
-                        <p class="news-summary lang-en"><strong>Key Points:</strong> Xiaomi completed the acquisition of the MiniMo reasoning model team; previously Xiaomi released MiniMo-32B, performing well on multiple reasoning benchmarks.</p>
-                        <p class="news-insight lang-cn"><strong>洞察：</strong>小米从手机公司向AI平台公司的转型正在加速。通过收购快速获取顶级AI推理人才，是小米在手机增长放缓背景下寻找第二曲线的战略举措。</p>
-                        <p class="news-insight lang-en"><strong>Insight:</strong> Xiaomi's pivot from phone company to AI platform company is accelerating. Acquiring top AI reasoning talent through M&A is Xiaomi's strategic move to find a second growth curve as phone growth slows.</p>
-                    </div>
-                </div>
-                <div class="news-item">
-                    <img src="ai_icon_terminal.png" class="news-bullet">
-                    <div class="news-content">
-                        <span class="news-category"><span class="lang-cn">产品动态</span><span class="lang-en">Product</span></span>
-                        <div class="news-title"><a href="https://www.geekpark.net/" target="_blank" class="lang-cn">千寻位置推出农业自动驾驶系统，AI落地垂直场景提速</a><a href="https://www.geekpark.net/" target="_blank" class="lang-en">Qianxun Position Launches Agricultural Autonomous Driving System, AI Vertical Applications Accelerate</a></div>
-                        <div class="news-meta"><span class="source">极客公园</span><span class="date-tag">· 3月17日</span><span class="verify-tag">✓</span></div>
-                        <p class="news-summary lang-cn"><strong>要点：</strong>千寻位置（阿里巴巴和中国兵器工业集团合资）推出基于AI的农业自动驾驶系统，精度达厘米级，已在国内多个大型农场试点。</p>
-                        <p class="news-summary lang-en"><strong>Key Points:</strong> Qianxun Position (a JV between Alibaba and China North Industries Group) launched an AI-based agricultural autonomous driving system with centimeter-level precision, piloted at multiple large farms in China.</p>
-                        <p class="news-insight lang-cn"><strong>洞察：</strong>AI正在从通用走向垂直。农业自动驾驶是一个高门槛但高毛利的场景，千寻位置凭借高精度定位+AI决策的组合，正在开辟一条不同于通用AI的差异化竞争路径。</p>
-                        <p class="news-insight lang-en"><strong>Insight:</strong> AI is moving from general to vertical. Agricultural autonomous driving is a high-barrier, high-margin scenario where Qianxun Position is carving out a differentiated competitive path through high-precision positioning + AI decision-making.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <footer class="footer">
-            <div class="footer-divider"><div class="footer-line"></div></div>
-            <div class="footer-text lang-cn">每天早上 9 点自动生成</div>
-            <div class="footer-text lang-en">Generated daily at 9:00 AM</div>
-            <div class="footer-note lang-cn">由 OpenClaw Daily AI News Digest 生成 · 技术趋势 / 行业格局 / 企业战略 / 产品动态 · 全部链接已验证</div>
-            <div class="footer-note lang-en">Powered by OpenClaw Daily AI News Digest · Market Trend · Industry · Corporate Strategy · Product · All links verified</div>
-        </footer>
-    </div>
-    <div class="page-number lang-cn">— 1 —</div>
-    <div class="page-number lang-en">— 1 —</div>
-    <script>
-        function toggleLang(en) {
-            var buttons = document.querySelectorAll('.lang-btn');
-            if (en) {
-                document.body.classList.add('show-en');
-                buttons[0].classList.remove('active-lang');
-                buttons[1].classList.add('active-lang');
-            } else {
-                document.body.classList.remove('show-en');
-                buttons[0].classList.add('active-lang');
-                buttons[1].classList.remove('active-lang');
-            }
-        }
-    </script>
+<section class="news-section">
+<div class="section-header">
+<span class="section-title lang-cn">国内动态</span><span class="section-title lang-en">China</span>
+<span class="section-meta lang-cn">5则 · 4个信源</span><span class="section-meta lang-en">5 articles · 4 sources</span>
+</div>
+<div class="news-list">
+<div class="news-item">
+<img src="ai_icon_chip.png" class="news-bullet">
+<div class="news-content">
+<span class="news-category"><span class="lang-cn">技术突破</span><span class="lang-en">Tech Breakthrough</span></span>
+<div class="news-title"><a href="https://www.qbitai.com/2026/03/393460.html" target="_blank" class="lang-cn">阿里发布Qwen3.5-Omni：215项任务击败Gemini-3.1 Pro，定价仅为十分之一</a><a href="https://www.qbitai.com/2026/03/393460.html" target="_blank" class="lang-en">Alibaba Releases Qwen3.5-Omni: Tops Gemini-3.1 Pro on 215 Tasks, Priced at One-Tenth the Cost</a></div>
+<div class="news-meta"><span class="source">量子位</span><span class="date-tag">· 3月30日</span><span class="verify-tag">✓</span></div>
+<p class="news-summary lang-cn"><strong>要点：</strong>阿里于3月30日发布Qwen3.5-Omni，在音视频理解、识别、交互等215项任务中取得SOTA，超越Gemini-3.1 Pro；支持113种语言和方言识别；每百万Tokens输入不到0.8元，约为Gemini的十分之一。</p>
+<p class="news-summary lang-en"><strong>Key Points:</strong> Alibaba released Qwen3.5-Omni on March 30, achieving SOTA on 215 audio/video/voice tasks, outperforming Gemini-3.1 Pro; supports 113 languages/dialects; priced at less than 0.8 yuan per million tokens, roughly 1/10th of Gemini cost.</p>
+<p class="news-insight lang-cn"><strong>洞察：</strong>Qwen3.5-Omni是中国在多模态领域的实质性突破。价格优势加性能领先的双重组合正在重塑全球AI多模态市场格局，标志着中国AI企业从追赶者向定义者的身份转变。</p>
+<p class="news-insight lang-en"><strong>Insight:</strong> Qwen3.5-Omni is a substantial breakthrough for China in multimodal AI. The combination of price advantage and leading performance is reshaping the global multimodal market, marking a shift from follower to standard-setter for Chinese AI companies.</p>
+</div>
+</div>
+<div class="news-item">
+<img src="ai_icon_brain.png" class="news-bullet">
+<div class="news-content">
+<span class="news-category"><span class="lang-cn">技术突破</span><span class="lang-en">Tech Breakthrough</span></span>
+<div class="news-title"><a href="https://www.qbitai.com/2026/03/393235.html" target="_blank" class="lang-cn">DeepSeek网页版大升级后宕机11小时：静默升级V3新版，被猜测V4将至</a><a href="https://www.qbitai.com/2026/03/393235.html" target="_blank" class="lang-en">DeepSeek Silent Model Upgrade: Website Crashes 11 Hours After Major Update — V4 Rumors Swirl</a></div>
+<div class="news-meta"><span class="source">量子位</span><span class="date-tag">· 3月30日</span><span class="verify-tag">✓</span></div>
+<p class="news-summary lang-cn"><strong>要点：</strong>DeepSeek网页版于3月29日静默升级后宕机超过11小时；模型自我介绍已改为DeepSeek-V3，知识截止日期推断延至2026年1月；上周同时开启17个Agent方向岗位，被认为是下一代模型发布的前兆。</p>
+<p class="news-summary lang-en"><strong>Key Points:</strong> DeepSeek web version silently upgraded on March 29, followed by 11+ hour outage; model now identifies as DeepSeek-V3 with knowledge cutoff extending to January 2026; 17 Agent-related jobs posted last week, fueling V4 speculation.</p>
+<p class="news-insight lang-cn"><strong>洞察：</strong>DeepSeek的静默升级模式已成为其品牌文化——不预告、不公告，用产品说话。11小时的宕机反而成为最好的营销，让用户主动参与推理新模型版本的乐趣中，体现了AI时代用户与产品全新的互动关系。</p>
+<p class="news-insight lang-en"><strong>Insight:</strong> DeepSeek silent upgrade has become its brand — no announcements, just product. The 11-hour crash became the best marketing, engaging users in deducing the new model version, showcasing a new kind of interaction between AI products and users.</p>
+</div>
+</div>
+<div class="news-item">
+<img src="ai_icon_robot.png" class="news-bullet">
+<div class="news-content">
+<span class="news-category"><span class="lang-cn">技术突破</span><span class="lang-en">Tech Breakthrough</span></span>
+<div class="news-title"><a href="https://www.qbitai.com/2026/03/393645.html" target="_blank" class="lang-cn">Meta华人实习生主导发布Hyperagents论文：AI可自我进化，已获ICLR 2026接收</a><a href="https://www.qbitai.com/2026/03/393645.html" target="_blank" class="lang-en">Meta Chinese Intern Leads Hyperagents Paper: AI That Evolves Itself — Accepted at ICLR 2026</a></div>
+<div class="news-meta"><span class="source">量子位</span><span class="date-tag">· 3月31日</span><span class="verify-tag">✓</span></div>
+<p class="news-summary lang-cn"><strong>要点：</strong>Meta研究团队发布Hyperagents论文，结合哥德尔机思想与达尔文开放算法，实现AI持续自我迭代；在SWE-bench上性能从20.0%自动提升至50.0%；论文已被ICLR 2026接收；第一作者Jenny Zhang为华人实习生。</p>
+<p class="news-summary lang-en"><strong>Key Points:</strong> Meta published Hyperagents paper combining Gödel Machine theory with Darwinian algorithms for AI self-improvement; on SWE-bench, performance auto-improved from 20.0% to 50.0%; accepted at ICLR 2026; lead author Jenny Zhang is a Chinese-Canadian intern.</p>
+<p class="news-insight lang-cn"><strong>洞察：</strong>从会学习到会改进自己的学习方式，这是AI能力的重大飞跃。Hyperagents表明AI的自我迭代可以深入到底层学习逻辑本身——这或许是通向AGI的关键一步，也意味着AI自我改进能力正在从理论走向实证。</p>
+<p class="news-insight lang-en"><strong>Insight:</strong> The shift from can learn to can improve how it learns is a significant leap. Hyperagents shows AI self-iteration at the meta-learning level — potentially a crucial step toward AGI, marking the shift from theory to empirical evidence for AI self-improvement.</p>
+</div>
+</div>
+<div class="news-item">
+<img src="ai_icon_chart.png" class="news-bullet">
+<div class="news-content">
+<span class="news-category"><span class="lang-cn">行业格局</span><span class="lang-en">Industry Landscape</span></span>
+<div class="news-title"><a href="https://www.qbitai.com/2026/03/393395.html" target="_blank" class="lang-cn">Ai2开源梦断：核心团队整体加入微软，美国开源AI最后旗帜倒下</a><a href="https://www.qbitai.com/2026/03/393395.html" target="_blank" class="lang-en">Ai2 Open-Source Dream Ends: Core Team Collectively Joins Microsoft, Last US Open-Source AI Banner Falls</a></div>
+<div class="news-meta"><span class="source">量子位</span><span class="date-tag">· 3月30日</span><span class="verify-tag">✓</span></div>
+<p class="news-summary lang-cn"><strong>要点：</strong>艾伦人工智能研究所削减开源模型OLMo开发资金，核心团队几乎全部加入微软超级智能团队；前CEO、COO及OLMo项目联合负责人集体出走；资助方策略转变，倾向于AI应用而非开源基础模型。</p>
+<p class="news-summary lang-en"><strong>Key Points:</strong> AI2 cuts OLMo open-source funding; core team almost entirely joins Microsoft Super Intelligence team; former CEO, COO and OLMo co-lead among those departing; funder shifts strategy toward AI applications over open-source base models.</p>
+<p class="news-insight lang-cn"><strong>洞察：</strong>Ai2的陨落标志着美国非营利AI研究模式的结构性困境：当OpenAI、谷歌们投入数百亿美元时，非营利组织难以维持竞争。这也意味着中国开源模型将更容易获得全球市场份额——MIT报告显示中国开源模型全球下载量已达17.1%，首次超越美国。</p>
+<p class="news-insight lang-en"><strong>Insight:</strong> AI2 fall marks the structural dilemma of US nonprofit AI research: when OpenAI and Google spend billions, nonprofits cannot compete. This means Chinese open-source models will more easily gain global market share — MIT reports Chinese open-source downloads at 17.1%, first overtaking the US.</p>
+</div>
+</div>
+<div class="news-item">
+<img src="ai_icon_terminal.png" class="news-bullet">
+<div class="news-content">
+<span class="news-category"><span class="lang-cn">技术突破</span><span class="lang-en">Tech Breakthrough</span></span>
+<div class="news-title"><a href="https://www.qbitai.com/2026/03/393296.html" target="_blank" class="lang-cn">国产世界模型GigaWorld-1登顶全球第一：3D准确度近满分，断层领先谷歌英伟达</a><a href="https://www.qbitai.com/2026/03/393296.html" target="_blank" class="lang-en">Chinese World Model GigaWorld-1 Tops Global: 3D Accuracy Near-Perfect, Surpassing Google and NVIDIA</a></div>
+<div class="news-meta"><span class="source">量子位</span><span class="date-tag">· 3月30日</span><span class="verify-tag">✓</span></div>
+<p class="news-summary lang-cn"><strong>要点：</strong>极佳科技发布GigaWorld-1，在WorldArena榜单综合得分突破60分登顶全球第一；3D准确度近满分，物理遵循能力相比第二名提升16%；已开源核心代码，半个月内HuggingFace下载量突破16000次。</p>
+<p class="news-summary lang-en"><strong>Key Points:</strong> Jijia Technology released GigaWorld-1, topping WorldArena global rankings with composite score exceeding 60; near-perfect 3D accuracy, physics adherence 16% ahead of second place; core code open-sourced, 16000+ HuggingFace downloads in half a month.</p>
+<p class="news-insight lang-cn"><strong>洞察：</strong>世界模型是具身AI的核心基础设施，GigaWorld-1的突破意味着中国在物理世界模拟能力上占据了先机。在机器人、自动驾驶等需要真实物理交互的领域，世界模型的优势将转化为真实的商业竞争力。</p>
+<p class="news-insight lang-en"><strong>Insight:</strong> World models are core infrastructure for embodied AI; GigaWorld-1 breakthrough means China has seized the initiative in physical world simulation. In robotics and autonomous driving requiring real physical interaction, world model advantages will translate into genuine commercial competitiveness.</p>
+</div>
+</div>
+</div>
+</section>
+<footer class="footer">
+<div class="footer-divider"><div class="footer-line"></div></div>
+<div class="footer-text lang-cn">每天早上 9 点自动生成</div>
+<div class="footer-text lang-en">Generated daily at 9:00 AM</div>
+<div class="footer-note lang-cn">由 OpenClaw Daily AI News Digest 生成 · 技术突破 / 行业格局 / 企业战略 · 全部链接已验证</div>
+<div class="footer-note lang-en">Powered by OpenClaw Daily AI News Digest · Tech Breakthrough · Industry · Corporate Strategy · All links verified</div>
+</footer>
+</div>
+<div class="page-number lang-cn">— 1 —</div>
+<div class="page-number lang-en">— 1 —</div>
+<script>
+function toggleLang(en){var buttons=document.querySelectorAll('.lang-btn');if(en){document.body.classList.add('show-en');buttons[0].classList.remove('active-lang');buttons[1].classList.add('active-lang');}else{document.body.classList.remove('show-en');buttons[0].classList.add('active-lang');buttons[1].classList.remove('active-lang');}}
+</script>
 
 <style>
 
@@ -472,1910 +422,6 @@ body {
   </div>
 </div>
 
-
-<script>
-/**
- * Iframe 元素高亮注入脚本
- * 需要在目标网站中引入此脚本来支持跨域 iframe 高亮功能
- *
- * 使用方法：
- * 1. 将此脚本添加到目标网站的 HTML 中
- * 2. 或通过浏览器扩展、用户脚本等方式注入
- */
-
-(function () {
-  "use strict";
-
-  // 检查是否在 iframe 中
-  if (window.self === window.top) {
-    return; // 不在 iframe 中，不执行
-  }
-
-  // 检查是否已经初始化过
-  if (window.__iframeHighlightInitialized) {
-    return;
-  }
-  window.__iframeHighlightInitialized = true;
-  console.log("Iframe 高亮脚本已加载");
-
-  // 创建高亮覆盖层
-  var overlay = document.createElement("div");
-  overlay.id = "iframe-highlight-overlay";
-  overlay.style.cssText = "\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100vw;\n    height: 100vh;\n    pointer-events: none;\n    z-index: 999999;\n    overflow: hidden;\n  ";
-
-  // 创建悬停高亮框（虚线边框）
-  var highlightBox = document.createElement("div");
-  highlightBox.id = "iframe-highlight-box";
-  highlightBox.style.cssText = "\n    position: absolute;\n    border: 2px dashed #007AFF;\n    background: rgba(0, 122, 255, 0.08);\n    pointer-events: none;\n    display: none;\n    transition: all 0.1s ease;\n    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.8);\n    border-radius: 2px;\n  ";
-
-  // 创建选中节点的常驻高亮框（实线边框）
-  var selectedBox = document.createElement("div");
-  selectedBox.id = "iframe-selected-box";
-  selectedBox.style.cssText = "\n    position: absolute;\n    border: 2px solid #007AFF;\n    pointer-events: none;\n    display: none;\n    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.9), 0 0 8px rgba(255, 107, 53, 0.4);\n    border-radius: 2px;\n    z-index: 1000000;\n  ";
-
-  // 创建悬停标签显示
-  var tagLabel = document.createElement("div");
-  tagLabel.id = "iframe-tag-label";
-  tagLabel.style.cssText = "\n    position: absolute;\n    background: #007AFF;\n    color: white;\n    padding: 2px 6px;\n    font-size: 11px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n    border-radius: 2px;\n    pointer-events: none;\n    display: none;\n    white-space: nowrap;\n    z-index: 1000001;\n    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);\n    font-weight: 500;\n  ";
-
-  // 创建选中节点标签
-  var selectedLabel = document.createElement("div");
-  selectedLabel.id = "iframe-selected-label";
-  selectedLabel.style.cssText = "\n    position: absolute;\n    background: #007AFF;\n    color: white;\n    padding: 3px 8px;\n    font-size: 11px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n    border-radius: 3px;\n    pointer-events: none;\n    display: none;\n    white-space: nowrap;\n    z-index: 1000002;\n    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);\n    font-weight: 600;\n  ";
-  overlay.appendChild(highlightBox);
-  overlay.appendChild(selectedBox);
-  overlay.appendChild(tagLabel);
-  overlay.appendChild(selectedLabel);
-  document.body.appendChild(overlay);
-
-  // 存储当前选中的元素
-  var selectedElement = null;
-  var highlightEnabled = false;
-
-  // 更新选中元素的高亮显示
-  function updateSelectedHighlight(element) {
-    console.log("updateSelectedHighlight called with:", element);
-    if (!element) {
-      selectedBox.style.display = "none";
-      selectedLabel.style.display = "none";
-      selectedElement = null;
-      console.log("Cleared selected highlight");
-      return;
-    }
-    selectedElement = element;
-    var rect = element.getBoundingClientRect();
-    console.log("Selected element rect:", rect);
-
-    // 更新选中高亮框位置
-    selectedBox.style.display = "block";
-    selectedBox.style.left = "".concat(rect.left - 2, "px");
-    selectedBox.style.top = "".concat(rect.top - 2, "px");
-    selectedBox.style.width = "".concat(rect.width + 4, "px");
-    selectedBox.style.height = "".concat(rect.height + 4, "px");
-
-    // 更新选中标签位置和内容
-    selectedLabel.style.display = "block";
-    selectedLabel.textContent = "\u2713 <".concat(element.tagName.toLowerCase(), ">");
-
-    // 计算标签位置，确保不超出视窗
-    var labelTop = rect.top - 28;
-    var labelLeft = rect.left;
-
-    // 如果标签会超出顶部，显示在元素下方
-    if (labelTop < 5) {
-      labelTop = rect.bottom + 5;
-    }
-
-    // 如果标签会超出右侧，向左调整
-    var labelWidth = selectedLabel.offsetWidth || 100; // 预估宽度
-    if (labelLeft + labelWidth > window.innerWidth - 10) {
-      labelLeft = window.innerWidth - labelWidth - 10;
-    }
-    selectedLabel.style.left = "".concat(Math.max(5, labelLeft), "px");
-    selectedLabel.style.top = "".concat(labelTop, "px");
-    console.log("Selected highlight positioned at:", {
-      left: selectedBox.style.left,
-      top: selectedBox.style.top,
-      width: selectedBox.style.width,
-      height: selectedBox.style.height
-    });
-  }
-  function getElementSelector(element) {
-    if (!(element instanceof Element)) throw new Error('Argument must be a DOM element');
-    var segments = [];
-    var current = element;
-    while (current !== document.documentElement) {
-      var selector = '';
-      // 优先检查唯一ID
-      if (current.id && document.querySelectorAll("#".concat(current.id)).length === 1) {
-        segments.unshift("#".concat(current.id));
-        break; // ID唯一，无需继续向上
-      }
-
-      // 生成类名选择器（取第一个有效类名）
-      var classes = Array.from(current.classList).filter(function (c) {
-        return !c.startsWith('js-');
-      });
-      var className = classes.length > 0 ? ".".concat(classes[0]) : '';
-
-      // 生成位置索引（nth-child）
-      var tag = current.tagName.toLowerCase();
-      if (!className) {
-        var siblings = Array.from(current.parentNode.children);
-        var index = siblings.findIndex(function (el) {
-          return el === current;
-        }) + 1;
-        selector = "".concat(tag, ":nth-child(").concat(index, ")");
-      } else {
-        selector = className;
-      }
-      segments.unshift(selector);
-      current = current.parentElement;
-    }
-
-    // 处理根元素
-    if (current === document.documentElement) {
-      segments.unshift('html');
-    }
-    return segments.join(' > ');
-  }
-
-  // 获取元素文本内容
-  function getElementText(element) {
-    var _element$textContent;
-    if (element.tagName === "INPUT") {
-      return element.value || element.placeholder || "";
-    }
-    if (element.tagName === "TEXTAREA") {
-      return element.value || element.placeholder || "";
-    }
-    var text = ((_element$textContent = element.textContent) === null || _element$textContent === void 0 ? void 0 : _element$textContent.trim()) || "";
-    return text.length > 50 ? text.substring(0, 50) + "..." : text;
-  }
-
-  // 获取元素属性信息
-  function getElementAttributes(element) {
-    var attrs = {};
-    for (var i = 0; i < element.attributes.length; i++) {
-      var attr = element.attributes[i];
-      attrs[attr.name] = attr.value;
-    }
-    return attrs;
-  }
-
-  // 鼠标悬停事件处理
-  function handleMouseOver(e) {
-    if (!highlightEnabled) return;
-    var target = e.target;
-    if (!target || target === overlay || target === highlightBox || target === tagLabel || target === selectedBox || target === selectedLabel) {
-      return;
-    }
-
-    // 避免高亮 html 和 body 元素
-    if (target === document.documentElement || target === document.body) {
-      return;
-    }
-
-    // 如果是已选中的元素，不显示悬停高亮
-    if (target === selectedElement) {
-      highlightBox.style.display = "none";
-      tagLabel.style.display = "none";
-      return;
-    }
-    var rect = target.getBoundingClientRect();
-    var selector = getElementSelector(target);
-    var text = getElementText(target);
-    var attributes = getElementAttributes(target);
-
-    // 更新悬停高亮框位置
-    highlightBox.style.display = "block";
-    highlightBox.style.left = "".concat(rect.left - 2, "px");
-    highlightBox.style.top = "".concat(rect.top - 2, "px");
-    highlightBox.style.width = "".concat(rect.width + 4, "px");
-    highlightBox.style.height = "".concat(rect.height + 4, "px");
-
-    // 更新标签位置和内容
-    tagLabel.style.display = "block";
-    tagLabel.textContent = "<".concat(target.tagName.toLowerCase(), ">");
-
-    // 计算标签位置，确保不超出视窗
-    var labelTop = rect.top - 22;
-    var labelLeft = rect.left;
-
-    // 如果标签会超出顶部，显示在元素下方
-    if (labelTop < 0) {
-      labelTop = rect.bottom + 5;
-    }
-
-    // 如果标签会超出右侧，向左调整
-    if (labelLeft + tagLabel.offsetWidth > window.innerWidth) {
-      labelLeft = window.innerWidth - tagLabel.offsetWidth - 5;
-    }
-    tagLabel.style.left = "".concat(Math.max(0, labelLeft), "px");
-    tagLabel.style.top = "".concat(labelTop, "px");
-
-    // 发送消息到父窗口
-    var elementInfo = {
-      tagName: target.tagName.toLowerCase(),
-      rect: {
-        left: rect.left,
-        top: rect.top,
-        right: rect.right,
-        bottom: rect.bottom,
-        width: rect.width,
-        height: rect.height,
-        x: rect.x,
-        y: rect.y
-      },
-      selector: selector,
-      text: text,
-      attributes: attributes,
-      url: window.location.href,
-      path: window.location.pathname,
-      timestamp: Date.now()
-    };
-    try {
-      window.parent.postMessage({
-        type: "iframe-element-hover",
-        data: elementInfo,
-        source: "iframe-highlight-injector"
-      }, "*");
-    } catch (error) {
-      console.warn("无法发送消息到父窗口:", error);
-    }
-  }
-
-  // 鼠标离开事件处理
-  function handleMouseOut(e) {
-    if (!highlightEnabled) return;
-    var relatedTarget = e.relatedTarget;
-
-    // 如果鼠标移动到高亮相关元素上，不隐藏高亮
-    if (relatedTarget && (relatedTarget === highlightBox || relatedTarget === tagLabel || relatedTarget === overlay || relatedTarget === selectedBox || relatedTarget === selectedLabel)) {
-      return;
-    }
-    highlightBox.style.display = "none";
-    tagLabel.style.display = "none";
-    try {
-      window.parent.postMessage({
-        type: "iframe-element-hover",
-        data: null,
-        source: "iframe-highlight-injector"
-      }, "*");
-    } catch (error) {
-      console.warn("无法发送消息到父窗口:", error);
-    }
-  }
-
-  // 点击事件处理
-  function handleClick(e) {
-    var target = e.target;
-    if (!target || target === overlay || target === highlightBox || target === tagLabel || target === selectedBox || target === selectedLabel) {
-      return;
-    }
-
-    // 避免处理 html 和 body 元素
-    if (target === document.documentElement || target === document.body) {
-      return;
-    }
-
-    // 检查是否是交互元素，这些元素需要保留默认行为
-    var isInteractiveElement = ['input', 'textarea', 'select', 'button', 'a'].includes(target.tagName.toLowerCase());
-
-    // 如果高亮功能启用，对于非交互元素阻止默认行为和事件传播
-    if (highlightEnabled) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    var rect = target.getBoundingClientRect();
-    var selector = getElementSelector(target);
-    var text = getElementText(target);
-    var attributes = getElementAttributes(target);
-    console.log("Element clicked:", {
-      tagName: target.tagName,
-      selector: selector,
-      rect: rect
-    });
-
-    // 立即更新选中高亮
-    updateSelectedHighlight(target);
-
-    // 隐藏悬停高亮，因为现在是选中状态
-    highlightBox.style.display = "none";
-    tagLabel.style.display = "none";
-    var elementInfo = {
-      tagName: target.tagName.toLowerCase(),
-      rect: {
-        left: rect.left,
-        top: rect.top,
-        right: rect.right,
-        bottom: rect.bottom,
-        width: rect.width,
-        height: rect.height,
-        x: rect.x,
-        y: rect.y
-      },
-      selector: selector,
-      text: text,
-      attributes: attributes,
-      url: window.location.href,
-      path: window.location.pathname,
-      timestamp: Date.now()
-    };
-    try {
-      window.parent.postMessage({
-        type: "iframe-element-click",
-        data: elementInfo,
-        source: "iframe-highlight-injector"
-      }, "*");
-    } catch (error) {
-      console.warn("无法发送消息到父窗口:", error);
-    }
-  }
-
-  // 监听来自父窗口的消息
-  function handleParentMessage(event) {
-    console.log("Received message from parent:", event.data);
-    if (event.data.type === "iframe-highlight-toggle") {
-      var enabled = event.data.enabled;
-      console.log("Highlight toggle:", enabled);
-      if (enabled) {
-        enableHighlight();
-      } else {
-        disableHighlight();
-      }
-    } else if (event.data.type === "enable-iframe-highlight") {
-      console.log("Enable iframe highlight");
-      enableHighlight();
-    } else if (event.data.type === "disable-iframe-highlight") {
-      console.log("Disable iframe highlight");
-      disableHighlight();
-    } else if (event.data.type === "toggle-iframe-highlight") {
-      var _enabled = event.data.enabled !== undefined ? event.data.enabled : !highlightEnabled;
-      console.log("Toggle iframe highlight to:", _enabled);
-      if (_enabled) {
-        enableHighlight();
-      } else {
-        disableHighlight();
-      }
-    } else if (event.data.type === "update-selected-element") {
-      var selector = event.data.selector;
-      console.log("Update selected element with selector:", selector);
-      if (selector) {
-        try {
-          var element = document.querySelector(selector);
-          console.log("Found element by selector:", element);
-          updateSelectedHighlight(element);
-        } catch (error) {
-          console.warn("Failed to select element:", error);
-          updateSelectedHighlight(null);
-        }
-      } else {
-        updateSelectedHighlight(null);
-      }
-    } else if (event.data.type === "clear-selected-element") {
-      console.log("Clear selected element");
-      updateSelectedHighlight(null);
-    }
-  }
-
-  // 启用高亮功能
-  function enableHighlight() {
-    console.log("Enabling highlight");
-    document.addEventListener("mouseover", handleMouseOver, true);
-    document.addEventListener("mouseout", handleMouseOut, true);
-    document.addEventListener("click", handleClick, true);
-    highlightEnabled = true;
-    overlay.style.display = "block";
-  }
-
-  // 禁用高亮功能
-  function disableHighlight() {
-    console.log("Disabling highlight");
-    highlightEnabled = false;
-    // 保持事件监听器，但通过 highlightEnabled 变量控制行为
-    // 这样可以保留选中状态的显示
-    highlightBox.style.display = "none";
-    tagLabel.style.display = "none";
-    // 不隐藏 selectedBox 和 selectedLabel，保留选中状态
-  }
-
-  // 完全禁用高亮功能（移除所有监听器）
-  function fullyDisableHighlight() {
-    console.log("Fully disabling highlight");
-    highlightEnabled = false;
-    document.removeEventListener("mouseover", handleMouseOver, true);
-    document.removeEventListener("mouseout", handleMouseOut, true);
-    document.removeEventListener("click", handleClick, true);
-    overlay.style.display = "none";
-    highlightBox.style.display = "none";
-    tagLabel.style.display = "none";
-    selectedBox.style.display = "none";
-    selectedLabel.style.display = "none";
-  }
-
-  // 添加事件监听
-  enableHighlight();
-  window.addEventListener("message", handleParentMessage);
-
-  // 暴露全局函数供外部调用
-  window.__iframeHighlightControl = {
-    enable: enableHighlight,
-    disable: disableHighlight,
-    fullyDisable: fullyDisableHighlight,
-    isEnabled: function isEnabled() {
-      return highlightEnabled;
-    },
-    getSelectedElement: function getSelectedElement() {
-      return selectedElement;
-    },
-    updateSelected: updateSelectedHighlight,
-    // 通过消息发送开关控制
-    sendToggleMessage: function sendToggleMessage(enabled) {
-      window.parent.postMessage({
-        type: 'iframe-highlight-status',
-        enabled: enabled || highlightEnabled,
-        source: 'iframe-highlight-injector'
-      }, '*');
-    }
-  };
-
-  // 通知父窗口脚本已加载
-  try {
-    window.parent.postMessage({
-      type: "iframe-highlight-ready",
-      data: {
-        url: window.location.href,
-        userAgent: navigator.userAgent,
-        timestamp: Date.now()
-      },
-      source: "iframe-highlight-injector"
-    }, "*");
-  } catch (error) {
-    console.warn("无法发送就绪消息到父窗口:", error);
-  }
-
-  // 清理函数
-  window.__iframeHighlightCleanup = function () {
-    fullyDisableHighlight();
-    window.removeEventListener("message", handleParentMessage);
-    if (overlay.parentElement) {
-      overlay.parentElement.removeChild(overlay);
-    }
-    delete window.__iframeHighlightInitialized;
-    delete window.__iframeHighlightCleanup;
-  };
-})();
-
-</script>
-
-<script>
-/**
- * Iframe 元素高亮注入脚本
- * 需要在目标网站中引入此脚本来支持跨域 iframe 高亮功能
- *
- * 使用方法：
- * 1. 将此脚本添加到目标网站的 HTML 中
- * 2. 或通过浏览器扩展、用户脚本等方式注入
- */
-
-(function () {
-  "use strict";
-
-  // 检查是否在 iframe 中
-  if (window.self === window.top) {
-    return; // 不在 iframe 中，不执行
-  }
-
-  // 检查是否已经初始化过
-  if (window.__iframeHighlightInitialized) {
-    return;
-  }
-  window.__iframeHighlightInitialized = true;
-  console.log("Iframe 高亮脚本已加载");
-
-  // 创建高亮覆盖层
-  var overlay = document.createElement("div");
-  overlay.id = "iframe-highlight-overlay";
-  overlay.style.cssText = "\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100vw;\n    height: 100vh;\n    pointer-events: none;\n    z-index: 999999;\n    overflow: hidden;\n  ";
-
-  // 创建悬停高亮框（虚线边框）
-  var highlightBox = document.createElement("div");
-  highlightBox.id = "iframe-highlight-box";
-  highlightBox.style.cssText = "\n    position: absolute;\n    border: 2px dashed #007AFF;\n    background: rgba(0, 122, 255, 0.08);\n    pointer-events: none;\n    display: none;\n    transition: all 0.1s ease;\n    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.8);\n    border-radius: 2px;\n  ";
-
-  // 创建选中节点的常驻高亮框（实线边框）
-  var selectedBox = document.createElement("div");
-  selectedBox.id = "iframe-selected-box";
-  selectedBox.style.cssText = "\n    position: absolute;\n    border: 2px solid #007AFF;\n    pointer-events: none;\n    display: none;\n    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.9), 0 0 8px rgba(255, 107, 53, 0.4);\n    border-radius: 2px;\n    z-index: 1000000;\n  ";
-
-  // 创建悬停标签显示
-  var tagLabel = document.createElement("div");
-  tagLabel.id = "iframe-tag-label";
-  tagLabel.style.cssText = "\n    position: absolute;\n    background: #007AFF;\n    color: white;\n    padding: 2px 6px;\n    font-size: 11px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n    border-radius: 2px;\n    pointer-events: none;\n    display: none;\n    white-space: nowrap;\n    z-index: 1000001;\n    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);\n    font-weight: 500;\n  ";
-
-  // 创建选中节点标签
-  var selectedLabel = document.createElement("div");
-  selectedLabel.id = "iframe-selected-label";
-  selectedLabel.style.cssText = "\n    position: absolute;\n    background: #007AFF;\n    color: white;\n    padding: 3px 8px;\n    font-size: 11px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n    border-radius: 3px;\n    pointer-events: none;\n    display: none;\n    white-space: nowrap;\n    z-index: 1000002;\n    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);\n    font-weight: 600;\n  ";
-  overlay.appendChild(highlightBox);
-  overlay.appendChild(selectedBox);
-  overlay.appendChild(tagLabel);
-  overlay.appendChild(selectedLabel);
-  document.body.appendChild(overlay);
-
-  // 存储当前选中的元素
-  var selectedElement = null;
-  var highlightEnabled = false;
-
-  // 更新选中元素的高亮显示
-  function updateSelectedHighlight(element) {
-    console.log("updateSelectedHighlight called with:", element);
-    if (!element) {
-      selectedBox.style.display = "none";
-      selectedLabel.style.display = "none";
-      selectedElement = null;
-      console.log("Cleared selected highlight");
-      return;
-    }
-    selectedElement = element;
-    var rect = element.getBoundingClientRect();
-    console.log("Selected element rect:", rect);
-
-    // 更新选中高亮框位置
-    selectedBox.style.display = "block";
-    selectedBox.style.left = "".concat(rect.left - 2, "px");
-    selectedBox.style.top = "".concat(rect.top - 2, "px");
-    selectedBox.style.width = "".concat(rect.width + 4, "px");
-    selectedBox.style.height = "".concat(rect.height + 4, "px");
-
-    // 更新选中标签位置和内容
-    selectedLabel.style.display = "block";
-    selectedLabel.textContent = "\u2713 <".concat(element.tagName.toLowerCase(), ">");
-
-    // 计算标签位置，确保不超出视窗
-    var labelTop = rect.top - 28;
-    var labelLeft = rect.left;
-
-    // 如果标签会超出顶部，显示在元素下方
-    if (labelTop < 5) {
-      labelTop = rect.bottom + 5;
-    }
-
-    // 如果标签会超出右侧，向左调整
-    var labelWidth = selectedLabel.offsetWidth || 100; // 预估宽度
-    if (labelLeft + labelWidth > window.innerWidth - 10) {
-      labelLeft = window.innerWidth - labelWidth - 10;
-    }
-    selectedLabel.style.left = "".concat(Math.max(5, labelLeft), "px");
-    selectedLabel.style.top = "".concat(labelTop, "px");
-    console.log("Selected highlight positioned at:", {
-      left: selectedBox.style.left,
-      top: selectedBox.style.top,
-      width: selectedBox.style.width,
-      height: selectedBox.style.height
-    });
-  }
-  function getElementSelector(element) {
-    if (!(element instanceof Element)) throw new Error('Argument must be a DOM element');
-    var segments = [];
-    var current = element;
-    while (current !== document.documentElement) {
-      var selector = '';
-      // 优先检查唯一ID
-      if (current.id && document.querySelectorAll("#".concat(current.id)).length === 1) {
-        segments.unshift("#".concat(current.id));
-        break; // ID唯一，无需继续向上
-      }
-
-      // 生成类名选择器（取第一个有效类名）
-      var classes = Array.from(current.classList).filter(function (c) {
-        return !c.startsWith('js-');
-      });
-      var className = classes.length > 0 ? ".".concat(classes[0]) : '';
-
-      // 生成位置索引（nth-child）
-      var tag = current.tagName.toLowerCase();
-      if (!className) {
-        var siblings = Array.from(current.parentNode.children);
-        var index = siblings.findIndex(function (el) {
-          return el === current;
-        }) + 1;
-        selector = "".concat(tag, ":nth-child(").concat(index, ")");
-      } else {
-        selector = className;
-      }
-      segments.unshift(selector);
-      current = current.parentElement;
-    }
-
-    // 处理根元素
-    if (current === document.documentElement) {
-      segments.unshift('html');
-    }
-    return segments.join(' > ');
-  }
-
-  // 获取元素文本内容
-  function getElementText(element) {
-    var _element$textContent;
-    if (element.tagName === "INPUT") {
-      return element.value || element.placeholder || "";
-    }
-    if (element.tagName === "TEXTAREA") {
-      return element.value || element.placeholder || "";
-    }
-    var text = ((_element$textContent = element.textContent) === null || _element$textContent === void 0 ? void 0 : _element$textContent.trim()) || "";
-    return text.length > 50 ? text.substring(0, 50) + "..." : text;
-  }
-
-  // 获取元素属性信息
-  function getElementAttributes(element) {
-    var attrs = {};
-    for (var i = 0; i < element.attributes.length; i++) {
-      var attr = element.attributes[i];
-      attrs[attr.name] = attr.value;
-    }
-    return attrs;
-  }
-
-  // 鼠标悬停事件处理
-  function handleMouseOver(e) {
-    if (!highlightEnabled) return;
-    var target = e.target;
-    if (!target || target === overlay || target === highlightBox || target === tagLabel || target === selectedBox || target === selectedLabel) {
-      return;
-    }
-
-    // 避免高亮 html 和 body 元素
-    if (target === document.documentElement || target === document.body) {
-      return;
-    }
-
-    // 如果是已选中的元素，不显示悬停高亮
-    if (target === selectedElement) {
-      highlightBox.style.display = "none";
-      tagLabel.style.display = "none";
-      return;
-    }
-    var rect = target.getBoundingClientRect();
-    var selector = getElementSelector(target);
-    var text = getElementText(target);
-    var attributes = getElementAttributes(target);
-
-    // 更新悬停高亮框位置
-    highlightBox.style.display = "block";
-    highlightBox.style.left = "".concat(rect.left - 2, "px");
-    highlightBox.style.top = "".concat(rect.top - 2, "px");
-    highlightBox.style.width = "".concat(rect.width + 4, "px");
-    highlightBox.style.height = "".concat(rect.height + 4, "px");
-
-    // 更新标签位置和内容
-    tagLabel.style.display = "block";
-    tagLabel.textContent = "<".concat(target.tagName.toLowerCase(), ">");
-
-    // 计算标签位置，确保不超出视窗
-    var labelTop = rect.top - 22;
-    var labelLeft = rect.left;
-
-    // 如果标签会超出顶部，显示在元素下方
-    if (labelTop < 0) {
-      labelTop = rect.bottom + 5;
-    }
-
-    // 如果标签会超出右侧，向左调整
-    if (labelLeft + tagLabel.offsetWidth > window.innerWidth) {
-      labelLeft = window.innerWidth - tagLabel.offsetWidth - 5;
-    }
-    tagLabel.style.left = "".concat(Math.max(0, labelLeft), "px");
-    tagLabel.style.top = "".concat(labelTop, "px");
-
-    // 发送消息到父窗口
-    var elementInfo = {
-      tagName: target.tagName.toLowerCase(),
-      rect: {
-        left: rect.left,
-        top: rect.top,
-        right: rect.right,
-        bottom: rect.bottom,
-        width: rect.width,
-        height: rect.height,
-        x: rect.x,
-        y: rect.y
-      },
-      selector: selector,
-      text: text,
-      attributes: attributes,
-      url: window.location.href,
-      path: window.location.pathname,
-      timestamp: Date.now()
-    };
-    try {
-      window.parent.postMessage({
-        type: "iframe-element-hover",
-        data: elementInfo,
-        source: "iframe-highlight-injector"
-      }, "*");
-    } catch (error) {
-      console.warn("无法发送消息到父窗口:", error);
-    }
-  }
-
-  // 鼠标离开事件处理
-  function handleMouseOut(e) {
-    if (!highlightEnabled) return;
-    var relatedTarget = e.relatedTarget;
-
-    // 如果鼠标移动到高亮相关元素上，不隐藏高亮
-    if (relatedTarget && (relatedTarget === highlightBox || relatedTarget === tagLabel || relatedTarget === overlay || relatedTarget === selectedBox || relatedTarget === selectedLabel)) {
-      return;
-    }
-    highlightBox.style.display = "none";
-    tagLabel.style.display = "none";
-    try {
-      window.parent.postMessage({
-        type: "iframe-element-hover",
-        data: null,
-        source: "iframe-highlight-injector"
-      }, "*");
-    } catch (error) {
-      console.warn("无法发送消息到父窗口:", error);
-    }
-  }
-
-  // 点击事件处理
-  function handleClick(e) {
-    var target = e.target;
-    if (!target || target === overlay || target === highlightBox || target === tagLabel || target === selectedBox || target === selectedLabel) {
-      return;
-    }
-
-    // 避免处理 html 和 body 元素
-    if (target === document.documentElement || target === document.body) {
-      return;
-    }
-
-    // 检查是否是交互元素，这些元素需要保留默认行为
-    var isInteractiveElement = ['input', 'textarea', 'select', 'button', 'a'].includes(target.tagName.toLowerCase());
-
-    // 如果高亮功能启用，对于非交互元素阻止默认行为和事件传播
-    if (highlightEnabled) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    var rect = target.getBoundingClientRect();
-    var selector = getElementSelector(target);
-    var text = getElementText(target);
-    var attributes = getElementAttributes(target);
-    console.log("Element clicked:", {
-      tagName: target.tagName,
-      selector: selector,
-      rect: rect
-    });
-
-    // 立即更新选中高亮
-    updateSelectedHighlight(target);
-
-    // 隐藏悬停高亮，因为现在是选中状态
-    highlightBox.style.display = "none";
-    tagLabel.style.display = "none";
-    var elementInfo = {
-      tagName: target.tagName.toLowerCase(),
-      rect: {
-        left: rect.left,
-        top: rect.top,
-        right: rect.right,
-        bottom: rect.bottom,
-        width: rect.width,
-        height: rect.height,
-        x: rect.x,
-        y: rect.y
-      },
-      selector: selector,
-      text: text,
-      attributes: attributes,
-      url: window.location.href,
-      path: window.location.pathname,
-      timestamp: Date.now()
-    };
-    try {
-      window.parent.postMessage({
-        type: "iframe-element-click",
-        data: elementInfo,
-        source: "iframe-highlight-injector"
-      }, "*");
-    } catch (error) {
-      console.warn("无法发送消息到父窗口:", error);
-    }
-  }
-
-  // 监听来自父窗口的消息
-  function handleParentMessage(event) {
-    console.log("Received message from parent:", event.data);
-    if (event.data.type === "iframe-highlight-toggle") {
-      var enabled = event.data.enabled;
-      console.log("Highlight toggle:", enabled);
-      if (enabled) {
-        enableHighlight();
-      } else {
-        disableHighlight();
-      }
-    } else if (event.data.type === "enable-iframe-highlight") {
-      console.log("Enable iframe highlight");
-      enableHighlight();
-    } else if (event.data.type === "disable-iframe-highlight") {
-      console.log("Disable iframe highlight");
-      disableHighlight();
-    } else if (event.data.type === "toggle-iframe-highlight") {
-      var _enabled = event.data.enabled !== undefined ? event.data.enabled : !highlightEnabled;
-      console.log("Toggle iframe highlight to:", _enabled);
-      if (_enabled) {
-        enableHighlight();
-      } else {
-        disableHighlight();
-      }
-    } else if (event.data.type === "update-selected-element") {
-      var selector = event.data.selector;
-      console.log("Update selected element with selector:", selector);
-      if (selector) {
-        try {
-          var element = document.querySelector(selector);
-          console.log("Found element by selector:", element);
-          updateSelectedHighlight(element);
-        } catch (error) {
-          console.warn("Failed to select element:", error);
-          updateSelectedHighlight(null);
-        }
-      } else {
-        updateSelectedHighlight(null);
-      }
-    } else if (event.data.type === "clear-selected-element") {
-      console.log("Clear selected element");
-      updateSelectedHighlight(null);
-    }
-  }
-
-  // 启用高亮功能
-  function enableHighlight() {
-    console.log("Enabling highlight");
-    document.addEventListener("mouseover", handleMouseOver, true);
-    document.addEventListener("mouseout", handleMouseOut, true);
-    document.addEventListener("click", handleClick, true);
-    highlightEnabled = true;
-    overlay.style.display = "block";
-  }
-
-  // 禁用高亮功能
-  function disableHighlight() {
-    console.log("Disabling highlight");
-    highlightEnabled = false;
-    // 保持事件监听器，但通过 highlightEnabled 变量控制行为
-    // 这样可以保留选中状态的显示
-    highlightBox.style.display = "none";
-    tagLabel.style.display = "none";
-    // 不隐藏 selectedBox 和 selectedLabel，保留选中状态
-  }
-
-  // 完全禁用高亮功能（移除所有监听器）
-  function fullyDisableHighlight() {
-    console.log("Fully disabling highlight");
-    highlightEnabled = false;
-    document.removeEventListener("mouseover", handleMouseOver, true);
-    document.removeEventListener("mouseout", handleMouseOut, true);
-    document.removeEventListener("click", handleClick, true);
-    overlay.style.display = "none";
-    highlightBox.style.display = "none";
-    tagLabel.style.display = "none";
-    selectedBox.style.display = "none";
-    selectedLabel.style.display = "none";
-  }
-
-  // 添加事件监听
-  enableHighlight();
-  window.addEventListener("message", handleParentMessage);
-
-  // 暴露全局函数供外部调用
-  window.__iframeHighlightControl = {
-    enable: enableHighlight,
-    disable: disableHighlight,
-    fullyDisable: fullyDisableHighlight,
-    isEnabled: function isEnabled() {
-      return highlightEnabled;
-    },
-    getSelectedElement: function getSelectedElement() {
-      return selectedElement;
-    },
-    updateSelected: updateSelectedHighlight,
-    // 通过消息发送开关控制
-    sendToggleMessage: function sendToggleMessage(enabled) {
-      window.parent.postMessage({
-        type: 'iframe-highlight-status',
-        enabled: enabled || highlightEnabled,
-        source: 'iframe-highlight-injector'
-      }, '*');
-    }
-  };
-
-  // 通知父窗口脚本已加载
-  try {
-    window.parent.postMessage({
-      type: "iframe-highlight-ready",
-      data: {
-        url: window.location.href,
-        userAgent: navigator.userAgent,
-        timestamp: Date.now()
-      },
-      source: "iframe-highlight-injector"
-    }, "*");
-  } catch (error) {
-    console.warn("无法发送就绪消息到父窗口:", error);
-  }
-
-  // 清理函数
-  window.__iframeHighlightCleanup = function () {
-    fullyDisableHighlight();
-    window.removeEventListener("message", handleParentMessage);
-    if (overlay.parentElement) {
-      overlay.parentElement.removeChild(overlay);
-    }
-    delete window.__iframeHighlightInitialized;
-    delete window.__iframeHighlightCleanup;
-  };
-})();
-
-</script>
-
-<script>
-/**
- * Iframe 元素高亮注入脚本
- * 需要在目标网站中引入此脚本来支持跨域 iframe 高亮功能
- *
- * 使用方法：
- * 1. 将此脚本添加到目标网站的 HTML 中
- * 2. 或通过浏览器扩展、用户脚本等方式注入
- */
-
-(function () {
-  "use strict";
-
-  // 检查是否在 iframe 中
-  if (window.self === window.top) {
-    return; // 不在 iframe 中，不执行
-  }
-
-  // 检查是否已经初始化过
-  if (window.__iframeHighlightInitialized) {
-    return;
-  }
-  window.__iframeHighlightInitialized = true;
-  console.log("Iframe 高亮脚本已加载");
-
-  // 创建高亮覆盖层
-  var overlay = document.createElement("div");
-  overlay.id = "iframe-highlight-overlay";
-  overlay.style.cssText = "\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100vw;\n    height: 100vh;\n    pointer-events: none;\n    z-index: 999999;\n    overflow: hidden;\n  ";
-
-  // 创建悬停高亮框（虚线边框）
-  var highlightBox = document.createElement("div");
-  highlightBox.id = "iframe-highlight-box";
-  highlightBox.style.cssText = "\n    position: absolute;\n    border: 2px dashed #007AFF;\n    background: rgba(0, 122, 255, 0.08);\n    pointer-events: none;\n    display: none;\n    transition: all 0.1s ease;\n    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.8);\n    border-radius: 2px;\n  ";
-
-  // 创建选中节点的常驻高亮框（实线边框）
-  var selectedBox = document.createElement("div");
-  selectedBox.id = "iframe-selected-box";
-  selectedBox.style.cssText = "\n    position: absolute;\n    border: 2px solid #007AFF;\n    pointer-events: none;\n    display: none;\n    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.9), 0 0 8px rgba(255, 107, 53, 0.4);\n    border-radius: 2px;\n    z-index: 1000000;\n  ";
-
-  // 创建悬停标签显示
-  var tagLabel = document.createElement("div");
-  tagLabel.id = "iframe-tag-label";
-  tagLabel.style.cssText = "\n    position: absolute;\n    background: #007AFF;\n    color: white;\n    padding: 2px 6px;\n    font-size: 11px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n    border-radius: 2px;\n    pointer-events: none;\n    display: none;\n    white-space: nowrap;\n    z-index: 1000001;\n    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);\n    font-weight: 500;\n  ";
-
-  // 创建选中节点标签
-  var selectedLabel = document.createElement("div");
-  selectedLabel.id = "iframe-selected-label";
-  selectedLabel.style.cssText = "\n    position: absolute;\n    background: #007AFF;\n    color: white;\n    padding: 3px 8px;\n    font-size: 11px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n    border-radius: 3px;\n    pointer-events: none;\n    display: none;\n    white-space: nowrap;\n    z-index: 1000002;\n    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);\n    font-weight: 600;\n  ";
-  overlay.appendChild(highlightBox);
-  overlay.appendChild(selectedBox);
-  overlay.appendChild(tagLabel);
-  overlay.appendChild(selectedLabel);
-  document.body.appendChild(overlay);
-
-  // 存储当前选中的元素
-  var selectedElement = null;
-  var highlightEnabled = false;
-
-  // 更新选中元素的高亮显示
-  function updateSelectedHighlight(element) {
-    console.log("updateSelectedHighlight called with:", element);
-    if (!element) {
-      selectedBox.style.display = "none";
-      selectedLabel.style.display = "none";
-      selectedElement = null;
-      console.log("Cleared selected highlight");
-      return;
-    }
-    selectedElement = element;
-    var rect = element.getBoundingClientRect();
-    console.log("Selected element rect:", rect);
-
-    // 更新选中高亮框位置
-    selectedBox.style.display = "block";
-    selectedBox.style.left = "".concat(rect.left - 2, "px");
-    selectedBox.style.top = "".concat(rect.top - 2, "px");
-    selectedBox.style.width = "".concat(rect.width + 4, "px");
-    selectedBox.style.height = "".concat(rect.height + 4, "px");
-
-    // 更新选中标签位置和内容
-    selectedLabel.style.display = "block";
-    selectedLabel.textContent = "\u2713 <".concat(element.tagName.toLowerCase(), ">");
-
-    // 计算标签位置，确保不超出视窗
-    var labelTop = rect.top - 28;
-    var labelLeft = rect.left;
-
-    // 如果标签会超出顶部，显示在元素下方
-    if (labelTop < 5) {
-      labelTop = rect.bottom + 5;
-    }
-
-    // 如果标签会超出右侧，向左调整
-    var labelWidth = selectedLabel.offsetWidth || 100; // 预估宽度
-    if (labelLeft + labelWidth > window.innerWidth - 10) {
-      labelLeft = window.innerWidth - labelWidth - 10;
-    }
-    selectedLabel.style.left = "".concat(Math.max(5, labelLeft), "px");
-    selectedLabel.style.top = "".concat(labelTop, "px");
-    console.log("Selected highlight positioned at:", {
-      left: selectedBox.style.left,
-      top: selectedBox.style.top,
-      width: selectedBox.style.width,
-      height: selectedBox.style.height
-    });
-  }
-  function getElementSelector(element) {
-    if (!(element instanceof Element)) throw new Error('Argument must be a DOM element');
-    var segments = [];
-    var current = element;
-    while (current !== document.documentElement) {
-      var selector = '';
-      // 优先检查唯一ID
-      if (current.id && document.querySelectorAll("#".concat(current.id)).length === 1) {
-        segments.unshift("#".concat(current.id));
-        break; // ID唯一，无需继续向上
-      }
-
-      // 生成类名选择器（取第一个有效类名）
-      var classes = Array.from(current.classList).filter(function (c) {
-        return !c.startsWith('js-');
-      });
-      var className = classes.length > 0 ? ".".concat(classes[0]) : '';
-
-      // 生成位置索引（nth-child）
-      var tag = current.tagName.toLowerCase();
-      if (!className) {
-        var siblings = Array.from(current.parentNode.children);
-        var index = siblings.findIndex(function (el) {
-          return el === current;
-        }) + 1;
-        selector = "".concat(tag, ":nth-child(").concat(index, ")");
-      } else {
-        selector = className;
-      }
-      segments.unshift(selector);
-      current = current.parentElement;
-    }
-
-    // 处理根元素
-    if (current === document.documentElement) {
-      segments.unshift('html');
-    }
-    return segments.join(' > ');
-  }
-
-  // 获取元素文本内容
-  function getElementText(element) {
-    var _element$textContent;
-    if (element.tagName === "INPUT") {
-      return element.value || element.placeholder || "";
-    }
-    if (element.tagName === "TEXTAREA") {
-      return element.value || element.placeholder || "";
-    }
-    var text = ((_element$textContent = element.textContent) === null || _element$textContent === void 0 ? void 0 : _element$textContent.trim()) || "";
-    return text.length > 50 ? text.substring(0, 50) + "..." : text;
-  }
-
-  // 获取元素属性信息
-  function getElementAttributes(element) {
-    var attrs = {};
-    for (var i = 0; i < element.attributes.length; i++) {
-      var attr = element.attributes[i];
-      attrs[attr.name] = attr.value;
-    }
-    return attrs;
-  }
-
-  // 鼠标悬停事件处理
-  function handleMouseOver(e) {
-    if (!highlightEnabled) return;
-    var target = e.target;
-    if (!target || target === overlay || target === highlightBox || target === tagLabel || target === selectedBox || target === selectedLabel) {
-      return;
-    }
-
-    // 避免高亮 html 和 body 元素
-    if (target === document.documentElement || target === document.body) {
-      return;
-    }
-
-    // 如果是已选中的元素，不显示悬停高亮
-    if (target === selectedElement) {
-      highlightBox.style.display = "none";
-      tagLabel.style.display = "none";
-      return;
-    }
-    var rect = target.getBoundingClientRect();
-    var selector = getElementSelector(target);
-    var text = getElementText(target);
-    var attributes = getElementAttributes(target);
-
-    // 更新悬停高亮框位置
-    highlightBox.style.display = "block";
-    highlightBox.style.left = "".concat(rect.left - 2, "px");
-    highlightBox.style.top = "".concat(rect.top - 2, "px");
-    highlightBox.style.width = "".concat(rect.width + 4, "px");
-    highlightBox.style.height = "".concat(rect.height + 4, "px");
-
-    // 更新标签位置和内容
-    tagLabel.style.display = "block";
-    tagLabel.textContent = "<".concat(target.tagName.toLowerCase(), ">");
-
-    // 计算标签位置，确保不超出视窗
-    var labelTop = rect.top - 22;
-    var labelLeft = rect.left;
-
-    // 如果标签会超出顶部，显示在元素下方
-    if (labelTop < 0) {
-      labelTop = rect.bottom + 5;
-    }
-
-    // 如果标签会超出右侧，向左调整
-    if (labelLeft + tagLabel.offsetWidth > window.innerWidth) {
-      labelLeft = window.innerWidth - tagLabel.offsetWidth - 5;
-    }
-    tagLabel.style.left = "".concat(Math.max(0, labelLeft), "px");
-    tagLabel.style.top = "".concat(labelTop, "px");
-
-    // 发送消息到父窗口
-    var elementInfo = {
-      tagName: target.tagName.toLowerCase(),
-      rect: {
-        left: rect.left,
-        top: rect.top,
-        right: rect.right,
-        bottom: rect.bottom,
-        width: rect.width,
-        height: rect.height,
-        x: rect.x,
-        y: rect.y
-      },
-      selector: selector,
-      text: text,
-      attributes: attributes,
-      url: window.location.href,
-      path: window.location.pathname,
-      timestamp: Date.now()
-    };
-    try {
-      window.parent.postMessage({
-        type: "iframe-element-hover",
-        data: elementInfo,
-        source: "iframe-highlight-injector"
-      }, "*");
-    } catch (error) {
-      console.warn("无法发送消息到父窗口:", error);
-    }
-  }
-
-  // 鼠标离开事件处理
-  function handleMouseOut(e) {
-    if (!highlightEnabled) return;
-    var relatedTarget = e.relatedTarget;
-
-    // 如果鼠标移动到高亮相关元素上，不隐藏高亮
-    if (relatedTarget && (relatedTarget === highlightBox || relatedTarget === tagLabel || relatedTarget === overlay || relatedTarget === selectedBox || relatedTarget === selectedLabel)) {
-      return;
-    }
-    highlightBox.style.display = "none";
-    tagLabel.style.display = "none";
-    try {
-      window.parent.postMessage({
-        type: "iframe-element-hover",
-        data: null,
-        source: "iframe-highlight-injector"
-      }, "*");
-    } catch (error) {
-      console.warn("无法发送消息到父窗口:", error);
-    }
-  }
-
-  // 点击事件处理
-  function handleClick(e) {
-    var target = e.target;
-    if (!target || target === overlay || target === highlightBox || target === tagLabel || target === selectedBox || target === selectedLabel) {
-      return;
-    }
-
-    // 避免处理 html 和 body 元素
-    if (target === document.documentElement || target === document.body) {
-      return;
-    }
-
-    // 检查是否是交互元素，这些元素需要保留默认行为
-    var isInteractiveElement = ['input', 'textarea', 'select', 'button', 'a'].includes(target.tagName.toLowerCase());
-
-    // 如果高亮功能启用，对于非交互元素阻止默认行为和事件传播
-    if (highlightEnabled) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    var rect = target.getBoundingClientRect();
-    var selector = getElementSelector(target);
-    var text = getElementText(target);
-    var attributes = getElementAttributes(target);
-    console.log("Element clicked:", {
-      tagName: target.tagName,
-      selector: selector,
-      rect: rect
-    });
-
-    // 立即更新选中高亮
-    updateSelectedHighlight(target);
-
-    // 隐藏悬停高亮，因为现在是选中状态
-    highlightBox.style.display = "none";
-    tagLabel.style.display = "none";
-    var elementInfo = {
-      tagName: target.tagName.toLowerCase(),
-      rect: {
-        left: rect.left,
-        top: rect.top,
-        right: rect.right,
-        bottom: rect.bottom,
-        width: rect.width,
-        height: rect.height,
-        x: rect.x,
-        y: rect.y
-      },
-      selector: selector,
-      text: text,
-      attributes: attributes,
-      url: window.location.href,
-      path: window.location.pathname,
-      timestamp: Date.now()
-    };
-    try {
-      window.parent.postMessage({
-        type: "iframe-element-click",
-        data: elementInfo,
-        source: "iframe-highlight-injector"
-      }, "*");
-    } catch (error) {
-      console.warn("无法发送消息到父窗口:", error);
-    }
-  }
-
-  // 监听来自父窗口的消息
-  function handleParentMessage(event) {
-    console.log("Received message from parent:", event.data);
-    if (event.data.type === "iframe-highlight-toggle") {
-      var enabled = event.data.enabled;
-      console.log("Highlight toggle:", enabled);
-      if (enabled) {
-        enableHighlight();
-      } else {
-        disableHighlight();
-      }
-    } else if (event.data.type === "enable-iframe-highlight") {
-      console.log("Enable iframe highlight");
-      enableHighlight();
-    } else if (event.data.type === "disable-iframe-highlight") {
-      console.log("Disable iframe highlight");
-      disableHighlight();
-    } else if (event.data.type === "toggle-iframe-highlight") {
-      var _enabled = event.data.enabled !== undefined ? event.data.enabled : !highlightEnabled;
-      console.log("Toggle iframe highlight to:", _enabled);
-      if (_enabled) {
-        enableHighlight();
-      } else {
-        disableHighlight();
-      }
-    } else if (event.data.type === "update-selected-element") {
-      var selector = event.data.selector;
-      console.log("Update selected element with selector:", selector);
-      if (selector) {
-        try {
-          var element = document.querySelector(selector);
-          console.log("Found element by selector:", element);
-          updateSelectedHighlight(element);
-        } catch (error) {
-          console.warn("Failed to select element:", error);
-          updateSelectedHighlight(null);
-        }
-      } else {
-        updateSelectedHighlight(null);
-      }
-    } else if (event.data.type === "clear-selected-element") {
-      console.log("Clear selected element");
-      updateSelectedHighlight(null);
-    }
-  }
-
-  // 启用高亮功能
-  function enableHighlight() {
-    console.log("Enabling highlight");
-    document.addEventListener("mouseover", handleMouseOver, true);
-    document.addEventListener("mouseout", handleMouseOut, true);
-    document.addEventListener("click", handleClick, true);
-    highlightEnabled = true;
-    overlay.style.display = "block";
-  }
-
-  // 禁用高亮功能
-  function disableHighlight() {
-    console.log("Disabling highlight");
-    highlightEnabled = false;
-    // 保持事件监听器，但通过 highlightEnabled 变量控制行为
-    // 这样可以保留选中状态的显示
-    highlightBox.style.display = "none";
-    tagLabel.style.display = "none";
-    // 不隐藏 selectedBox 和 selectedLabel，保留选中状态
-  }
-
-  // 完全禁用高亮功能（移除所有监听器）
-  function fullyDisableHighlight() {
-    console.log("Fully disabling highlight");
-    highlightEnabled = false;
-    document.removeEventListener("mouseover", handleMouseOver, true);
-    document.removeEventListener("mouseout", handleMouseOut, true);
-    document.removeEventListener("click", handleClick, true);
-    overlay.style.display = "none";
-    highlightBox.style.display = "none";
-    tagLabel.style.display = "none";
-    selectedBox.style.display = "none";
-    selectedLabel.style.display = "none";
-  }
-
-  // 添加事件监听
-  enableHighlight();
-  window.addEventListener("message", handleParentMessage);
-
-  // 暴露全局函数供外部调用
-  window.__iframeHighlightControl = {
-    enable: enableHighlight,
-    disable: disableHighlight,
-    fullyDisable: fullyDisableHighlight,
-    isEnabled: function isEnabled() {
-      return highlightEnabled;
-    },
-    getSelectedElement: function getSelectedElement() {
-      return selectedElement;
-    },
-    updateSelected: updateSelectedHighlight,
-    // 通过消息发送开关控制
-    sendToggleMessage: function sendToggleMessage(enabled) {
-      window.parent.postMessage({
-        type: 'iframe-highlight-status',
-        enabled: enabled || highlightEnabled,
-        source: 'iframe-highlight-injector'
-      }, '*');
-    }
-  };
-
-  // 通知父窗口脚本已加载
-  try {
-    window.parent.postMessage({
-      type: "iframe-highlight-ready",
-      data: {
-        url: window.location.href,
-        userAgent: navigator.userAgent,
-        timestamp: Date.now()
-      },
-      source: "iframe-highlight-injector"
-    }, "*");
-  } catch (error) {
-    console.warn("无法发送就绪消息到父窗口:", error);
-  }
-
-  // 清理函数
-  window.__iframeHighlightCleanup = function () {
-    fullyDisableHighlight();
-    window.removeEventListener("message", handleParentMessage);
-    if (overlay.parentElement) {
-      overlay.parentElement.removeChild(overlay);
-    }
-    delete window.__iframeHighlightInitialized;
-    delete window.__iframeHighlightCleanup;
-  };
-})();
-
-</script>
-
-<script>
-/**
- * Iframe 元素高亮注入脚本
- * 需要在目标网站中引入此脚本来支持跨域 iframe 高亮功能
- *
- * 使用方法：
- * 1. 将此脚本添加到目标网站的 HTML 中
- * 2. 或通过浏览器扩展、用户脚本等方式注入
- */
-
-(function () {
-  "use strict";
-
-  // 检查是否在 iframe 中
-  if (window.self === window.top) {
-    return; // 不在 iframe 中，不执行
-  }
-
-  // 检查是否已经初始化过
-  if (window.__iframeHighlightInitialized) {
-    return;
-  }
-  window.__iframeHighlightInitialized = true;
-  console.log("Iframe 高亮脚本已加载");
-
-  // 创建高亮覆盖层
-  var overlay = document.createElement("div");
-  overlay.id = "iframe-highlight-overlay";
-  overlay.style.cssText = "\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100vw;\n    height: 100vh;\n    pointer-events: none;\n    z-index: 999999;\n    overflow: hidden;\n  ";
-
-  // 创建悬停高亮框（虚线边框）
-  var highlightBox = document.createElement("div");
-  highlightBox.id = "iframe-highlight-box";
-  highlightBox.style.cssText = "\n    position: absolute;\n    border: 2px dashed #007AFF;\n    background: rgba(0, 122, 255, 0.08);\n    pointer-events: none;\n    display: none;\n    transition: all 0.1s ease;\n    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.8);\n    border-radius: 2px;\n  ";
-
-  // 创建选中节点的常驻高亮框（实线边框）
-  var selectedBox = document.createElement("div");
-  selectedBox.id = "iframe-selected-box";
-  selectedBox.style.cssText = "\n    position: absolute;\n    border: 2px solid #007AFF;\n    pointer-events: none;\n    display: none;\n    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.9), 0 0 8px rgba(255, 107, 53, 0.4);\n    border-radius: 2px;\n    z-index: 1000000;\n  ";
-
-  // 创建悬停标签显示
-  var tagLabel = document.createElement("div");
-  tagLabel.id = "iframe-tag-label";
-  tagLabel.style.cssText = "\n    position: absolute;\n    background: #007AFF;\n    color: white;\n    padding: 2px 6px;\n    font-size: 11px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n    border-radius: 2px;\n    pointer-events: none;\n    display: none;\n    white-space: nowrap;\n    z-index: 1000001;\n    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);\n    font-weight: 500;\n  ";
-
-  // 创建选中节点标签
-  var selectedLabel = document.createElement("div");
-  selectedLabel.id = "iframe-selected-label";
-  selectedLabel.style.cssText = "\n    position: absolute;\n    background: #007AFF;\n    color: white;\n    padding: 3px 8px;\n    font-size: 11px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n    border-radius: 3px;\n    pointer-events: none;\n    display: none;\n    white-space: nowrap;\n    z-index: 1000002;\n    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);\n    font-weight: 600;\n  ";
-  overlay.appendChild(highlightBox);
-  overlay.appendChild(selectedBox);
-  overlay.appendChild(tagLabel);
-  overlay.appendChild(selectedLabel);
-  document.body.appendChild(overlay);
-
-  // 存储当前选中的元素
-  var selectedElement = null;
-  var highlightEnabled = false;
-
-  // 更新选中元素的高亮显示
-  function updateSelectedHighlight(element) {
-    console.log("updateSelectedHighlight called with:", element);
-    if (!element) {
-      selectedBox.style.display = "none";
-      selectedLabel.style.display = "none";
-      selectedElement = null;
-      console.log("Cleared selected highlight");
-      return;
-    }
-    selectedElement = element;
-    var rect = element.getBoundingClientRect();
-    console.log("Selected element rect:", rect);
-
-    // 更新选中高亮框位置
-    selectedBox.style.display = "block";
-    selectedBox.style.left = "".concat(rect.left - 2, "px");
-    selectedBox.style.top = "".concat(rect.top - 2, "px");
-    selectedBox.style.width = "".concat(rect.width + 4, "px");
-    selectedBox.style.height = "".concat(rect.height + 4, "px");
-
-    // 更新选中标签位置和内容
-    selectedLabel.style.display = "block";
-    selectedLabel.textContent = "\u2713 <".concat(element.tagName.toLowerCase(), ">");
-
-    // 计算标签位置，确保不超出视窗
-    var labelTop = rect.top - 28;
-    var labelLeft = rect.left;
-
-    // 如果标签会超出顶部，显示在元素下方
-    if (labelTop < 5) {
-      labelTop = rect.bottom + 5;
-    }
-
-    // 如果标签会超出右侧，向左调整
-    var labelWidth = selectedLabel.offsetWidth || 100; // 预估宽度
-    if (labelLeft + labelWidth > window.innerWidth - 10) {
-      labelLeft = window.innerWidth - labelWidth - 10;
-    }
-    selectedLabel.style.left = "".concat(Math.max(5, labelLeft), "px");
-    selectedLabel.style.top = "".concat(labelTop, "px");
-    console.log("Selected highlight positioned at:", {
-      left: selectedBox.style.left,
-      top: selectedBox.style.top,
-      width: selectedBox.style.width,
-      height: selectedBox.style.height
-    });
-  }
-  function getElementSelector(element) {
-    if (!(element instanceof Element)) throw new Error('Argument must be a DOM element');
-    var segments = [];
-    var current = element;
-    while (current !== document.documentElement) {
-      var selector = '';
-      // 优先检查唯一ID
-      if (current.id && document.querySelectorAll("#".concat(current.id)).length === 1) {
-        segments.unshift("#".concat(current.id));
-        break; // ID唯一，无需继续向上
-      }
-
-      // 生成类名选择器（取第一个有效类名）
-      var classes = Array.from(current.classList).filter(function (c) {
-        return !c.startsWith('js-');
-      });
-      var className = classes.length > 0 ? ".".concat(classes[0]) : '';
-
-      // 生成位置索引（nth-child）
-      var tag = current.tagName.toLowerCase();
-      if (!className) {
-        var siblings = Array.from(current.parentNode.children);
-        var index = siblings.findIndex(function (el) {
-          return el === current;
-        }) + 1;
-        selector = "".concat(tag, ":nth-child(").concat(index, ")");
-      } else {
-        selector = className;
-      }
-      segments.unshift(selector);
-      current = current.parentElement;
-    }
-
-    // 处理根元素
-    if (current === document.documentElement) {
-      segments.unshift('html');
-    }
-    return segments.join(' > ');
-  }
-
-  // 获取元素文本内容
-  function getElementText(element) {
-    var _element$textContent;
-    if (element.tagName === "INPUT") {
-      return element.value || element.placeholder || "";
-    }
-    if (element.tagName === "TEXTAREA") {
-      return element.value || element.placeholder || "";
-    }
-    var text = ((_element$textContent = element.textContent) === null || _element$textContent === void 0 ? void 0 : _element$textContent.trim()) || "";
-    return text.length > 50 ? text.substring(0, 50) + "..." : text;
-  }
-
-  // 获取元素属性信息
-  function getElementAttributes(element) {
-    var attrs = {};
-    for (var i = 0; i < element.attributes.length; i++) {
-      var attr = element.attributes[i];
-      attrs[attr.name] = attr.value;
-    }
-    return attrs;
-  }
-
-  // 鼠标悬停事件处理
-  function handleMouseOver(e) {
-    if (!highlightEnabled) return;
-    var target = e.target;
-    if (!target || target === overlay || target === highlightBox || target === tagLabel || target === selectedBox || target === selectedLabel) {
-      return;
-    }
-
-    // 避免高亮 html 和 body 元素
-    if (target === document.documentElement || target === document.body) {
-      return;
-    }
-
-    // 如果是已选中的元素，不显示悬停高亮
-    if (target === selectedElement) {
-      highlightBox.style.display = "none";
-      tagLabel.style.display = "none";
-      return;
-    }
-    var rect = target.getBoundingClientRect();
-    var selector = getElementSelector(target);
-    var text = getElementText(target);
-    var attributes = getElementAttributes(target);
-
-    // 更新悬停高亮框位置
-    highlightBox.style.display = "block";
-    highlightBox.style.left = "".concat(rect.left - 2, "px");
-    highlightBox.style.top = "".concat(rect.top - 2, "px");
-    highlightBox.style.width = "".concat(rect.width + 4, "px");
-    highlightBox.style.height = "".concat(rect.height + 4, "px");
-
-    // 更新标签位置和内容
-    tagLabel.style.display = "block";
-    tagLabel.textContent = "<".concat(target.tagName.toLowerCase(), ">");
-
-    // 计算标签位置，确保不超出视窗
-    var labelTop = rect.top - 22;
-    var labelLeft = rect.left;
-
-    // 如果标签会超出顶部，显示在元素下方
-    if (labelTop < 0) {
-      labelTop = rect.bottom + 5;
-    }
-
-    // 如果标签会超出右侧，向左调整
-    if (labelLeft + tagLabel.offsetWidth > window.innerWidth) {
-      labelLeft = window.innerWidth - tagLabel.offsetWidth - 5;
-    }
-    tagLabel.style.left = "".concat(Math.max(0, labelLeft), "px");
-    tagLabel.style.top = "".concat(labelTop, "px");
-
-    // 发送消息到父窗口
-    var elementInfo = {
-      tagName: target.tagName.toLowerCase(),
-      rect: {
-        left: rect.left,
-        top: rect.top,
-        right: rect.right,
-        bottom: rect.bottom,
-        width: rect.width,
-        height: rect.height,
-        x: rect.x,
-        y: rect.y
-      },
-      selector: selector,
-      text: text,
-      attributes: attributes,
-      url: window.location.href,
-      path: window.location.pathname,
-      timestamp: Date.now()
-    };
-    try {
-      window.parent.postMessage({
-        type: "iframe-element-hover",
-        data: elementInfo,
-        source: "iframe-highlight-injector"
-      }, "*");
-    } catch (error) {
-      console.warn("无法发送消息到父窗口:", error);
-    }
-  }
-
-  // 鼠标离开事件处理
-  function handleMouseOut(e) {
-    if (!highlightEnabled) return;
-    var relatedTarget = e.relatedTarget;
-
-    // 如果鼠标移动到高亮相关元素上，不隐藏高亮
-    if (relatedTarget && (relatedTarget === highlightBox || relatedTarget === tagLabel || relatedTarget === overlay || relatedTarget === selectedBox || relatedTarget === selectedLabel)) {
-      return;
-    }
-    highlightBox.style.display = "none";
-    tagLabel.style.display = "none";
-    try {
-      window.parent.postMessage({
-        type: "iframe-element-hover",
-        data: null,
-        source: "iframe-highlight-injector"
-      }, "*");
-    } catch (error) {
-      console.warn("无法发送消息到父窗口:", error);
-    }
-  }
-
-  // 点击事件处理
-  function handleClick(e) {
-    var target = e.target;
-    if (!target || target === overlay || target === highlightBox || target === tagLabel || target === selectedBox || target === selectedLabel) {
-      return;
-    }
-
-    // 避免处理 html 和 body 元素
-    if (target === document.documentElement || target === document.body) {
-      return;
-    }
-
-    // 检查是否是交互元素，这些元素需要保留默认行为
-    var isInteractiveElement = ['input', 'textarea', 'select', 'button', 'a'].includes(target.tagName.toLowerCase());
-
-    // 如果高亮功能启用，对于非交互元素阻止默认行为和事件传播
-    if (highlightEnabled) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    var rect = target.getBoundingClientRect();
-    var selector = getElementSelector(target);
-    var text = getElementText(target);
-    var attributes = getElementAttributes(target);
-    console.log("Element clicked:", {
-      tagName: target.tagName,
-      selector: selector,
-      rect: rect
-    });
-
-    // 立即更新选中高亮
-    updateSelectedHighlight(target);
-
-    // 隐藏悬停高亮，因为现在是选中状态
-    highlightBox.style.display = "none";
-    tagLabel.style.display = "none";
-    var elementInfo = {
-      tagName: target.tagName.toLowerCase(),
-      rect: {
-        left: rect.left,
-        top: rect.top,
-        right: rect.right,
-        bottom: rect.bottom,
-        width: rect.width,
-        height: rect.height,
-        x: rect.x,
-        y: rect.y
-      },
-      selector: selector,
-      text: text,
-      attributes: attributes,
-      url: window.location.href,
-      path: window.location.pathname,
-      timestamp: Date.now()
-    };
-    try {
-      window.parent.postMessage({
-        type: "iframe-element-click",
-        data: elementInfo,
-        source: "iframe-highlight-injector"
-      }, "*");
-    } catch (error) {
-      console.warn("无法发送消息到父窗口:", error);
-    }
-  }
-
-  // 监听来自父窗口的消息
-  function handleParentMessage(event) {
-    console.log("Received message from parent:", event.data);
-    if (event.data.type === "iframe-highlight-toggle") {
-      var enabled = event.data.enabled;
-      console.log("Highlight toggle:", enabled);
-      if (enabled) {
-        enableHighlight();
-      } else {
-        disableHighlight();
-      }
-    } else if (event.data.type === "enable-iframe-highlight") {
-      console.log("Enable iframe highlight");
-      enableHighlight();
-    } else if (event.data.type === "disable-iframe-highlight") {
-      console.log("Disable iframe highlight");
-      disableHighlight();
-    } else if (event.data.type === "toggle-iframe-highlight") {
-      var _enabled = event.data.enabled !== undefined ? event.data.enabled : !highlightEnabled;
-      console.log("Toggle iframe highlight to:", _enabled);
-      if (_enabled) {
-        enableHighlight();
-      } else {
-        disableHighlight();
-      }
-    } else if (event.data.type === "update-selected-element") {
-      var selector = event.data.selector;
-      console.log("Update selected element with selector:", selector);
-      if (selector) {
-        try {
-          var element = document.querySelector(selector);
-          console.log("Found element by selector:", element);
-          updateSelectedHighlight(element);
-        } catch (error) {
-          console.warn("Failed to select element:", error);
-          updateSelectedHighlight(null);
-        }
-      } else {
-        updateSelectedHighlight(null);
-      }
-    } else if (event.data.type === "clear-selected-element") {
-      console.log("Clear selected element");
-      updateSelectedHighlight(null);
-    }
-  }
-
-  // 启用高亮功能
-  function enableHighlight() {
-    console.log("Enabling highlight");
-    document.addEventListener("mouseover", handleMouseOver, true);
-    document.addEventListener("mouseout", handleMouseOut, true);
-    document.addEventListener("click", handleClick, true);
-    highlightEnabled = true;
-    overlay.style.display = "block";
-  }
-
-  // 禁用高亮功能
-  function disableHighlight() {
-    console.log("Disabling highlight");
-    highlightEnabled = false;
-    // 保持事件监听器，但通过 highlightEnabled 变量控制行为
-    // 这样可以保留选中状态的显示
-    highlightBox.style.display = "none";
-    tagLabel.style.display = "none";
-    // 不隐藏 selectedBox 和 selectedLabel，保留选中状态
-  }
-
-  // 完全禁用高亮功能（移除所有监听器）
-  function fullyDisableHighlight() {
-    console.log("Fully disabling highlight");
-    highlightEnabled = false;
-    document.removeEventListener("mouseover", handleMouseOver, true);
-    document.removeEventListener("mouseout", handleMouseOut, true);
-    document.removeEventListener("click", handleClick, true);
-    overlay.style.display = "none";
-    highlightBox.style.display = "none";
-    tagLabel.style.display = "none";
-    selectedBox.style.display = "none";
-    selectedLabel.style.display = "none";
-  }
-
-  // 添加事件监听
-  enableHighlight();
-  window.addEventListener("message", handleParentMessage);
-
-  // 暴露全局函数供外部调用
-  window.__iframeHighlightControl = {
-    enable: enableHighlight,
-    disable: disableHighlight,
-    fullyDisable: fullyDisableHighlight,
-    isEnabled: function isEnabled() {
-      return highlightEnabled;
-    },
-    getSelectedElement: function getSelectedElement() {
-      return selectedElement;
-    },
-    updateSelected: updateSelectedHighlight,
-    // 通过消息发送开关控制
-    sendToggleMessage: function sendToggleMessage(enabled) {
-      window.parent.postMessage({
-        type: 'iframe-highlight-status',
-        enabled: enabled || highlightEnabled,
-        source: 'iframe-highlight-injector'
-      }, '*');
-    }
-  };
-
-  // 通知父窗口脚本已加载
-  try {
-    window.parent.postMessage({
-      type: "iframe-highlight-ready",
-      data: {
-        url: window.location.href,
-        userAgent: navigator.userAgent,
-        timestamp: Date.now()
-      },
-      source: "iframe-highlight-injector"
-    }, "*");
-  } catch (error) {
-    console.warn("无法发送就绪消息到父窗口:", error);
-  }
-
-  // 清理函数
-  window.__iframeHighlightCleanup = function () {
-    fullyDisableHighlight();
-    window.removeEventListener("message", handleParentMessage);
-    if (overlay.parentElement) {
-      overlay.parentElement.removeChild(overlay);
-    }
-    delete window.__iframeHighlightInitialized;
-    delete window.__iframeHighlightCleanup;
-  };
-})();
-
-</script>
 
 <script>
 /**
