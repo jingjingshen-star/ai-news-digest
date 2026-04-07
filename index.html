@@ -1,902 +1,871 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Daily AI News</title><style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Noto+Serif+SC:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600&display=swap');
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--primary:#0D2137;--secondary:#4A90D9;--accent:#E8F4FD;--text:#1A2A3A;--light-text:#7A8FA6;--bg:#F4F8FC;--border:#D6E4F0;--tag-bg:rgba(74,144,217,0.1)}
-body{font-family:'Noto Serif SC','Playfair Display',serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:10pt;min-height:100vh;position:relative}
-.bg-pattern{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.15;overflow:hidden}
-.bg-icon{position:absolute;width:280px;height:280px;opacity:0.18;object-fit:contain}
-.corner-decoration{position:fixed;width:28px;height:28px;border:1px solid var(--border);z-index:2;pointer-events:none}
-.corner-tl{top:20px;left:20px;border-right:none;border-bottom:none}
-.corner-tr{top:20px;right:20px;border-left:none;border-bottom:none}
-.corner-bl{bottom:20px;left:20px;border-right:none;border-top:none}
-.corner-br{bottom:20px;right:20px;border-left:none;border-top:none}
-.container{max-width:800px;margin:0 auto;padding:40px 30px;position:relative;z-index:1}
-.top-accent{height:2px;background:linear-gradient(90deg,transparent 0%,var(--secondary) 30%,var(--secondary) 70%,transparent 100%);margin-bottom:30px}
-.header{text-align:center;padding-bottom:25px;border-bottom:1px solid var(--border);margin-bottom:30px}
-.lang-toggle{display:flex;justify-content:center;gap:10px;margin-bottom:20px}
-.lang-btn{padding:6px 20px;border:1px solid var(--secondary);border-radius:20px;background:transparent;color:var(--secondary);cursor:pointer;font-family:'Cormorant Garamond',serif;font-size:10pt;letter-spacing:2px;transition:all .3s}
-.lang-btn:hover,.lang-btn.active-lang{background:var(--secondary);color:#fff}
-.date-line{font-family:'Cormorant Garamond',serif;font-size:10pt;color:var(--light-text);letter-spacing:4px;text-transform:uppercase;margin-bottom:15px}
-.main-title{font-family:'Playfair Display',serif;font-size:32pt;font-weight:500;color:var(--primary);letter-spacing:2px;margin-bottom:10px}
-.subtitle{font-family:'Cormorant Garamond',serif;font-size:11pt;color:var(--secondary);letter-spacing:5px;text-transform:uppercase;font-weight:400}
-.divider{display:flex;align-items:center;justify-content:center;margin:25px 0}
-.divider-line{width:80px;height:1px;background:var(--secondary)}
-.divider-dot{width:6px;height:6px;background:var(--secondary);border-radius:50%;margin:0 12px}
-.insight-section{background:linear-gradient(135deg,var(--accent) 0%,#FFF 100%);border-left:4px solid var(--secondary);padding:22px 28px;margin-bottom:35px;border-radius:0 8px 8px 0;box-shadow:0 2px 8px rgba(13,33,55,.04)}
-.insight-header{display:flex;align-items:center;margin-bottom:14px}
-.insight-title{font-size:13pt;font-weight:600;color:var(--primary);letter-spacing:1px}
-.insight-content{font-size:10.5pt;color:var(--text);line-height:2;text-align:justify}
-.section-header{display:flex;align-items:center;margin-bottom:22px;padding-bottom:12px;border-bottom:1px solid var(--border)}
-.section-title{font-size:14pt;font-weight:600;color:var(--primary);letter-spacing:1px}
-.section-meta{margin-left:auto;font-family:'Cormorant Garamond',serif;font-size:9.5pt;color:var(--light-text);font-style:italic}
-.news-item{display:flex;padding:18px 0;border-bottom:1px solid var(--border);position:relative;align-items:flex-start;transition:all .3s ease}
-.news-item:hover{background:rgba(232,244,253,.5);margin:0 -15px;padding-left:15px;padding-right:15px;border-radius:6px}
-.news-item:last-child{border-bottom:none}
-.news-bullet{width:32px;height:32px;min-width:32px;margin-right:16px;margin-top:2px;opacity:.7;transition:opacity .3s;object-fit:contain}
-.news-item:hover .news-bullet{opacity:1}
-.news-content{flex:1}
-.news-category{display:inline-block;font-family:'Cormorant Garamond',serif;font-size:8.5pt;color:var(--secondary);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;padding:3px 10px;background:var(--tag-bg);border-radius:3px;font-weight:600}
-.news-title{font-size:11pt;font-weight:500;color:var(--text);margin-bottom:6px;line-height:1.6;font-family:'Noto Serif SC',serif}
-.news-title a{color:var(--text);text-decoration:none;transition:color .3s}
-.news-title a:hover{color:var(--primary)}
-.news-meta{display:flex;align-items:center;font-family:'Cormorant Garamond',serif;font-size:9pt;color:var(--light-text);flex-wrap:wrap;gap:6px;margin-bottom:6px}
-.news-meta .source{color:var(--secondary);font-weight:500}
-.news-meta .verify-tag{color:#4caf50;font-weight:700}
-.news-summary{font-size:9.5pt;color:var(--light-text);line-height:1.7;margin-bottom:4px;font-family:'Noto Serif SC',serif}
-.news-insight{font-size:9.5pt;color:var(--text);line-height:1.8;background:rgba(232,244,253,.5);padding:8px 12px;border-radius:6px;border-left:2px solid var(--secondary);font-family:'Noto Serif SC',serif}
-.footer{margin-top:45px;padding-top:25px;border-top:1px solid var(--border);text-align:center}
-.footer-divider{display:flex;align-items:center;justify-content:center;margin-bottom:18px}
-.footer-line{width:100px;height:1px;background:linear-gradient(90deg,transparent,var(--secondary),transparent)}
-.footer-text{font-family:'Cormorant Garamond',serif;font-size:9pt;color:var(--light-text);letter-spacing:2px}
-.footer-note{font-size:8.5pt;color:#AAA;margin-top:10px}
-.page-number{position:fixed;bottom:20px;right:30px;font-family:'Cormorant Garamond',serif;font-size:10pt;color:var(--light-text);z-index:2}
-.lang-en{display:none}
-body.show-en .lang-cn{display:none}
-body.show-en .lang-en{display:block}
-@media(max-width:768px){.container{padding:30px 20px}.main-title{font-size:24pt}.news-bullet{width:24px;height:24px}}
-</style></head><body>
-<div class="bg-pattern">
-<img src="ai_icon_brain.png" class="bg-icon" style="top:5%;left:2%">
-<img src="ai_icon_chip.png" class="bg-icon" style="top:25%;right:3%">
-<img src="ai_icon_robot.png" class="bg-icon" style="top:50%;left:60%">
-<img src="ai_icon_chart.png" class="bg-icon" style="top:70%;left:10%">
-<img src="ai_icon_terminal.png" class="bg-icon" style="top:85%;right:15%">
-</div>
-<div class="corner-decoration corner-tl"></div>
-<div class="corner-decoration corner-tr"></div>
-<div class="corner-decoration corner-bl"></div>
-<div class="corner-decoration corner-br"></div>
-<div class="container">
-<div class="top-accent"></div>
-<header class="header">
-<div class="lang-toggle">
-<button class="lang-btn active-lang" onclick="toggleLang(false)">中文</button>
-<button class="lang-btn" onclick="toggleLang(true)">En</button>
-</div>
-<div class="date-line lang-cn">2026年3月31日 · Tuesday</div>
-<div class="date-line lang-en">March 31, 2026 · Tuesday</div>
-<h1 class="main-title">Daily AI News</h1>
-<div class="subtitle">Intelligence Report</div>
-<div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
-</header>
-<section class="insight-section">
-<div class="insight-header"><span class="insight-title lang-cn">今日洞察</span><span class="insight-title lang-en">Today Insight</span></div>
-<p class="insight-content lang-cn">AI行业能来多事之秋：OpenAI承认Sora每天烋掉百万美元却用户腰斩，最终壯士斢腐关停。Anthropic Claude Mythos泄密文档曝光，性能号章史上最强；GPT-5.4百万Token上下文窗口即将落地。国内方面，阿里Qwen3.5-Omni以十分之一价格函掌“Gemini-3.1 Pro，Ai2美国开源最后旗品倒下——技术竞赛、商业博弈与监管冲突三条主线正在加速合流。</p>
-<p class="insight-content lang-en">A turbulent week: OpenAI shuts down Sora burning $1M/day with halved users; Anthropic leaked Claude Mythos promises the most powerful model ever; GPT-5.4 million-token context incoming. Domestically, Alibaba Qwen3.5-Omni beats Gemini-3.1 Pro at 1/10th price; Ai2, the last US open-source banner, falls. Technology competition, business strategy and regulatory conflict converging at speed.</p>
-</section>
-
-<section class="news-section">
-<div class="section-header">
-<span class="section-title lang-cn">国际动态</span><span class="section-title lang-en">International</span>
-<span class="section-meta lang-cn">5则 · 4个信源</span><span class="section-meta lang-en">5 articles · 4 sources</span>
-</div>
-<div class="news-list">
-<div class="news-item">
-<img src="ai_icon_chip.png" class="news-bullet">
-<div class="news-content">
-<span class="news-category"><span class="lang-cn">行业格局</span><span class="lang-en">Industry</span></span>
-<div class="news-title"><a href="https://the-decoder.com/openais-sora-burned-a-million-dollars-a-day-while-losing-half-its-users-in-record-time/" target="_blank" class="lang-cn">OpenAI正式宣布关停Sora：每天烧掉100万美元，用户量腰斩后无力回天</a><a href="https://the-decoder.com/openais-sora-burned-a-million-dollars-a-day-while-losing-half-its-users-in-record-time/" target="_blank" class="lang-en">OpenAI Shuts Down Sora: Burning $1M/Day, User Count Halved — App Dies in April, API in September</a></div>
-<div class="news-meta"><span class="source">The Decoder</span><span class="date-tag">· 3月30日</span><span class="verify-tag">✓</span></div>
-<p class="news-summary lang-cn"><strong>要点：</strong>Sora巅峰期约100万用户，随即跌至50万且从未恢复；每天运营成本约100万美元；OpenAI将算力重新分配给编程、企业和Agent产品；Sora应用将于4月关停，API于9月跟进。</p>
-<p class="news-summary lang-en"><strong>Key Points:</strong> Sora peaked at ~1M users, then dropped to 500K and never recovered; burning ~$1M/day; OpenAI redirecting compute to coding, enterprise and Agent products; Sora app shuts down April, API follows September.</p>
-<p class="news-insight lang-cn"><strong>洞察：</strong>Sora的失败不是技术失败，而是产品市场契合度的失败。在Runway等竞品冲击下，高成本与低留存暴露了OpenAI在消费者产品上的短板。这次关停标志着AI视频生成从概念验证进入商业生存的新阶段。</p>
-<p class="news-insight lang-en"><strong>Insight:</strong> Sora failure was not technological but product-market fit. Against Runway, high costs and low retention exposed OpenAI weakness in consumer products. The shutdown signals AI video generation has entered a new commercial survival phase beyond proof-of-concept.</p>
-</div>
-</div>
-<div class="news-item">
-<img src="ai_icon_brain.png" class="news-bullet">
-<div class="news-content">
-<span class="news-category"><span class="lang-cn">技术突破</span><span class="lang-en">Tech Breakthrough</span></span>
-<div class="news-title"><a href="https://the-decoder.com/anthropic-leak-reveals-new-model-claude-mythos-with-dramatically-higher-scores-on-tests-than-any-previous-model/" target="_blank" class="lang-cn">Anthropic内部文档泄密：Claude Mythos曝光，号称史上最大跨越</a><a href="https://the-decoder.com/anthropic-leak-reveals-new-model-claude-mythos-with-dramatically-higher-scores-on-tests-than-any-previous-model/" target="_blank" class="lang-en">Anthropic Leak Reveals Claude Mythos: Internal Docs Promise Biggest Leap Ever in AI History</a></div>
-<div class="news-meta"><span class="source">The Decoder</span><span class="date-tag">· 3月27日</span><span class="verify-tag">✓</span></div>
-<p class="news-summary lang-cn"><strong>要点：</strong>Anthropic内容管理系统配置错误导致约3000份内部文档外泄；新模型代号Claude Mythos，被称为有史以来最强大的模型；在编程、学术推理和网络安全基准测试中大幅超越Claude Opus 4.6。</p>
-<p class="news-summary lang-en"><strong>Key Points:</strong> Anthropic CMS misconfiguration exposed ~3,000 internal documents; new model codenamed Claude Mythos described as most powerful ever built; dramatically outperforms Opus 4.6 on coding, academic reasoning and cybersecurity benchmarks.</p>
-<p class="news-insight lang-cn"><strong>洞察：</strong>这次泄密或许是Anthropic有意为之的软发布——在正式发布前测试市场反应。Claude Mythos若如期推出，将重新定义大模型竞争格局，但其天价服务成本意味着只有大型企业客户才能率先使用。</p>
-<p class="news-insight lang-en"><strong>Insight:</strong> The leak may have been a deliberate soft launch to gauge market response. If Claude Mythos launches as described, it will redefine the LLM competitive landscape — but its extremely expensive serving cost means only large enterprise clients will access it first.</p>
-</div>
-</div>
-<div class="news-item">
-<img src="ai_icon_chart.png" class="news-bullet">
-<div class="news-content">
-<span class="news-category"><span class="lang-cn">企业战略</span><span class="lang-en">Corporate Strategy</span></span>
-<div class="news-title"><a href="https://the-decoder.com/microsoft-rolls-out-copilot-cowork-more-broadly-and-lets-ai-models-check-each-others-work/" target="_blank" class="lang-cn">Microsoft扩大Copilot Cowork：推出模型互评功能，AI审查AI</a><a href="https://the-decoder.com/microsoft-rolls-out-copilot-cowork-more-broadly-and-lets-ai-models-check-each-others-work/" target="_blank" class="lang-en">Microsoft Expands Copilot Cowork: AI Models Now Review Each Other Work — Model Council Launches</a></div>
-<div class="news-meta"><span class="source">The Decoder</span><span class="date-tag">· 3月30日</span><span class="verify-tag">✓</span></div>
-<p class="news-summary lang-cn"><strong>要点：</strong>Microsoft推出Model Council功能，用户可横向对比不同AI模型的回答；Researcher工具新增Critique模式，一个AI写草稿、另一个AI审查；整合Anthropic和OpenAI模型，号称在深度研究任务上超越Perplexity 7个百分点。</p>
-<p class="news-summary lang-en"><strong>Key Points:</strong> Microsoft launches Model Council comparing AI answers side-by-side; Researcher gets Critique mode where one AI writes drafts and another reviews; pulls from Anthropic and OpenAI, outperforming Perplexity by 7 points on deep research.</p>
-<p class="news-insight lang-cn"><strong>洞察：</strong>双AI评审机制揭示了一个趋势：当单一模型无法保证质量时，AI批AI成为提升可靠性的新路径。这也意味着Anthropic和OpenAI在企业市场的竞争正在Microsoft平台上以另一种形式持续。</p>
-<p class="news-insight lang-en"><strong>Insight:</strong> The dual-AI review reveals a new reliability path when single models cannot guarantee quality. It also means the Anthropic vs OpenAI enterprise competition is continuing in a new form on Microsoft platform.</p>
-</div>
-</div>
-<div class="news-item">
-<img src="ai_icon_robot.png" class="news-bullet">
-<div class="news-content">
-<span class="news-category"><span class="lang-cn">行业格局</span><span class="lang-en">Industry</span></span>
-<div class="news-title"><a href="https://techcrunch.com/2026/03/09/openai-and-google-employees-rush-to-anthropics-defense-in-dod-lawsuit/" target="_blank" class="lang-cn">Anthropic起诉美国国防部，OpenAI/Google员工联名声援</a><a href="https://techcrunch.com/2026/03/09/openai-and-google-employees-rush-to-anthropics-defense-in-dod-lawsuit/" target="_blank" class="lang-en">Anthropic Sues DOD Over Military Contractor Status; OpenAI & Google Employees File Amicus Brief in Support</a></div>
-<div class="news-meta"><span class="source">TechCrunch</span><span class="date-tag">· 3月9日</span><span class="verify-tag">✓</span></div>
-<p class="news-summary lang-cn"><strong>要点：</strong>美国国防部将Anthropic认定为军事承包商，威胁其非军事用途AI的商业模式；Anthropic正式起诉国防部；超过30名OpenAI和Google DeepMind员工签署请愿书公开支持Anthropic。</p>
-<p class="news-summary lang-en"><strong>Key Points:</strong> The US DOD labeled Anthropic a military contractor, threatening its non-military AI business model; Anthropic filed suit; 30+ OpenAI and Google DeepMind employees signed petitions supporting Anthropic.</p>
-<p class="news-insight lang-cn"><strong>洞察：</strong>这是AI行业首次出现跨公司员工联合支持同一立场的标志性事件。Anthropic坚持AI安全优先的立场正在获得越来越多科技从业者的认同，但也意味着它与政府机构的博弈已进入实质性阶段。</p>
-<p class="news-insight lang-en"><strong>Insight:</strong> This is a landmark event where cross-company employees united for the same cause. Anthropic AI safety first stance is gaining认同 among tech workers, but it also means its showdown with government agencies has entered a substantive stage.</p>
-</div>
-</div>
-<div class="news-item">
-<img src="ai_icon_terminal.png" class="news-bullet">
-<div class="news-content">
-<span class="news-category"><span class="lang-cn">技术突破</span><span class="lang-en">Tech Breakthrough</span></span>
-<div class="news-title"><a href="https://the-decoder.com/gpt-5-4-reportedly-brings-a-million-token-context-window-and-an-extreme-reasoning-mode/" target="_blank" class="lang-cn">GPT-5.4传闻曝光：支持百万Token上下文窗口加极限推理模式</a><a href="https://the-decoder.com/gpt-5-4-reportedly-brings-a-million-token-context-window-and-an-extreme-reasoning-mode/" target="_blank" class="lang-en">GPT-5.4 Reportedly Adds Million-Token Context Window and Extreme Reasoning Mode</a></div>
-<div class="news-meta"><span class="source">The Decoder</span><span class="date-tag">· 3月27日</span><span class="verify-tag">✓</span></div>
-<p class="news-summary lang-cn"><strong>要点：</strong>OpenAI即将推出GPT-5.4，据报引入100万Token上下文窗口和极限推理模式；Claude Mythos泄密文档同时透露OpenAI正在准备代号Spud的新模型，已完成预训练。</p>
-<p class="news-summary lang-en"><strong>Key Points:</strong> OpenAI upcoming GPT-5.4 reportedly introduces 1-million-token context and extreme reasoning mode; Claude Mythos leak also revealed OpenAI preparing codenamed Spud, pretraining already complete.</p>
-<p class="news-insight lang-cn"><strong>洞察：</strong>百万Token上下文意味着AI可以一次性处理整本书籍、全部代码库或数百份长文档。这是从助手向专业工具转变的核心支撑，也是Agent时代基础设施竞争白热化的标志。</p>
-<p class="news-insight lang-en"><strong>Insight:</strong> A million-token context means AI can process entire books, full codebases or hundreds of documents in one pass — the core support for the shift from assistant to professional tool, and a marker of infrastructure competition heating up for the Agent era.</p>
-</div>
-</div>
-</div>
-</section>
-
-<section class="news-section">
-<div class="section-header">
-<span class="section-title lang-cn">国内动态</span><span class="section-title lang-en">China</span>
-<span class="section-meta lang-cn">5则 · 4个信源</span><span class="section-meta lang-en">5 articles · 4 sources</span>
-</div>
-<div class="news-list">
-<div class="news-item">
-<img src="ai_icon_chip.png" class="news-bullet">
-<div class="news-content">
-<span class="news-category"><span class="lang-cn">技术突破</span><span class="lang-en">Tech Breakthrough</span></span>
-<div class="news-title"><a href="https://www.qbitai.com/2026/03/393460.html" target="_blank" class="lang-cn">阿里发布Qwen3.5-Omni：215项任务击败Gemini-3.1 Pro，定价仅为十分之一</a><a href="https://www.qbitai.com/2026/03/393460.html" target="_blank" class="lang-en">Alibaba Releases Qwen3.5-Omni: Tops Gemini-3.1 Pro on 215 Tasks, Priced at One-Tenth the Cost</a></div>
-<div class="news-meta"><span class="source">量子位</span><span class="date-tag">· 3月30日</span><span class="verify-tag">✓</span></div>
-<p class="news-summary lang-cn"><strong>要点：</strong>阿里于3月30日发布Qwen3.5-Omni，在音视频理解、识别、交互等215项任务中取得SOTA，超越Gemini-3.1 Pro；支持113种语言和方言识别；每百万Tokens输入不到0.8元，约为Gemini的十分之一。</p>
-<p class="news-summary lang-en"><strong>Key Points:</strong> Alibaba released Qwen3.5-Omni on March 30, achieving SOTA on 215 audio/video/voice tasks, outperforming Gemini-3.1 Pro; supports 113 languages/dialects; priced at less than 0.8 yuan per million tokens, roughly 1/10th of Gemini cost.</p>
-<p class="news-insight lang-cn"><strong>洞察：</strong>Qwen3.5-Omni是中国在多模态领域的实质性突破。价格优势加性能领先的双重组合正在重塑全球AI多模态市场格局，标志着中国AI企业从追赶者向定义者的身份转变。</p>
-<p class="news-insight lang-en"><strong>Insight:</strong> Qwen3.5-Omni is a substantial breakthrough for China in multimodal AI. The combination of price advantage and leading performance is reshaping the global multimodal market, marking a shift from follower to standard-setter for Chinese AI companies.</p>
-</div>
-</div>
-<div class="news-item">
-<img src="ai_icon_brain.png" class="news-bullet">
-<div class="news-content">
-<span class="news-category"><span class="lang-cn">技术突破</span><span class="lang-en">Tech Breakthrough</span></span>
-<div class="news-title"><a href="https://www.qbitai.com/2026/03/393235.html" target="_blank" class="lang-cn">DeepSeek网页版大升级后宕机11小时：静默升级V3新版，被猜测V4将至</a><a href="https://www.qbitai.com/2026/03/393235.html" target="_blank" class="lang-en">DeepSeek Silent Model Upgrade: Website Crashes 11 Hours After Major Update — V4 Rumors Swirl</a></div>
-<div class="news-meta"><span class="source">量子位</span><span class="date-tag">· 3月30日</span><span class="verify-tag">✓</span></div>
-<p class="news-summary lang-cn"><strong>要点：</strong>DeepSeek网页版于3月29日静默升级后宕机超过11小时；模型自我介绍已改为DeepSeek-V3，知识截止日期推断延至2026年1月；上周同时开启17个Agent方向岗位，被认为是下一代模型发布的前兆。</p>
-<p class="news-summary lang-en"><strong>Key Points:</strong> DeepSeek web version silently upgraded on March 29, followed by 11+ hour outage; model now identifies as DeepSeek-V3 with knowledge cutoff extending to January 2026; 17 Agent-related jobs posted last week, fueling V4 speculation.</p>
-<p class="news-insight lang-cn"><strong>洞察：</strong>DeepSeek的静默升级模式已成为其品牌文化——不预告、不公告，用产品说话。11小时的宕机反而成为最好的营销，让用户主动参与推理新模型版本的乐趣中，体现了AI时代用户与产品全新的互动关系。</p>
-<p class="news-insight lang-en"><strong>Insight:</strong> DeepSeek silent upgrade has become its brand — no announcements, just product. The 11-hour crash became the best marketing, engaging users in deducing the new model version, showcasing a new kind of interaction between AI products and users.</p>
-</div>
-</div>
-<div class="news-item">
-<img src="ai_icon_robot.png" class="news-bullet">
-<div class="news-content">
-<span class="news-category"><span class="lang-cn">技术突破</span><span class="lang-en">Tech Breakthrough</span></span>
-<div class="news-title"><a href="https://www.qbitai.com/2026/03/393645.html" target="_blank" class="lang-cn">Meta华人实习生主导发布Hyperagents论文：AI可自我进化，已获ICLR 2026接收</a><a href="https://www.qbitai.com/2026/03/393645.html" target="_blank" class="lang-en">Meta Chinese Intern Leads Hyperagents Paper: AI That Evolves Itself — Accepted at ICLR 2026</a></div>
-<div class="news-meta"><span class="source">量子位</span><span class="date-tag">· 3月31日</span><span class="verify-tag">✓</span></div>
-<p class="news-summary lang-cn"><strong>要点：</strong>Meta研究团队发布Hyperagents论文，结合哥德尔机思想与达尔文开放算法，实现AI持续自我迭代；在SWE-bench上性能从20.0%自动提升至50.0%；论文已被ICLR 2026接收；第一作者Jenny Zhang为华人实习生。</p>
-<p class="news-summary lang-en"><strong>Key Points:</strong> Meta published Hyperagents paper combining Gödel Machine theory with Darwinian algorithms for AI self-improvement; on SWE-bench, performance auto-improved from 20.0% to 50.0%; accepted at ICLR 2026; lead author Jenny Zhang is a Chinese-Canadian intern.</p>
-<p class="news-insight lang-cn"><strong>洞察：</strong>从会学习到会改进自己的学习方式，这是AI能力的重大飞跃。Hyperagents表明AI的自我迭代可以深入到底层学习逻辑本身——这或许是通向AGI的关键一步，也意味着AI自我改进能力正在从理论走向实证。</p>
-<p class="news-insight lang-en"><strong>Insight:</strong> The shift from can learn to can improve how it learns is a significant leap. Hyperagents shows AI self-iteration at the meta-learning level — potentially a crucial step toward AGI, marking the shift from theory to empirical evidence for AI self-improvement.</p>
-</div>
-</div>
-<div class="news-item">
-<img src="ai_icon_chart.png" class="news-bullet">
-<div class="news-content">
-<span class="news-category"><span class="lang-cn">行业格局</span><span class="lang-en">Industry Landscape</span></span>
-<div class="news-title"><a href="https://www.qbitai.com/2026/03/393395.html" target="_blank" class="lang-cn">Ai2开源梦断：核心团队整体加入微软，美国开源AI最后旗帜倒下</a><a href="https://www.qbitai.com/2026/03/393395.html" target="_blank" class="lang-en">Ai2 Open-Source Dream Ends: Core Team Collectively Joins Microsoft, Last US Open-Source AI Banner Falls</a></div>
-<div class="news-meta"><span class="source">量子位</span><span class="date-tag">· 3月30日</span><span class="verify-tag">✓</span></div>
-<p class="news-summary lang-cn"><strong>要点：</strong>艾伦人工智能研究所削减开源模型OLMo开发资金，核心团队几乎全部加入微软超级智能团队；前CEO、COO及OLMo项目联合负责人集体出走；资助方策略转变，倾向于AI应用而非开源基础模型。</p>
-<p class="news-summary lang-en"><strong>Key Points:</strong> AI2 cuts OLMo open-source funding; core team almost entirely joins Microsoft Super Intelligence team; former CEO, COO and OLMo co-lead among those departing; funder shifts strategy toward AI applications over open-source base models.</p>
-<p class="news-insight lang-cn"><strong>洞察：</strong>Ai2的陨落标志着美国非营利AI研究模式的结构性困境：当OpenAI、谷歌们投入数百亿美元时，非营利组织难以维持竞争。这也意味着中国开源模型将更容易获得全球市场份额——MIT报告显示中国开源模型全球下载量已达17.1%，首次超越美国。</p>
-<p class="news-insight lang-en"><strong>Insight:</strong> AI2 fall marks the structural dilemma of US nonprofit AI research: when OpenAI and Google spend billions, nonprofits cannot compete. This means Chinese open-source models will more easily gain global market share — MIT reports Chinese open-source downloads at 17.1%, first overtaking the US.</p>
-</div>
-</div>
-<div class="news-item">
-<img src="ai_icon_terminal.png" class="news-bullet">
-<div class="news-content">
-<span class="news-category"><span class="lang-cn">技术突破</span><span class="lang-en">Tech Breakthrough</span></span>
-<div class="news-title"><a href="https://www.qbitai.com/2026/03/393296.html" target="_blank" class="lang-cn">国产世界模型GigaWorld-1登顶全球第一：3D准确度近满分，断层领先谷歌英伟达</a><a href="https://www.qbitai.com/2026/03/393296.html" target="_blank" class="lang-en">Chinese World Model GigaWorld-1 Tops Global: 3D Accuracy Near-Perfect, Surpassing Google and NVIDIA</a></div>
-<div class="news-meta"><span class="source">量子位</span><span class="date-tag">· 3月30日</span><span class="verify-tag">✓</span></div>
-<p class="news-summary lang-cn"><strong>要点：</strong>极佳科技发布GigaWorld-1，在WorldArena榜单综合得分突破60分登顶全球第一；3D准确度近满分，物理遵循能力相比第二名提升16%；已开源核心代码，半个月内HuggingFace下载量突破16000次。</p>
-<p class="news-summary lang-en"><strong>Key Points:</strong> Jijia Technology released GigaWorld-1, topping WorldArena global rankings with composite score exceeding 60; near-perfect 3D accuracy, physics adherence 16% ahead of second place; core code open-sourced, 16000+ HuggingFace downloads in half a month.</p>
-<p class="news-insight lang-cn"><strong>洞察：</strong>世界模型是具身AI的核心基础设施，GigaWorld-1的突破意味着中国在物理世界模拟能力上占据了先机。在机器人、自动驾驶等需要真实物理交互的领域，世界模型的优势将转化为真实的商业竞争力。</p>
-<p class="news-insight lang-en"><strong>Insight:</strong> World models are core infrastructure for embodied AI; GigaWorld-1 breakthrough means China has seized the initiative in physical world simulation. In robotics and autonomous driving requiring real physical interaction, world model advantages will translate into genuine commercial competitiveness.</p>
-</div>
-</div>
-</div>
-</section>
-<footer class="footer">
-<div class="footer-divider"><div class="footer-line"></div></div>
-<div class="footer-text lang-cn">每天早上 9 点自动生成</div>
-<div class="footer-text lang-en">Generated daily at 9:00 AM</div>
-<div class="footer-note lang-cn">由 OpenClaw Daily AI News Digest 生成 · 技术突破 / 行业格局 / 企业战略 · 全部链接已验证</div>
-<div class="footer-note lang-en">Powered by OpenClaw Daily AI News Digest · Tech Breakthrough · Industry · Corporate Strategy · All links verified</div>
-</footer>
-</div>
-<div class="page-number lang-cn">— 1 —</div>
-<div class="page-number lang-en">— 1 —</div>
-<script>
-function toggleLang(en){var buttons=document.querySelectorAll('.lang-btn');if(en){document.body.classList.add('show-en');buttons[0].classList.remove('active-lang');buttons[1].classList.add('active-lang');}else{document.body.classList.remove('show-en');buttons[0].classList.add('active-lang');buttons[1].classList.remove('active-lang');}}
-</script>
-
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI News Digest · 2026年04月07日</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+:root {
+  --deep-blue: #0D2137;
+  --tech-blue: #4A90D9;
+  --ice-white: #E8F4FD;
+  --white: #FFFFFF;
+  --text-dark: #1A2332;
+  --text-light: #8FA4BC;
+  --tag-tech-trend: #2563EB;
+  --tag-tech-breakthrough: #7C3AED;
+  --tag-industry: #059669;
+  --tag-corp: #DC2626;
+  --tag-product: #D97706;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-}
-
-.inland-security-footer {
-  position: fixed;
-  z-index: 10;
-  bottom: 0;
-  right: 0;
-  width: fit-content;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.tooltip-container {
+  font-family: 'Noto Sans SC', 'Inter', -apple-system, sans-serif;
+  background-color: #0a1a2e;
+  color: var(--text-dark);
+  min-height: 100vh;
   position: relative;
 }
 
-.trigger-content {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  background-color: transparent;
-  border-radius: 8px;
-  cursor: pointer;
+.bg-icons {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
 }
-
-.minimax-link {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  font-weight: 300;
-  color: #adadad;
-  text-decoration: none;
-}
-
-.minimax-link:visited {
-  color: #adadad;
-}
-
-.minimax-link:hover {
-  color: #666666;
-}
-
-.tooltip-content {
+.bg-icon {
   position: absolute;
-  bottom: 100%;
-  right: 0;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 8px;
-  padding-bottom: 16px; /* 8px 内容间距 + 8px 用于鼠标移动的透明区域 */
-  font-size: 12px;
-  line-height: 17px;
-  background-color: #fafafa;
-  border-radius: 12px;
-  white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  color: #171717;
+  opacity: 0.07;
+  filter: drop-shadow(0 0 30px rgba(74, 144, 217, 0.3));
+}
+.bg-icon:nth-child(1) { top: 5%; left: 5%; width: 120px; }
+.bg-icon:nth-child(2) { top: 15%; right: 8%; width: 100px; }
+.bg-icon:nth-child(3) { top: 40%; left: 2%; width: 80px; }
+.bg-icon:nth-child(4) { top: 60%; right: 3%; width: 110px; }
+.bg-icon:nth-child(5) { bottom: 10%; left: 8%; width: 90px; }
+.bg-icon:nth-child(6) { top: 30%; left: 45%; width: 70px; }
+.bg-icon:nth-child(7) { bottom: 30%; right: 15%; width: 85px; }
+.bg-icon:nth-child(8) { top: 75%; left: 35%; width: 75px; }
+.bg-icon:nth-child(9) { top: 50%; left: 20%; width: 65px; }
+.bg-icon:nth-child(10) { bottom: 5%; right: 30%; width: 95px; }
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 40px 20px 60px;
 }
 
-/* 创建透明的连接区域，让鼠标可以平滑移动到 tooltip */
-.tooltip-content::after {
+.header {
+  background: linear-gradient(135deg, var(--deep-blue) 0%, #1a3a5c 50%, var(--tech-blue) 100%);
+  border-radius: 24px;
+  padding: 48px 48px 40px;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(13, 33, 55, 0.5);
+}
+.header::before {
   content: '';
   position: absolute;
-  bottom: -8px;
-  left: 0;
-  right: 0;
-  height: 16px;
+  top: -50%; right: -20%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(74,144,217,0.3) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -30%; left: -10%;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(74,144,217,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(74,144,217,0.2);
+  border: 1px solid rgba(74,144,217,0.4);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--tech-blue);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.header h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: 42px;
+  font-weight: 900;
+  color: var(--white);
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+.header-date {
+  font-size: 16px;
+  color: rgba(255,255,255,0.6);
+  font-weight: 500;
+  margin-bottom: 28px;
+}
+.header-date span { color: var(--tech-blue); font-weight: 700; }
+
+.insight-card {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(74,144,217,0.3);
+  border-radius: 16px;
+  padding: 20px 24px;
+}
+.insight-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--tech-blue);
+  margin-bottom: 10px;
+}
+.insight-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.9);
 }
 
-.tooltip-container:hover .tooltip-content {
-  display: flex;
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 36px;
+}
+.stat-card {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(13,33,55,0.08);
+}
+.stat-num {
+  font-family: 'Inter', sans-serif;
+  font-size: 32px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--deep-blue), var(--tech-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-label {
+  font-size: 12px;
+  color: var(--text-light);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.info-section {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-}
-
-.beian-link {
+.section-header {
   display: flex;
   align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.section-header h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--white);
+}
+.section-header .line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, rgba(74,144,217,0.5), transparent);
+}
+.section-header.cn h2 { color: var(--deep-blue); }
+.section-header.cn .line { background: linear-gradient(to right, rgba(13,33,55,0.2), transparent); }
+
+.news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.news-card {
+  background: var(--white);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(13,33,55,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.news-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(13,33,55,0.15);
+}
+.news-card-inner {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+}
+.news-icon-col {
+  background: linear-gradient(180deg, var(--deep-blue) 0%, #1a3a5c 100%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 20px;
+}
+.news-icon-col img {
+  width: 32px;
+  height: 32px;
+  opacity: 0.85;
+}
+.news-content {
+  padding: 20px 22px 20px 18px;
+}
+.news-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+.tag-tech-trend { background: #EFF6FF; color: var(--tag-tech-trend); }
+.tag-tech-breakthrough { background: #F5F3FF; color: var(--tag-tech-breakthrough); }
+.tag-industry { background: #ECFDF5; color: var(--tag-industry); }
+.tag-corp { background: #FEF2F2; color: var(--tag-corp); }
+.tag-product { background: #FFFBEB; color: var(--tag-product); }
+.news-source {
+  font-size: 12px;
+  color: var(--text-light);
+  font-weight: 600;
+}
+.news-date { font-size: 12px; color: var(--text-light); }
+
+.news-body-en {
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #F1F5F9;
+}
+.news-title-en {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--deep-blue);
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+.news-title-en a {
   text-decoration: none;
-  color: #171717;
+  color: var(--deep-blue);
+  transition: color 0.15s;
+}
+.news-title-en a:hover { color: var(--tech-blue); }
+.news-keypts-en {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: #475569;
+  margin-bottom: 8px;
+}
+.news-insight-en {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--tech-blue);
+  background: #F0F7FF;
+  border-left: 3px solid var(--tech-blue);
+  padding: 8px 12px;
+  border-radius: 0 8px 8px 0;
 }
 
-.beian-icon {
-  width: 14px;
-  height: 14px;
-  margin-right: 2px;
+.news-title-cn {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1E3A5F;
+  line-height: 1.45;
+  margin-bottom: 8px;
+}
+.news-title-cn a {
+  text-decoration: none;
+  color: #1E3A5F;
+  transition: color 0.15s;
+}
+.news-title-cn a:hover { color: var(--tech-blue); }
+.news-keypts-cn {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: #475569;
+  margin-bottom: 8px;
+}
+.news-insight-cn {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #2563EB;
+  background: #EFF6FF;
+  border-left: 3px solid #2563EB;
+  padding: 8px 12px;
+  border-radius: 0 8px 8px 0;
 }
 
-.underline-text {
-  color: #171717;
-  text-decoration: underline;
+.footer {
+  text-align: center;
+  padding: 32px 0 16px;
+  color: rgba(255,255,255,0.35);
+  font-size: 13px;
 }
+.footer a { color: var(--tech-blue); text-decoration: none; }
 
-.underline-text:hover {
-  color: #000000;
+@media (max-width: 600px) {
+  .header { padding: 32px 24px 28px; }
+  .header h1 { font-size: 28px; }
+  .stats-row { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .stat-num { font-size: 24px; }
+  .news-card-inner { grid-template-columns: 44px 1fr; }
+  .news-icon-col { padding-top: 16px; }
+  .news-icon-col img { width: 24px; height: 24px; }
 }
-
-/* 深色模式支持 */
-@media (prefers-color-scheme: dark) {
-  .trigger-content {
-    background-color: transparent;
-  }
-
-  .minimax-link,
-  .minimax-link:visited {
-    color: #666666;
-  }
-
-  .minimax-link:hover {
-    color: #adadad;
-  }
-
-  .tooltip-content {
-    background-color: #262626;
-    color: #ededed;
-  }
-
-  .beian-link,
-  .underline-text {
-    color: #ededed;
-  }
-
-  .underline-text:hover {
-    color: #ffffff;
-  }
-}
-
 </style>
-<div class="inland-security-footer">
-  <div class="tooltip-container">
-    <div class="trigger-content">
-      <a href="https://www.minimaxi.com/" target="_blank" rel="noreferrer" class="minimax-link">
-        <span>© 2026 MiniMax</span>
-      </a>
-    </div>
-    <div class="tooltip-content">
-      <section class="info-section">
-        <span>上海稀宇科技有限公司</span>
-      </section>
+</head>
+<body>
 
-      <section class="info-section">
-        <a class="beian-link" href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31010402010179" target="_blank" rel="noreferrer">
-          <img alt="hailuo-beian-icon" src="https://cdn.hailuoai.com/hailuo-video-web/public_assets/223037d3-79fd-4db0-a456-749f38a6a14b.png" class="beian-icon">
-          <span class="underline-text">沪公网安备31010402010179号</span>
-        </a>
-        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer" class="underline-text">
-          沪ICP备2023003282号-38
-        </a>
-      </section>
-
-      <section class="info-section">
-        <span>模型名称：MiniMax</span>
-        <span>备案号：Shanghai-MiniMax-202505230046</span>
-      </section>
-
-      <section class="info-section">
-        <a href="https://agent.minimaxi.com/doc/zh/terms-of-service.html" target="_blank" rel="noreferrer" class="underline-text">
-          用户协议
-        </a>
-        <a href="https://agent.minimaxi.com/doc/zh/privacy-policy.html" target="_blank" rel="noreferrer" class="underline-text">
-          隐私政策
-        </a>
-      </section>
-    </div>
-  </div>
+<div class="bg-icons">
+  <img class="bg-icon" src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_brain.png" alt="">
+  <img class="bg-icon" src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_chip.png" alt="">
+  <img class="bg-icon" src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_robot.png" alt="">
+  <img class="bg-icon" src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_chart.png" alt="">
+  <img class="bg-icon" src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_terminal.png" alt="">
+  <img class="bg-icon" src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_brain.png" alt="">
+  <img class="bg-icon" src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_chip.png" alt="">
+  <img class="bg-icon" src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_robot.png" alt="">
+  <img class="bg-icon" src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_chart.png" alt="">
+  <img class="bg-icon" src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_terminal.png" alt="">
 </div>
 
+<div class="container">
 
-<script>
-/**
- * Iframe 元素高亮注入脚本
- * 需要在目标网站中引入此脚本来支持跨域 iframe 高亮功能
- *
- * 使用方法：
- * 1. 将此脚本添加到目标网站的 HTML 中
- * 2. 或通过浏览器扩展、用户脚本等方式注入
- */
+  <header class="header">
+    <div class="header-badge">🤖 AI NEWS DIGEST</div>
+    <h1>AI News Digest</h1>
+    <div class="header-date">2026年04月07日 &nbsp;·&nbsp; <span>Tuesday</span></div>
+    <div class="insight-card">
+      <div class="insight-label">💡 今日洞察</div>
+      <p class="insight-text">
+        2026年4月的第一周，AI领域呈现"内外双线并进"的格局：国际上，OpenAI、微软、高通等巨头正从模型竞争转向AI经济制度设计——从"机器人税"到"AI代理之年"，AI正在重新定义生产关系与财富分配规则；国内，智谱AI港交所上市标志着大模型商业化正式进入价值兑现期，具身智能突破万亿市场规模，VLA等端到端具身模型加速成熟。从"参数为王"到"治理为基"，AI正从单一技术竞赛全面转向技术、经济与社会系统的协同演进。
+      </p>
+    </div>
+  </header>
 
-(function () {
-  "use strict";
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num">7</div>
+      <div class="stat-label">国际要闻</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">6</div>
+      <div class="stat-label">国内动态</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">5</div>
+      <div class="stat-label">内容分类</div>
+    </div>
+  </div>
 
-  // 检查是否在 iframe 中
-  if (window.self === window.top) {
-    return; // 不在 iframe 中，不执行
-  }
+  <!-- International Section -->
+  <div class="section-header">
+    <h2>🌍 国际要闻</h2>
+    <div class="line"></div>
+  </div>
 
-  // 检查是否已经初始化过
-  if (window.__iframeHighlightInitialized) {
-    return;
-  }
-  window.__iframeHighlightInitialized = true;
-  console.log("Iframe 高亮脚本已加载");
+  <div class="news-list">
 
-  // 创建高亮覆盖层
-  var overlay = document.createElement("div");
-  overlay.id = "iframe-highlight-overlay";
-  overlay.style.cssText = "\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100vw;\n    height: 100vh;\n    pointer-events: none;\n    z-index: 999999;\n    overflow: hidden;\n  ";
+    <article class="news-card">
+      <div class="news-card-inner">
+        <div class="news-icon-col">
+          <img src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_brain.png" alt="icon">
+        </div>
+        <div class="news-content">
+          <div class="news-meta">
+            <span class="tag tag-corp">企业战略</span>
+            <span class="news-source">TechCrunch</span>
+            <span class="news-date">2026-04-06</span>
+          </div>
+          <div class="news-body-en">
+            <div class="news-title-en">
+              <a href="https://techcrunch.com/2026/04/06/openais-vision-for-the-ai-economy-public-wealth-funds-robot-taxes-and-a-four-day-work-week/" target="_blank">OpenAI's Vision for the AI Economy: Public Wealth Funds, Robot Taxes, and a Four-Day Workweek</a>
+            </div>
+            <div class="news-keypts-en">
+              <strong>Key Points:</strong> OpenAI proposes robot taxes to shift tax burden from labor to capital; public wealth funds to distribute AI prosperity; subsidized four-day workweek; massive electricity infrastructure expansion; positioning AI as a utility with systemic safeguards.
+            </div>
+            <div class="news-insight-en">
+              <strong>Insight:</strong> This marks AI's first serious foray into political economy. By proposing redistribution before forced regulation arrives, OpenAI is shaping its own governance terms — a move that could define the industry's social license for the next decade.
+            </div>
+          </div>
+          <div class="news-title-cn">
+            <a href="https://techcrunch.com/2026/04/06/openais-vision-for-the-ai-economy-public-wealth-funds-robot-taxes-and-a-four-day-work-week/" target="_blank">OpenAI发布AI经济蓝图：机器人税、全民财富基金与四天工作制</a>
+          </div>
+          <div class="news-keypts-cn">
+            <strong>要点：</strong>OpenAI建议向机器人征税，将税负从劳动转向资本；提议建立公共财富基金分配AI红利；支持补贴四天工作制；呼吁大规模电力基础设施建设；将AI定位为需配套系统性保障的公用事业。
+          </div>
+          <div class="news-insight-cn">
+            <strong>洞察：</strong>这是AI首次严肃进入政治经济学领域。OpenAI在被迫接受监管前主动提出系统性再分配，试图塑造自身治理规则——这一战略举措将决定该行业未来十年的社会合法性。
+          </div>
+        </div>
+      </div>
+    </article>
 
-  // 创建悬停高亮框（虚线边框）
-  var highlightBox = document.createElement("div");
-  highlightBox.id = "iframe-highlight-box";
-  highlightBox.style.cssText = "\n    position: absolute;\n    border: 2px dashed #007AFF;\n    background: rgba(0, 122, 255, 0.08);\n    pointer-events: none;\n    display: none;\n    transition: all 0.1s ease;\n    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.8);\n    border-radius: 2px;\n  ";
+    <article class="news-card">
+      <div class="news-card-inner">
+        <div class="news-icon-col">
+          <img src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_chip.png" alt="icon">
+        </div>
+        <div class="news-content">
+          <div class="news-meta">
+            <span class="tag tag-product">产品动态</span>
+            <span class="news-source">TechCrunch</span>
+            <span class="news-date">2026-04-02</span>
+          </div>
+          <div class="news-body-en">
+            <div class="news-title-en">
+              <a href="https://techcrunch.com/2026/04/02/microsoft-takes-on-ai-rivals-with-three-new-foundational-models/" target="_blank">Microsoft Takes on AI Rivals with Three New Foundational Models</a>
+            </div>
+            <div class="news-keypts-en">
+              <strong>Key Points:</strong> Microsoft AI (MAI) launches MAI-Transcribe-1, MAI-Voice-1, MAI-Image-2 covering text, voice, and image; priced lower than Google and OpenAI equivalents; developed by Mustafa Suleyman's MAI Superintelligence team; available on Microsoft Foundry and MAI Playground.
+            </div>
+            <div class="news-insight-en">
+              <strong>Insight:</strong> Releasing competitive proprietary models while remaining OpenAI's biggest investor is a deliberate hedging strategy. Enterprise AI buyers will soon have a credible third option beyond OpenAI and Google — a market structure shift with profound pricing implications.
+            </div>
+          </div>
+          <div class="news-title-cn">
+            <a href="https://techcrunch.com/2026/04/02/microsoft-takes-on-ai-rivals-with-three-new-foundational-models/" target="_blank">微软发布三大基础模型：Transcribe/Voice/Image，剑指OpenAI和Google</a>
+          </div>
+          <div class="news-keypts-cn">
+            <strong>要点：</strong>微软AI（MAI）发布MAI-Transcribe-1（语音）、MAI-Voice-1（语音生成）、MAI-Image-2（图像）三款基础模型；定价低于Google和OpenAI同类产品；由Mustafa Suleyman团队开发；已上线Microsoft Foundry和MAI Playground。
+          </div>
+          <div class="news-insight-cn">
+            <strong>洞察：</strong>微软在仍是OpenAI最大投资者的同时发布竞争性自有模型，是精心设计的套利战略。企业AI买家将很快拥有OpenAI和Google之外的第三个可信选项——这一市场结构变化将产生深远的定价影响。
+          </div>
+        </div>
+      </div>
+    </article>
 
-  // 创建选中节点的常驻高亮框（实线边框）
-  var selectedBox = document.createElement("div");
-  selectedBox.id = "iframe-selected-box";
-  selectedBox.style.cssText = "\n    position: absolute;\n    border: 2px solid #007AFF;\n    pointer-events: none;\n    display: none;\n    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.9), 0 0 8px rgba(255, 107, 53, 0.4);\n    border-radius: 2px;\n    z-index: 1000000;\n  ";
+    <article class="news-card">
+      <div class="news-card-inner">
+        <div class="news-icon-col">
+          <img src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_robot.png" alt="icon">
+        </div>
+        <div class="news-content">
+          <div class="news-meta">
+            <span class="tag tag-tech-breakthrough">技术突破</span>
+            <span class="news-source">Ars Technica</span>
+            <span class="news-date">2026-04-03</span>
+          </div>
+          <div class="news-body-en">
+            <div class="news-title-en">
+              <a href="https://arstechnica.com/ai/2026/04/research-finds-ai-users-scarily-willing-to-surrender-their-cognition-to-llms/" target="_blank">"Cognitive Surrender" Leads AI Users to Abandon Logical Thinking, Research Finds</a>
+            </div>
+            <div class="news-keypts-en">
+              <strong>Key Points:</strong> University of Pennsylvania study (1,300+ participants) finds AI users overwhelmingly accept AI answers uncritically; "cognitive surrender" is strongest with fluent, confident AI outputs; high trust in AI correlates with higher vulnerability; fluid IQ is the strongest protective factor.
+            </div>
+            <div class="news-insight-en">
+              <strong>Insight:</strong> This is the first large-scale empirical evidence of AI eroding human critical reasoning. If verified in applied settings, it has alarming implications for AI deployment in medicine, law, and governance — domains where uncritical acceptance of AI outputs could cause systemic harm.
+            </div>
+          </div>
+          <div class="news-title-cn">
+            <a href="https://arstechnica.com/ai/2026/04/research-finds-ai-users-scarily-willing-to-surrender-their-cognition-to-llms/" target="_blank">宾大研究：当"认知投降"发生时，AI用户放弃独立思考</a>
+          </div>
+          <div class="news-keypts-cn">
+            <strong>要点：</strong>宾夕法尼亚大学1300余名受试者研究发现，用户普遍不经验证接受AI答案；"认知投降"在流畅、自信风格的AI输出面前最为严重；对AI高度信任与更高易感性相关；流体智力（Fluid IQ）是最强保护因素。
+          </div>
+          <div class="news-insight-cn">
+            <strong>洞察：</strong>这是AI大规模侵蚀人类批判性推理能力的首个大规模实证证据。对AI在医疗、法律和治理等高风险领域的部署具有严峻警示意义——这些领域对AI输出的无批判接受可能造成系统性危害。
+          </div>
+        </div>
+      </div>
+    </article>
 
-  // 创建悬停标签显示
-  var tagLabel = document.createElement("div");
-  tagLabel.id = "iframe-tag-label";
-  tagLabel.style.cssText = "\n    position: absolute;\n    background: #007AFF;\n    color: white;\n    padding: 2px 6px;\n    font-size: 11px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n    border-radius: 2px;\n    pointer-events: none;\n    display: none;\n    white-space: nowrap;\n    z-index: 1000001;\n    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);\n    font-weight: 500;\n  ";
+    <article class="news-card">
+      <div class="news-card-inner">
+        <div class="news-icon-col">
+          <img src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_chart.png" alt="icon">
+        </div>
+        <div class="news-content">
+          <div class="news-meta">
+            <span class="tag tag-tech-trend">技术趋势</span>
+            <span class="news-source">Ars Technica</span>
+            <span class="news-date">2026-04-03</span>
+          </div>
+          <div class="news-body-en">
+            <div class="news-title-en">
+              <a href="https://arstechnica.com/tech-policy/2026/04/sad-trumps-ai-data-center-push-is-failing-blame-his-own-tariffs/" target="_blank">Trump's AI Data Center Push Is Failing — Blame His Own Tariffs</a>
+            </div>
+            <div class="news-keypts-en">
+              <strong>Key Points:</strong> US tariffs on Chinese power infrastructure imports block critical components for AI data centers; nearly half of planned US data center projects face delay or cancellation in 2026; community opposition citing electricity costs, environmental impact, and quality of life is generating local and state-level moratoriums.
+            </div>
+            <div class="news-insight-en">
+              <strong>Insight:</strong> The irony is sharp: the administration's own trade policy is undermining its AI infrastructure ambitions. This creates a structural opening for non-US jurisdictions (UAE, Saudi Arabia, Singapore, EU) to attract AI compute investment, reshaping the geopolitical geography of AI development.
+            </div>
+          </div>
+          <div class="news-title-cn">
+            <a href="https://arstechnica.com/tech-policy/2026/04/sad-trumps-ai-data-center-push-is-failing-blame-his-own-tariffs/" target="_blank">美国AI数据中心建设受挫：关税政策反噬，2026年近半项目面临延期</a>
+          </div>
+          <div class="news-keypts-cn">
+            <strong>要点：</strong>美国对中国电力基础设施加征关税，阻断AI数据中心关键组件进口；2026年近半数规划中的美国数据中心面临延期或取消；地方社区反对（电力成本、环境影响、生活质量）正在催生多层级暂停令。
+          </div>
+          <div class="news-insight-cn">
+            <strong>洞察：</strong本届政府的贸易政策正在破坏其自身的AI基础设施雄心。这为阿联酋、沙特、新加坡、欧盟等非美司法管辖区创造了吸引AI算力投资的结构性机会，正在重塑AI发展的地缘政治格局。
+          </div>
+        </div>
+      </div>
+    </article>
 
-  // 创建选中节点标签
-  var selectedLabel = document.createElement("div");
-  selectedLabel.id = "iframe-selected-label";
-  selectedLabel.style.cssText = "\n    position: absolute;\n    background: #007AFF;\n    color: white;\n    padding: 3px 8px;\n    font-size: 11px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n    border-radius: 3px;\n    pointer-events: none;\n    display: none;\n    white-space: nowrap;\n    z-index: 1000002;\n    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);\n    font-weight: 600;\n  ";
-  overlay.appendChild(highlightBox);
-  overlay.appendChild(selectedBox);
-  overlay.appendChild(tagLabel);
-  overlay.appendChild(selectedLabel);
-  document.body.appendChild(overlay);
+    <article class="news-card">
+      <div class="news-card-inner">
+        <div class="news-icon-col">
+          <img src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_terminal.png" alt="icon">
+        </div>
+        <div class="news-content">
+          <div class="news-meta">
+            <span class="tag tag-industry">行业格局</span>
+            <span class="news-source">WIRED</span>
+            <span class="news-date">2026-03-27</span>
+          </div>
+          <div class="news-body-en">
+            <div class="news-title-en">
+              <a href="https://www.wired.com/story/made-in-china-ai-research-is-starting-to-split-along-geopolitical-lines/" target="_blank">AI Research Is Getting Harder to Separate From Geopolitics</a>
+            </div>
+            <div class="news-keypts-en">
+              <strong>Key Points:</strong> NeurIPS 2026 announced and rapidly reversed controversial restrictions on international participants, triggering massive backlash from Chinese AI researchers; the incident exposes deepening politicization of global scientific collaboration; risks driving Chinese AI talent away from US institutions.
+            </div>
+            <div class="news-insight-en">
+              <strong>Insight:</strong> The NeurIPS reversal is a canary in the coal mine for global AI research. If US institutions become perceived as politically unreliable, the center of gravity for fundamental AI research could shift decisively to Chinese universities and labs — a long-term competitive consequence far exceeding any short-term policy goal.
+            </div>
+          </div>
+          <div class="news-title-cn">
+            <a href="https://www.wired.com/story/made-in-china-ai-research-is-starting-to-split-along-geopolitical-lines/" target="_blank">NeurIPS限制令风波：AI研究正成为地缘政治的新战场</a>
+          </div>
+          <div class="news-keypts-cn">
+            <strong>要点：</strong>NeurIPS 2026宣布并快速撤回对国际参与者的限制措施，激怒中国AI研究人员；该事件揭示全球科研合作的政治化不断加深；美国大学和科技公司可能面临中国AI人才流失风险。
+          </div>
+          <div class="news-insight-cn">
+            <strong>洞察：</strong>NeurIPS撤回事件是全球AI研究的"煤矿金丝雀"。若美国机构被视为政治不可靠，AI基础研究重心可能决定性地转向中国高校和实验室——这一长期竞争后果将远超任何短期政策目标的收益。
+          </div>
+        </div>
+      </div>
+    </article>
 
-  // 存储当前选中的元素
-  var selectedElement = null;
-  var highlightEnabled = false;
+    <article class="news-card">
+      <div class="news-card-inner">
+        <div class="news-icon-col">
+          <img src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_brain.png" alt="icon">
+        </div>
+        <div class="news-content">
+          <div class="news-meta">
+            <span class="tag tag-tech-trend">技术趋势</span>
+            <span class="news-source">VentureBeat</span>
+            <span class="news-date">2026-03-26</span>
+          </div>
+          <div class="news-body-en">
+            <div class="news-title-en">
+              <a href="https://venturebeat.com/orchestration/the-consequential-ai-work-that-actually-moves-the-needle-for-enterprises" target="_blank">The Consequential AI Work That Actually Moves the Needle for Enterprises</a>
+            </div>
+            <div class="news-keypts-en">
+              <strong>Key Points:</strong> Enterprise AI focus shifts from model selection to orchestration and governance; multi-agent systems move from prototypes to production; shadow AI risks drive demand for AI-driven governance platforms; generalist developers lead enterprise AI integration; incremental wins prioritized over moonshots.
+            </div>
+            <div class="news-insight-en">
+              <strong>Insight:</strong> Enterprise AI's narrative has matured: it's no longer about which model you use but how well you orchestrate and govern AI at scale. The rise of the "generalist developer" as the primary AI integrator signals that AI is becoming infrastructure — invisible, essential, and everyone's responsibility.
+            </div>
+          </div>
+          <div class="news-title-cn">
+            <a href="https://venturebeat.com/orchestration/the-consequential-ai-work-that-actually-moves-the-needle-for-enterprises" target="_blank">企业AI重心转向编排与治理，而非模型选型</a>
+          </div>
+          <div class="news-keypts-cn">
+            <strong>要点：</strong>企业AI关注点从模型选型转向编排与治理；基于真实工作流的多智能体系统从原型走向生产；影子AI风险推动AI治理平台需求；全栈开发者主导企业AI集成；增量成果优先于登月项目。
+          </div>
+          <div class="news-insight-cn">
+            <strong>洞察：</strong>企业AI叙事已走向成熟：关键不再是你用了哪个模型，而是如何在大规模上编排和治理AI。"全栈开发者"崛起意味着AI正在成为基础设施——无形、必需、人人有责。
+          </div>
+        </div>
+      </div>
+    </article>
 
-  // 更新选中元素的高亮显示
-  function updateSelectedHighlight(element) {
-    console.log("updateSelectedHighlight called with:", element);
-    if (!element) {
-      selectedBox.style.display = "none";
-      selectedLabel.style.display = "none";
-      selectedElement = null;
-      console.log("Cleared selected highlight");
-      return;
-    }
-    selectedElement = element;
-    var rect = element.getBoundingClientRect();
-    console.log("Selected element rect:", rect);
+    <article class="news-card">
+      <div class="news-card-inner">
+        <div class="news-icon-col">
+          <img src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_chip.png" alt="icon">
+        </div>
+        <div class="news-content">
+          <div class="news-meta">
+            <span class="tag tag-industry">行业格局</span>
+            <span class="news-source">TechCrunch</span>
+            <span class="news-date">2026-03-13</span>
+          </div>
+          <div class="news-body-en">
+            <div class="news-title-en">
+              <a href="https://techcrunch.com/2026/03/13/the-biggest-ai-stories-of-the-year-so-far/" target="_blank">The Biggest AI Stories of the Year (So Far)</a>
+            </div>
+            <div class="news-keypts-en">
+              <strong>Key Points:</strong> Key 2026 milestones: Anthropic-Pentagon tensions over military AI use; OpenAI's classified-systems deal; the explosive growth of vibe-coded AI apps; Nvidia's deepening ties with both OpenAI and Anthropic; intensifying compute demands driving chip shortages and environmental concerns.
+            </div>
+            <div class="news-insight-en">
+              <strong>Insight:</strong> The Anthropic-Pentagon conflict and OpenAI's classified-systems deal reveal that AI safety and AI military applications are no longer theoretical debates — they are active regulatory and commercial battlegrounds. Whoever shapes these norms first gains a decisive strategic advantage.
+            </div>
+          </div>
+          <div class="news-title-cn">
+            <a href="https://techcrunch.com/2026/03/13/the-biggest-ai-stories-of-the-year-so-far/" target="_blank">2026年至今最重大AI事件盘点</a>
+          </div>
+          <div class="news-keypts-cn">
+            <strong>要点：</strong>2026年关键事件：Anthropic与五角大楼就军事AI使用的冲突；OpenAI的机密系统合作交易；vibe-coded AI应用的爆发式增长；Nvidia与OpenAI/Anthropic的双向深化；算力需求激增导致芯片短缺和环境担忧。
+          </div>
+          <div class="news-insight-cn">
+            <strong>洞察：</strong>Anthropic与五角大楼的冲突以及OpenAI的机密系统合作表明，AI安全与军事应用不再是理论辩题，而是活跃的监管和商业战场。谁率先塑造这些规范，谁就获得了决定性的战略优势。
+          </div>
+        </div>
+      </div>
+    </article>
 
-    // 更新选中高亮框位置
-    selectedBox.style.display = "block";
-    selectedBox.style.left = "".concat(rect.left - 2, "px");
-    selectedBox.style.top = "".concat(rect.top - 2, "px");
-    selectedBox.style.width = "".concat(rect.width + 4, "px");
-    selectedBox.style.height = "".concat(rect.height + 4, "px");
+  </div>
 
-    // 更新选中标签位置和内容
-    selectedLabel.style.display = "block";
-    selectedLabel.textContent = "\u2713 <".concat(element.tagName.toLowerCase(), ">");
+  <!-- Domestic Section -->
+  <div class="section-header cn">
+    <h2>🇨🇳 国内动态</h2>
+    <div class="line"></div>
+  </div>
 
-    // 计算标签位置，确保不超出视窗
-    var labelTop = rect.top - 28;
-    var labelLeft = rect.left;
+  <div class="news-list">
 
-    // 如果标签会超出顶部，显示在元素下方
-    if (labelTop < 5) {
-      labelTop = rect.bottom + 5;
-    }
+    <article class="news-card">
+      <div class="news-card-inner">
+        <div class="news-icon-col">
+          <img src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_robot.png" alt="icon">
+        </div>
+        <div class="news-content">
+          <div class="news-meta">
+            <span class="tag tag-tech-breakthrough">技术突破</span>
+            <span class="news-source">量子位</span>
+            <span class="news-date">2026-04-05</span>
+          </div>
+          <div class="news-body-en">
+            <div class="news-title-en">
+              <a href="https://m.36kr.com/p/3728058030013572" target="_blank">2026 AI & Data Science: Five Major Trends — From Scaling to Workforce Transformation</a>
+            </div>
+            <div class="news-keypts-en">
+              <strong>Key Points:</strong> 36Kr's five major 2026 AI trends: Scaling (of deployed AI systems), Agentic AI, Data Reshaping (infrastructure for training and inference), Governance, and Workforce Transformation. Enterprises are shifting from experimentation to large-scale deployment.
+            </div>
+            <div class="news-insight-en">
+              <strong>Insight:</strong> The emergence of "Governance" and "Workforce Transformation" as distinct trend categories — alongside technical domains — signals that AI has crossed a threshold:            <strong>Insight:</strong> The emergence of "Governance" and "Workforce Transformation" as distinct trend categories alongside technical domains signals that AI has crossed a threshold — it is no longer purely a technology challenge but a civilizational one requiring coordinated institutional response.
+            </div>
+          </div>
+          <div class="news-title-cn">
+            <a href="https://m.36kr.com/p/3728058030013572" target="_blank">36氪发布2026年AI与数据科学五大趋势：规模化、Agentic AI、数据重塑、治理、人才转型</a>
+          </div>
+          <div class="news-keypts-cn">
+            <strong>要点：</strong>36氪发布2026年AI五大趋势：规模化（Scaling）、代理式AI（Agentic AI）、数据重塑（Data Reshaping）、治理（Governance）、人才转型（Workforce Transformation）。企业正从实验探索转向规模化部署，Agentic AI成为核心方向，数据治理和复合型AI人才需求急剧增长。
+          </div>
+          <div class="news-insight-cn">
+            <strong>洞察：</strong>"治理"和"人才转型"作为独立趋势类别出现，标志着AI已跨越了一个临界点——它不再纯粹是技术挑战，而是需要协调制度性应对的文明级课题。
+          </div>
+        </div>
+      </div>
+    </article>
 
-    // 如果标签会超出右侧，向左调整
-    var labelWidth = selectedLabel.offsetWidth || 100; // 预估宽度
-    if (labelLeft + labelWidth > window.innerWidth - 10) {
-      labelLeft = window.innerWidth - labelWidth - 10;
-    }
-    selectedLabel.style.left = "".concat(Math.max(5, labelLeft), "px");
-    selectedLabel.style.top = "".concat(labelTop, "px");
-    console.log("Selected highlight positioned at:", {
-      left: selectedBox.style.left,
-      top: selectedBox.style.top,
-      width: selectedBox.style.width,
-      height: selectedBox.style.height
-    });
-  }
-  function getElementSelector(element) {
-    if (!(element instanceof Element)) throw new Error('Argument must be a DOM element');
-    var segments = [];
-    var current = element;
-    while (current !== document.documentElement) {
-      var selector = '';
-      // 优先检查唯一ID
-      if (current.id && document.querySelectorAll("#".concat(current.id)).length === 1) {
-        segments.unshift("#".concat(current.id));
-        break; // ID唯一，无需继续向上
-      }
+    <article class="news-card">
+      <div class="news-card-inner">
+        <div class="news-icon-col">
+          <img src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_chart.png" alt="icon">
+        </div>
+        <div class="news-content">
+          <div class="news-meta">
+            <span class="tag tag-corp">企业战略</span>
+            <span class="news-source">求是网</span>
+            <span class="news-date">2026-01-12</span>
+          </div>
+          <div class="news-body-en">
+            <div class="news-title-en">
+              <a href="https://www.qstheory.cn/20260112/634ced939dab4e6bbc52f6dd63dfaba6/c.html" target="_blank">AI Foundation Models Move Toward Value Delivery: Zhipu AI Lists on Hong Kong Stock Exchange</a>
+            </div>
+            <div class="news-keypts-en">
+              <strong>Key Points:</strong> On January 8, 2026, Zhipu AI (智谱AI) listed on the HKEX Main Board, becoming the world's first publicly listed company with AGI foundation model as its core business ("Global LLM First Stock"). This marks Chinese AI foundation models officially entering the value delivery phase.
+            </div>
+            <div class="news-insight-en">
+              <strong>Insight:</strong> Zhipu AI's listing validates that Chinese LLM companies can achieve commercial viability. More importantly, it signals that China's AI industry has moved from the "parameter race" to genuine business model innovation — a structural maturation with significant implications for future investment and talent flows.
+            </div>
+          </div>
+          <div class="news-title-cn">
+            <a href="https://www.qstheory.cn/20260112/634ced939dab4e6bbc52f6dd63dfaba6/c.html" target="_blank">AI大模型迈向价值兑现：智谱AI登陆港交所，"全球大模型第一股"诞生</a>
+          </div>
+          <div class="news-keypts-cn">
+            <strong>要点：</strong>2026年1月8日，智谱AI正式登陆港交所主板，成为全球首家以AGI基座大模型为核心业务的上市公司（"全球大模型第一股"）。智谱AI的上市标志着中国AI大模型从参数比拼的技术狂热期，正式迈入商业落地的价值兑现期。
+          </div>
+          <div class="news-insight-cn">
+            <strong>洞察：</strong>智谱AI上市验证了中国LLM公司的商业可行性。更重要的是，它标志着中国AI行业已从"参数竞赛"转向真正的商业模式创新——这一结构性成熟对未来的投资和人才流向具有深远影响。
+          </div>
+        </div>
+      </div>
+    </article>
 
-      // 生成类名选择器（取第一个有效类名）
-      var classes = Array.from(current.classList).filter(function (c) {
-        return !c.startsWith('js-');
-      });
-      var className = classes.length > 0 ? ".".concat(classes[0]) : '';
+    <article class="news-card">
+      <div class="news-card-inner">
+        <div class="news-icon-col">
+          <img src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_terminal.png" alt="icon">
+        </div>
+        <div class="news-content">
+          <div class="news-meta">
+            <span class="tag tag-tech-trend">技术趋势</span>
+            <span class="news-source">新浪财经</span>
+            <span class="news-date">2026-03-04</span>
+          </div>
+          <div class="news-body-en">
+            <div class="news-title-en">
+              <a href="https://finance.sina.com.cn/stock/hkstock/hkstocknews/2026-03-04/doc-inhpusks6942302.shtml" target="_blank">Agent Takes Center Stage: 2026 Set to Be the Year of the AI Agent Explosion</a>
+            </div>
+            <div class="news-keypts-en">
+              <strong>Key Points:</strong> At MWC 2026, Qualcomm CEO Cristiano Amon declared 2026 the "Year of AI Agents." AI agents are evolving from Q&A assistants to autonomous executors of complex multi-step tasks; this will elevate mobile and physical AI devices as critical data sources and reshape the entire digital ecosystem.
+            </div>
+            <div class="news-insight-en">
+              <strong>Insight:</strong> The shift from "copilot" to "agent" is not just a UX change — it represents a fundamental change in the human-AI relationship. When AI can execute tasks autonomously, the value chain of software and services gets restructured entirely, creating both massive opportunities and profound disruption.
+            </div>
+          </div>
+          <div class="news-title-cn">
+            <a href="https://finance.sina.com.cn/stock/hkstock/hkstocknews/2026-03-04/doc-inhpusks6942302.shtml" target="_blank">Agent站上数字世界"C位"！2026年或成AI代理爆发元年</a>
+          </div>
+          <div class="news-keypts-cn">
+            <strong>要点：</strong>高通CEO阿蒙在MWC 2026大会上宣布2026年将成为"AI代理之年"。AI代理正从问答助手演进为自主执行复杂多步骤任务的智能体，将提升移动设备和物理AI设备作为关键数据来源的地位，重构整个数字生态系统。
+          </div>
+          <div class="news-insight-cn">
+            <strong>洞察：</strong>从"副驾驶"到"代理"的转变不仅是用户体验的改变，而是人机关系的根本性变化。当AI能够自主执行任务时，软件和服务的价值链将被彻底重构，既带来巨大机遇，也造成深刻颠覆。
+          </div>
+        </div>
+      </div>
+    </article>
 
-      // 生成位置索引（nth-child）
-      var tag = current.tagName.toLowerCase();
-      if (!className) {
-        var siblings = Array.from(current.parentNode.children);
-        var index = siblings.findIndex(function (el) {
-          return el === current;
-        }) + 1;
-        selector = "".concat(tag, ":nth-child(").concat(index, ")");
-      } else {
-        selector = className;
-      }
-      segments.unshift(selector);
-      current = current.parentElement;
-    }
+    <article class="news-card">
+      <div class="news-card-inner">
+        <div class="news-icon-col">
+          <img src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_chip.png" alt="icon">
+        </div>
+        <div class="news-content">
+          <div class="news-meta">
+            <span class="tag tag-industry">行业格局</span>
+            <span class="news-source">36氪</span>
+            <span class="news-date">2026-03-23</span>
+          </div>
+          <div class="news-body-en">
+            <div class="news-title-en">
+              <a href="https://eu.36kr.com/zh/p/3735341158121733" target="_blank">China's Embodied Intelligence Market Poised to Exceed 1 Trillion Yuan in 2026</a>
+            </div>
+            <div class="news-keypts-en">
+              <strong>Key Points:</strong> China's embodied intelligence market grew from 213.3 billion yuan (2018) to 915 billion yuan (2025), projected to exceed 1 trillion yuan in 2026. Driven by world models, data闭环, and collaborative mechanisms, embodied AI is transforming into deployable general-purpose labor across industrial, service, and special domains.
+            </div>
+            <div class="news-insight-en">
+              <strong>Insight:</strong> The trillion-yuan embodied intelligence market represents China's most distinctive path in the global AI race — not competing purely on foundation models, but on the physical integration of AI with the real world. The move from "technical base competition" to "ecosystem-level competition" is a strategic pivot with long-term implications.
+            </div>
+          </div>
+          <div class="news-title-cn">
+            <a href="https://eu.36kr.com/zh/p/3735341158121733" target="_blank">36氪：这条AI赛道，2026年规模有望破万亿</a>
+          </div>
+          <div class="news-keypts-cn">
+            <strong>要点：</strong>36氪研究院测算，中国具身智能市场规模已从2018年2133亿元增至2025年9150亿元，2026年有望突破万亿元。在世界模型、数据闭环与协作机制驱动下，具身智能正转化为可规模部署的通用劳动力，并向工业、服务、特种等领域加速渗透。
+          </div>
+          <div class="news-insight-cn">
+            <strong>洞察：</strong>万亿级具身智能市场代表中国在全球AI竞争中最具差异化的路径——不完全在基础模型上竞争，而是将AI与物理世界深度融合。从"技术底座竞争"转向"生态层面综合较量"是具有长期影响的战略调整。
+          </div>
+        </div>
+      </div>
+    </article>
 
-    // 处理根元素
-    if (current === document.documentElement) {
-      segments.unshift('html');
-    }
-    return segments.join(' > ');
-  }
+    <article class="news-card">
+      <div class="news-card-inner">
+        <div class="news-icon-col">
+          <img src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_brain.png" alt="icon">
+        </div>
+        <div class="news-content">
+          <div class="news-meta">
+            <span class="tag tag-tech-breakthrough">技术突破</span>
+            <span class="news-source">量子位</span>
+            <span class="news-date">2026-02-12</span>
+          </div>
+          <div class="news-body-en">
+            <div class="news-title-en">
+              <a href="https://www.qbitai.com/2026/02/379326.html" target="_blank">Xiaomi's First VLA Robot Model: 80ms Inference, 30Hz Control, Fully Open-Source</a>
+            </div>
+            <div class="news-keypts-en">
+              <strong>Key Points:</strong> Xiaomi launches Xiaomi-Robotics-0, its first embodied VLA (Vision-Language-Action) model. At 4.7B parameters, it achieves 80ms inference latency and 30Hz real-time control frequency; runs on consumer-grade RTX 4090 GPU; achieves new SOTA on LIBERO, CALVIN, and SimplerEnv benchmarks; fully open-sourced.
+            </div>
+            <div class="news-insight-en">
+              <strong>Insight:</strong> The combination of consumer-grade hardware requirement (RTX 4090), strong benchmark performance, and full open-sourcing makes this a democratizing force in embodied AI. It lowers the barrier for research labs worldwide to work on real-world robotic control, potentially triggering a wave of innovation analogous to what open-source LLMs did for text AI.
+            </div>
+          </div>
+          <div class="news-title-cn">
+            <a href="https://www.qbitai.com/2026/02/379326.html" target="_blank">小米首代机器人VLA大模型：80ms推理延迟，30Hz控制频率，消费级4090即可运行</a>
+          </div>
+          <div class="news-keypts-cn">
+            <strong>要点：</strong>小米发布首个具身VLA大模型Xiaomi-Robotics-0，4.7B参数下达80ms推理延迟、30Hz实时控制频率，消费级4090显卡即可运行；在LIBERO、CALVIN等主流基准上刷新SOTA；并宣布全面开源。
+          </div>
+          <div class="news-insight-cn">
+            <strong>洞察：</strong>消费级硬件要求（RTX 4090）+强大基准性能+全面开源的组合，使该模型成为具身智能的民主化力量。它降低了全球研究实验室进入真实机器人控制领域的门槛，可能引发类似开源LLM对文本AI所产生的那种创新浪潮。
+          </div>
+        </div>
+      </div>
+    </article>
 
-  // 获取元素文本内容
-  function getElementText(element) {
-    var _element$textContent;
-    if (element.tagName === "INPUT") {
-      return element.value || element.placeholder || "";
-    }
-    if (element.tagName === "TEXTAREA") {
-      return element.value || element.placeholder || "";
-    }
-    var text = ((_element$textContent = element.textContent) === null || _element$textContent === void 0 ? void 0 : _element$textContent.trim()) || "";
-    return text.length > 50 ? text.substring(0, 50) + "..." : text;
-  }
+    <article class="news-card">
+      <div class="news-card-inner">
+        <div class="news-icon-col">
+          <img src="https://jingjingshen-star.github.io/ai-news-digest/imgs/ai_icon_robot.png" alt="icon">
+        </div>
+        <div class="news-content">
+          <div class="news-meta">
+            <span class="tag tag-tech-trend">技术趋势</span>
+            <span class="news-source">36氪</span>
+            <span class="news-date">2026-03-03</span>
+          </div>
+          <div class="news-body-en">
+            <div class="news-title-en">
+              <a href="https://eu.36kr.com/zh/p/3674170286776964" target="_blank">2026 Agentic AI Development Outlook: From Demo to Scale, From Silo to Synergy</a>
+            </div>
+            <div class="news-keypts-en">
+              <strong>Key Points:</strong> 36Kr's 2026 Agentic AI development outlook identifies three key transitions: from demos to production deployment; from isolated agents to coordinated multi-agent collaboration; from static models to self-improving systems with closed-loop verification. Enterprise adoption of AI agent orchestration platforms expected to grow 300% YoY.
+            </div>
+            <div class="news-insight-en">
+              <strong>Insight:</strong> The "from static to self-improving" transition is the most strategically significant. When AI agents can autonomously improve their own performance through closed-loop feedback, the pace of AI capability development accelerates beyond human scheduling — introducing both unprecedented productivity gains and novel governance challenges.
+            </div>
+          </div>
+          <div class="news-title-cn">
+            <a href="https://eu.36kr.com/zh/p/3674170286776964" target="_blank">36氪：2026年智能体AI三大转变，从孤岛到协同、从静态到自进化</a>
+          </div>
+          <div class="news-keypts-cn">
+            <strong>要点：</strong>36氪发布2026年智能体AI三大转变：从演示到规模化落地；从孤岛到多智能体协同；从静态到自进化闭环。IDC预测，2026年企业对AI智能体编排平台的采用率预计同比增长300%。
+          </div>
+          <div class="news-insight-cn">
+            <strong>洞察：</strong>"从静态到自进化"的转变最具战略意义。当AI智能体能够通过闭环反馈自主提升性能时，AI能力发展速度将超越人类设定的节奏——既带来前所未有的生产力提升，也带来全新的治理挑战。
+          </div>
+        </div>
+      </div>
+    </article>
 
-  // 获取元素属性信息
-  function getElementAttributes(element) {
-    var attrs = {};
-    for (var i = 0; i < element.attributes.length; i++) {
-      var attr = element.attributes[i];
-      attrs[attr.name] = attr.value;
-    }
-    return attrs;
-  }
+  </div>
 
-  // 鼠标悬停事件处理
-  function handleMouseOver(e) {
-    if (!highlightEnabled) return;
-    var target = e.target;
-    if (!target || target === overlay || target === highlightBox || target === tagLabel || target === selectedBox || target === selectedLabel) {
-      return;
-    }
+  <footer class="footer">
+    <p>AI News Digest · 2026年04月07日 · Powered by Minimax Agent AI</p>
+    <p style="margin-top:6px;"><a href="https://github.com/jingjingshen-star/ai-news-digest" target="_blank">GitHub Repository</a></p>
+  </footer>
 
-    // 避免高亮 html 和 body 元素
-    if (target === document.documentElement || target === document.body) {
-      return;
-    }
+</div>
 
-    // 如果是已选中的元素，不显示悬停高亮
-    if (target === selectedElement) {
-      highlightBox.style.display = "none";
-      tagLabel.style.display = "none";
-      return;
-    }
-    var rect = target.getBoundingClientRect();
-    var selector = getElementSelector(target);
-    var text = getElementText(target);
-    var attributes = getElementAttributes(target);
-
-    // 更新悬停高亮框位置
-    highlightBox.style.display = "block";
-    highlightBox.style.left = "".concat(rect.left - 2, "px");
-    highlightBox.style.top = "".concat(rect.top - 2, "px");
-    highlightBox.style.width = "".concat(rect.width + 4, "px");
-    highlightBox.style.height = "".concat(rect.height + 4, "px");
-
-    // 更新标签位置和内容
-    tagLabel.style.display = "block";
-    tagLabel.textContent = "<".concat(target.tagName.toLowerCase(), ">");
-
-    // 计算标签位置，确保不超出视窗
-    var labelTop = rect.top - 22;
-    var labelLeft = rect.left;
-
-    // 如果标签会超出顶部，显示在元素下方
-    if (labelTop < 0) {
-      labelTop = rect.bottom + 5;
-    }
-
-    // 如果标签会超出右侧，向左调整
-    if (labelLeft + tagLabel.offsetWidth > window.innerWidth) {
-      labelLeft = window.innerWidth - tagLabel.offsetWidth - 5;
-    }
-    tagLabel.style.left = "".concat(Math.max(0, labelLeft), "px");
-    tagLabel.style.top = "".concat(labelTop, "px");
-
-    // 发送消息到父窗口
-    var elementInfo = {
-      tagName: target.tagName.toLowerCase(),
-      rect: {
-        left: rect.left,
-        top: rect.top,
-        right: rect.right,
-        bottom: rect.bottom,
-        width: rect.width,
-        height: rect.height,
-        x: rect.x,
-        y: rect.y
-      },
-      selector: selector,
-      text: text,
-      attributes: attributes,
-      url: window.location.href,
-      path: window.location.pathname,
-      timestamp: Date.now()
-    };
-    try {
-      window.parent.postMessage({
-        type: "iframe-element-hover",
-        data: elementInfo,
-        source: "iframe-highlight-injector"
-      }, "*");
-    } catch (error) {
-      console.warn("无法发送消息到父窗口:", error);
-    }
-  }
-
-  // 鼠标离开事件处理
-  function handleMouseOut(e) {
-    if (!highlightEnabled) return;
-    var relatedTarget = e.relatedTarget;
-
-    // 如果鼠标移动到高亮相关元素上，不隐藏高亮
-    if (relatedTarget && (relatedTarget === highlightBox || relatedTarget === tagLabel || relatedTarget === overlay || relatedTarget === selectedBox || relatedTarget === selectedLabel)) {
-      return;
-    }
-    highlightBox.style.display = "none";
-    tagLabel.style.display = "none";
-    try {
-      window.parent.postMessage({
-        type: "iframe-element-hover",
-        data: null,
-        source: "iframe-highlight-injector"
-      }, "*");
-    } catch (error) {
-      console.warn("无法发送消息到父窗口:", error);
-    }
-  }
-
-  // 点击事件处理
-  function handleClick(e) {
-    var target = e.target;
-    if (!target || target === overlay || target === highlightBox || target === tagLabel || target === selectedBox || target === selectedLabel) {
-      return;
-    }
-
-    // 避免处理 html 和 body 元素
-    if (target === document.documentElement || target === document.body) {
-      return;
-    }
-
-    // 检查是否是交互元素，这些元素需要保留默认行为
-    var isInteractiveElement = ['input', 'textarea', 'select', 'button', 'a'].includes(target.tagName.toLowerCase());
-
-    // 如果高亮功能启用，对于非交互元素阻止默认行为和事件传播
-    if (highlightEnabled) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    var rect = target.getBoundingClientRect();
-    var selector = getElementSelector(target);
-    var text = getElementText(target);
-    var attributes = getElementAttributes(target);
-    console.log("Element clicked:", {
-      tagName: target.tagName,
-      selector: selector,
-      rect: rect
-    });
-
-    // 立即更新选中高亮
-    updateSelectedHighlight(target);
-
-    // 隐藏悬停高亮，因为现在是选中状态
-    highlightBox.style.display = "none";
-    tagLabel.style.display = "none";
-    var elementInfo = {
-      tagName: target.tagName.toLowerCase(),
-      rect: {
-        left: rect.left,
-        top: rect.top,
-        right: rect.right,
-        bottom: rect.bottom,
-        width: rect.width,
-        height: rect.height,
-        x: rect.x,
-        y: rect.y
-      },
-      selector: selector,
-      text: text,
-      attributes: attributes,
-      url: window.location.href,
-      path: window.location.pathname,
-      timestamp: Date.now()
-    };
-    try {
-      window.parent.postMessage({
-        type: "iframe-element-click",
-        data: elementInfo,
-        source: "iframe-highlight-injector"
-      }, "*");
-    } catch (error) {
-      console.warn("无法发送消息到父窗口:", error);
-    }
-  }
-
-  // 监听来自父窗口的消息
-  function handleParentMessage(event) {
-    console.log("Received message from parent:", event.data);
-    if (event.data.type === "iframe-highlight-toggle") {
-      var enabled = event.data.enabled;
-      console.log("Highlight toggle:", enabled);
-      if (enabled) {
-        enableHighlight();
-      } else {
-        disableHighlight();
-      }
-    } else if (event.data.type === "enable-iframe-highlight") {
-      console.log("Enable iframe highlight");
-      enableHighlight();
-    } else if (event.data.type === "disable-iframe-highlight") {
-      console.log("Disable iframe highlight");
-      disableHighlight();
-    } else if (event.data.type === "toggle-iframe-highlight") {
-      var _enabled = event.data.enabled !== undefined ? event.data.enabled : !highlightEnabled;
-      console.log("Toggle iframe highlight to:", _enabled);
-      if (_enabled) {
-        enableHighlight();
-      } else {
-        disableHighlight();
-      }
-    } else if (event.data.type === "update-selected-element") {
-      var selector = event.data.selector;
-      console.log("Update selected element with selector:", selector);
-      if (selector) {
-        try {
-          var element = document.querySelector(selector);
-          console.log("Found element by selector:", element);
-          updateSelectedHighlight(element);
-        } catch (error) {
-          console.warn("Failed to select element:", error);
-          updateSelectedHighlight(null);
-        }
-      } else {
-        updateSelectedHighlight(null);
-      }
-    } else if (event.data.type === "clear-selected-element") {
-      console.log("Clear selected element");
-      updateSelectedHighlight(null);
-    }
-  }
-
-  // 启用高亮功能
-  function enableHighlight() {
-    console.log("Enabling highlight");
-    document.addEventListener("mouseover", handleMouseOver, true);
-    document.addEventListener("mouseout", handleMouseOut, true);
-    document.addEventListener("click", handleClick, true);
-    highlightEnabled = true;
-    overlay.style.display = "block";
-  }
-
-  // 禁用高亮功能
-  function disableHighlight() {
-    console.log("Disabling highlight");
-    highlightEnabled = false;
-    // 保持事件监听器，但通过 highlightEnabled 变量控制行为
-    // 这样可以保留选中状态的显示
-    highlightBox.style.display = "none";
-    tagLabel.style.display = "none";
-    // 不隐藏 selectedBox 和 selectedLabel，保留选中状态
-  }
-
-  // 完全禁用高亮功能（移除所有监听器）
-  function fullyDisableHighlight() {
-    console.log("Fully disabling highlight");
-    highlightEnabled = false;
-    document.removeEventListener("mouseover", handleMouseOver, true);
-    document.removeEventListener("mouseout", handleMouseOut, true);
-    document.removeEventListener("click", handleClick, true);
-    overlay.style.display = "none";
-    highlightBox.style.display = "none";
-    tagLabel.style.display = "none";
-    selectedBox.style.display = "none";
-    selectedLabel.style.display = "none";
-  }
-
-  // 添加事件监听
-  enableHighlight();
-  window.addEventListener("message", handleParentMessage);
-
-  // 暴露全局函数供外部调用
-  window.__iframeHighlightControl = {
-    enable: enableHighlight,
-    disable: disableHighlight,
-    fullyDisable: fullyDisableHighlight,
-    isEnabled: function isEnabled() {
-      return highlightEnabled;
-    },
-    getSelectedElement: function getSelectedElement() {
-      return selectedElement;
-    },
-    updateSelected: updateSelectedHighlight,
-    // 通过消息发送开关控制
-    sendToggleMessage: function sendToggleMessage(enabled) {
-      window.parent.postMessage({
-        type: 'iframe-highlight-status',
-        enabled: enabled || highlightEnabled,
-        source: 'iframe-highlight-injector'
-      }, '*');
-    }
-  };
-
-  // 通知父窗口脚本已加载
-  try {
-    window.parent.postMessage({
-      type: "iframe-highlight-ready",
-      data: {
-        url: window.location.href,
-        userAgent: navigator.userAgent,
-        timestamp: Date.now()
-      },
-      source: "iframe-highlight-injector"
-    }, "*");
-  } catch (error) {
-    console.warn("无法发送就绪消息到父窗口:", error);
-  }
-
-  // 清理函数
-  window.__iframeHighlightCleanup = function () {
-    fullyDisableHighlight();
-    window.removeEventListener("message", handleParentMessage);
-    if (overlay.parentElement) {
-      overlay.parentElement.removeChild(overlay);
-    }
-    delete window.__iframeHighlightInitialized;
-    delete window.__iframeHighlightCleanup;
-  };
-})();
-
-</script>
 </body>
 </html>
