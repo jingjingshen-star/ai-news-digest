@@ -5,297 +5,349 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI 简报 · 2026年04月09日</title>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  :root{--deep-blue:#0D2137;--tech-blue:#4A90D9;--ice-white:#F0F4FA;--light-blue:#E8F0FA;--text-dark:#1A1A2E;--text-muted:#5A6B7A}
-  body{font-family:'PingFang SC','Microsoft YaHei','Helvetica Neue',Arial,sans-serif;background:#F0F4FA;color:#1A1A2E;min-height:100vh;position:relative;overflow-x:hidden}
-  .bg-icons{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
-  .bg-icon{position:absolute;opacity:0.10;width:120px;height:120px;object-fit:contain}
-  .bg-icon:nth-child(1){top:5%;left:3%;width:140px}
-  .bg-icon:nth-child(2){top:15%;right:5%;width:100px}
-  .bg-icon:nth-child(3){top:45%;left:2%;width:90px}
-  .bg-icon:nth-child(4){top:60%;right:4%;width:130px}
-  .bg-icon:nth-child(5){top:80%;left:8%;width:110px}
-  .container{max-width:860px;margin:0 auto;padding:40px 20px 60px;position:relative;z-index:1}
-  .header{background:linear-gradient(135deg,#0D2137 0%,#163352 100%);border-radius:20px;padding:48px 40px 40px;margin-bottom:36px;text-align:center;position:relative;overflow:hidden;box-shadow:0 12px 40px rgba(13,33,55,0.25)}
-  .header::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at center,rgba(74,144,217,0.15) 0%,transparent 70%);pointer-events:none}
-  .header-tag{display:inline-block;background:rgba(74,144,217,0.25);border:1px solid rgba(74,144,217,0.5);color:#8DC4F5;font-size:12px;font-weight:600;letter-spacing:2px;padding:4px 14px;border-radius:20px;margin-bottom:18px}
-  .header h1{font-size:32px;font-weight:700;color:#FFFFFF;letter-spacing:1px;margin-bottom:8px}
-  .header .date-line{font-size:15px;color:rgba(255,255,255,0.6);margin-bottom:24px}
-  .insight-box{background:rgba(74,144,217,0.18);border:1px solid rgba(74,144,217,0.4);border-radius:14px;padding:20px 24px;text-align:left;max-width:700px;margin:0 auto}
-  .insight-label{font-size:11px;font-weight:700;color:#8DC4F5;letter-spacing:2px;margin-bottom:8px}
-  .insight-text{font-size:15px;color:rgba(255,255,255,0.88);line-height:1.7}
-  .section-title{display:flex;align-items:center;gap:12px;margin-bottom:24px}
-  .section-title h2{font-size:20px;font-weight:700;color:#0D2137;letter-spacing:0.5px}
-  .section-line{flex:1;height:2px;background:linear-gradient(to right,#4A90D9,transparent);border-radius:2px}
-  .news-card{background:#FFFFFF;border-radius:16px;padding:28px 32px;margin-bottom:20px;box-shadow:0 4px 20px rgba(13,33,55,0.08);border:1px solid rgba(74,144,217,0.12);position:relative;overflow:hidden;transition:box-shadow 0.2s}
-  .news-card:hover{box-shadow:0 8px 32px rgba(13,33,55,0.14)}
-  .news-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(to bottom,#4A90D9,#0D2137);border-radius:4px 0 0 4px}
-  .card-top{display:flex;align-items:center;gap:14px;margin-bottom:16px}
-  .news-icon{width:40px;height:40px;object-fit:contain;flex-shrink:0}
-  .meta-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-  .category-tag{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:0.5px}
-  .cat-trend{background:#E3F2FD;color:#1565C0}
-  .cat-breakthrough{background:#F3E5F5;color:#7B1FA2}
-  .cat-landscape{background:#E8F5E9;color:#2E7D32}
-  .cat-strategy{background:#FFF3E0;color:#E65100}
-  .cat-product{background:#FBE9E7;color:#BF360C}
-  .source-badge{font-size:12px;color:#5A6B7A;font-weight:500}
-  .date-badge{font-size:12px;color:#5A6B7A}
-  .news-title-en{font-size:17px;font-weight:700;color:#0D2137;margin-bottom:10px;line-height:1.4}
-  .news-section-label{font-size:11px;font-weight:700;color:#4A90D9;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;margin-top:10px}
-  .news-keypoints{font-size:14px;color:#3A4A5A;line-height:1.75;margin-bottom:8px;padding-left:12px;border-left:3px solid #4A90D9}
-  .news-insight{font-size:13.5px;color:#4A5568;line-height:1.7;background:#E8F0FA;border-radius:8px;padding:10px 14px;margin-bottom:12px;font-style:italic}
-  .bilingual-block{margin-top:14px;border-top:1px solid rgba(74,144,217,0.15);padding-top:14px}
-  .lang-label{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px;margin-bottom:6px;margin-right:4px}
-  .lang-label.cn{background:#E3F2FD;color:#1565C0}
-  .news-title-cn{font-size:16px;font-weight:600;color:#0D2137;margin-bottom:8px;line-height:1.5}
-  .news-summary-cn{font-size:14px;color:#4A5568;line-height:1.75;padding-left:12px;border-left:3px solid #4A90D9}
-  .footer{text-align:center;margin-top:48px;padding-top:24px;border-top:1px solid rgba(74,144,217,0.2);color:#5A6B7A;font-size:13px}
-  .footer a{color:#4A90D9;text-decoration:none}
-  @media(max-width:600px){
-    .container{padding:20px 14px 40px}
-    .header{padding:32px 20px 28px;border-radius:14px}
-    .header h1{font-size:24px}
-    .news-card{padding:20px 20px;border-radius:12px}
-    .card-top{flex-direction:column;align-items:flex-start;gap:8px}
-    .news-icon{width:32px;height:32px}
-  }
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--deep-blue:#0D2137;--tech-blue:#4A90D9;--ice-white:#F0F4FA;--light-blue:#E8F0FA;--text-dark:#1A1A2E;--text-muted:#5A6B7A}
+body{font-family:'PingFang SC','Microsoft YaHei','Helvetica Neue',Arial,sans-serif;background:#F0F4FA;color:#1A1A2E;min-height:100vh;position:relative;overflow-x:hidden}
+.bg-icons{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.bg-icon{position:absolute;opacity:0.10;width:120px;height:120px;object-fit:contain}
+.bg-icon:nth-child(1){top:5%;left:3%;width:140px}
+.bg-icon:nth-child(2){top:15%;right:5%;width:100px}
+.bg-icon:nth-child(3){top:45%;left:2%;width:90px}
+.bg-icon:nth-child(4){top:60%;right:4%;width:130px}
+.bg-icon:nth-child(5){top:80%;left:8%;width:110px}
+.container{max-width:860px;margin:0 auto;padding:40px 20px 60px;position:relative;z-index:1}
+.header{background:linear-gradient(135deg,#0D2137 0%,#163352 100%);border-radius:20px;padding:48px 40px 40px;margin-bottom:36px;text-align:center;position:relative;overflow:hidden;box-shadow:0 12px 40px rgba(13,33,55,0.25)}
+.header::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at center,rgba(74,144,217,0.15) 0%,transparent 70%);pointer-events:none}
+.header-tag{display:inline-block;background:rgba(74,144,217,0.25);border:1px solid rgba(74,144,217,0.5);color:#8DC4F5;font-size:12px;font-weight:600;letter-spacing:2px;padding:4px 14px;border-radius:20px;margin-bottom:18px}
+.lang-en{display:none}
+body.show-en .lang-cn{display:none}
+body.show-en .lang-en{display:block}
+.header h1{font-size:32px;font-weight:700;color:#FFFFFF;letter-spacing:1px;margin-bottom:8px}
+.header .date-line{font-size:15px;color:rgba(255,255,255,0.6);margin-bottom:24px}
+.lang-toggle{margin-bottom:24px}
+.lang-toggle button{background:rgba(255,255,255,0.15);border:1px solid rgba(74,144,217,0.6);color:#8DC4F5;padding:6px 20px;border-radius:20px;font-size:13px;cursor:pointer;margin:0 4px;transition:all 0.2s;font-weight:600}
+.lang-toggle button:hover{background:rgba(74,144,217,0.35)}
+.lang-toggle button.active{background:rgba(74,144,217,0.5);border-color:#8DC4F5}
+.insight-box{background:rgba(74,144,217,0.18);border:1px solid rgba(74,144,217,0.4);border-radius:14px;padding:20px 24px;text-align:left;max-width:700px;margin:0 auto}
+.insight-label{font-size:11px;font-weight:700;color:#8DC4F5;letter-spacing:2px;margin-bottom:8px}
+.insight-text{font-size:15px;color:rgba(255,255,255,0.88);line-height:1.7}
+.section-title{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.section-title h2{font-size:20px;font-weight:700;color:#0D2137;letter-spacing:0.5px}
+.section-line{flex:1;height:2px;background:linear-gradient(to right,#4A90D9,transparent);border-radius:2px}
+.news-card{background:#FFFFFF;border-radius:16px;padding:28px 32px;margin-bottom:20px;box-shadow:0 4px 20px rgba(13,33,55,0.08);border:1px solid rgba(74,144,217,0.12);position:relative;overflow:hidden;transition:box-shadow 0.2s}
+.news-card:hover{box-shadow:0 8px 32px rgba(13,33,55,0.14)}
+.news-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(to bottom,#4A90D9,#0D2137);border-radius:4px 0 0 4px}
+.card-top{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.news-icon{width:40px;height:40px;object-fit:contain;flex-shrink:0}
+.meta-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.category-tag{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:0.5px}
+.cat-trend{background:#E3F2FD;color:#1565C0}
+.cat-breakthrough{background:#F3E5F5;color:#7B1FA2}
+.cat-landscape{background:#E8F5E9;color:#2E7D32}
+.cat-strategy{background:#FFF3E0;color:#E65100}
+.cat-product{background:#FBE9E7;color:#BF360C}
+.source-badge{font-size:12px;color:#5A6B7A;font-weight:500}
+.date-badge{font-size:12px;color:#5A6B7A}
+.news-title{font-size:17px;font-weight:700;color:#0D2137;margin-bottom:10px;line-height:1.4}
+.news-section-label{font-size:11px;font-weight:700;color:#4A90D9;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;margin-top:10px}
+.news-keypoints{font-size:14px;color:#3A4A5A;line-height:1.75;margin-bottom:8px;padding-left:12px;border-left:3px solid #4A90D9}
+.news-insight{font-size:13.5px;color:#4A5568;line-height:1.7;background:#E8F0FA;border-radius:8px;padding:10px 14px;margin-bottom:12px;font-style:italic}
+.news-link{display:inline-block;font-size:13px;color:#4A90D9;text-decoration:none;font-weight:600;padding:6px 14px;border:1px solid #4A90D9;border-radius:20px;transition:all 0.2s}
+.news-link:hover{background:#4A90D9;color:#fff}
+.footer{text-align:center;padding:32px 20px 48px;color:#5A6B7A;font-size:13px}
+.footer a{text-decoration:none}
+@media(max-width:600px){.container{padding:24px 16px 40px}.header{padding:32px 24px 28px}.news-card{padding:20px 20px}.header h1{font-size:24px}.lang-toggle button{padding:5px 14px;font-size:12px}}
 </style>
 </head>
 <body>
 
-<div class="bg-icons">
-  <img class="bg-icon" src="https://jingjingshen-star.github.io/ai-news-digest/ai_icon_brain.png" alt="">
-  <img class="bg-icon" src="https://jingjingshen-star.github.io/ai-news-digest/ai_icon_chip.png" alt="">
-  <img class="bg-icon" src="https://jingjingshen-star.github.io/ai-news-digest/ai_icon_robot.png" alt="">
-  <img class="bg-icon" src="https://jingjingshen-star.github.io/ai-news-digest/ai_icon_chart.png" alt="">
-  <img class="bg-icon" src="https://jingjingshen-star.github.io/ai-news-digest/ai_icon_terminal.png" alt="">
-</div>
-
 <div class="container">
 
+  <!-- Header -->
   <div class="header">
-    <div class="header-tag">🤖 AI Daily Digest</div>
-    <h1>全球 AI 动态简报</h1>
-    <div class="date-line">2026 年 04 月 09 日 · Thursday</div>
+    <div class="header-tag">🤖 AI NEWS DIGEST</div>
+    <h1 class="lang-cn">全球AI动态简报</h1>
+    <h1 class="lang-en">Daily AI News Digest</h1>
+    <div class="date-line">
+      <span class="lang-cn">2026年04月09日 · 星期四</span>
+      <span class="lang-en">Thursday, April 9, 2026</span>
+    </div>
+    <div class="lang-toggle">
+      <button class="active" onclick="toggleLang(false)">🇨🇳 中文</button>
+      <button onclick="toggleLang(true)">🇺🇸 En</button>
+    </div>
     <div class="insight-box">
-      <div class="insight-label">📌 今日洞察</div>
+      <div class="insight-label">💡 <span class="lang-cn">今日洞察</span><span class="lang-en">Today's Insight</span></div>
       <div class="insight-text">
-        2026年4月上旬，AI产业从"技术秀场"加速迈入"落地攻坚"。国际侧，微软以自研MAI三款模型强势入局基础模型价格战，OpenAI则转向系统性社会提案（机器人税、公共财富基金），AI企业正从技术竞争升级为经济制度竞争；Anthropic研究揭示AI技能鸿沟已真实出现，先行者的先发优势正在形成壁垒。国内侧，具身智能突破万亿在即，但企业AI投资50个项目中仅1个产生变革价值——"高期待、低回报"的鸿沟正在撕裂行业认知。与此同时，RSAC 2026上AI智能体身份框架虽已发布，却留下三大安全空白，暗示智能体规模化落地的安全基础设施仍严重滞后。
+        <span class="lang-cn">AI正从"实验探索"全面迈入"规模部署"阶段——本周政策、模型、安全三条主线同步推进。OpenAI提出"机器人税"与全民基本收入构想，反映行业已主动思考AI对社会的深层重构；微软三箭齐发挑战Google与OpenAI，价格战将成新战场；RSA大会暴露Agent身份认证三大缺口，安全问题已从理论走向现实风险。</span>
+        <span class="lang-en">AI is transitioning from "experimental exploration" to "large-scale deployment" — this week saw simultaneous advances across policy, models, and security. OpenAI's "robot tax" and universal income proposals show the industry is proactively addressing AI's societal implications; Microsoft's three-pronged model launch challenges Google and OpenAI with a price war as the new battlefield; RSA Conference revealed three critical gaps in Agent identity authentication, pushing security from theory into real-world risk.</span>
       </div>
     </div>
   </div>
 
+  <!-- International News -->
   <div class="section-title">
-    <h2>📰 今日要闻</h2>
+    <h2><span class="lang-cn">🌍 国际动态</span><span class="lang-en">🌍 International</span></h2>
     <div class="section-line"></div>
   </div>
 
-  <!-- News 1 -->
+  <!-- Card 1 -->
   <div class="news-card">
     <div class="card-top">
-      <img class="news-icon" src="https://jingjingshen-star.github.io/ai-news-digest/ai_icon_brain.png" alt="icon">
       <div class="meta-row">
-        <span class="category-tag cat-landscape">行业格局</span>
+        <span class="category-tag cat-strategy">📋 Policy</span>
         <span class="source-badge">TechCrunch</span>
         <span class="date-badge">2026-04-06</span>
       </div>
     </div>
-    <div class="news-title-en">OpenAI's Vision for the AI Economy: Public Wealth Funds, Robot Taxes, and a Four-Day Workweek</div>
-    <div class="news-section-label">Key Points</div>
-    <div class="news-keypoints">OpenAI released policy proposals for an "intelligence age," including: public wealth funds to distribute AI prosperity; shifting tax burden from labor to capital; a potential robot tax on AI-driven labor; subsidized four-day workweek policies; and expanded electricity infrastructure for AI. The framework also calls for safeguards and oversight bodies to mitigate AI misuse risks.</div>
-    <div class="news-section-label">Insight</div>
-    <div class="news-insight">OpenAI is positioning itself not just as a technology company but as a social architect — proposing systemic economic reforms that would reshape how AI wealth is distributed. This marks a notable shift from pure technology advocacy to economic policy leadership, as AI firms begin grappling with societal consequences of automation at scale.</div>
-    <div class="bilingual-block">
-      <span class="lang-label cn">中文</span>
-      <div class="news-title-cn">OpenAI 发布"AI经济"愿景：机器人税、公共财富基金与四天工作制</div>
-      <div class="news-section-label">要点</div>
-      <div class="news-summary-cn">OpenAI发布"智能时代"政策提案，核心包括：设立公共财富基金分配AI红利、将税负从劳动转向资本、探索"机器人税"对AI替代劳动力征税、补贴四天工作制、扩建AI用电基础设施。同时提出AI滥用风险 safeguard 和监管机构设置。</div>
-      <div class="news-section-label">洞察</div>
-      <div class="news-insight" style="background:#FFF8E1;border-left:3px solid #FF9800;">OpenAI正从纯科技公司向"社会架构师"角色转变，主动提出系统性经济改革方案。这反映出AI企业正逐步承担更多社会责任，以应对自动化大规模替代带来的结构性挑战。</div>
+    <div class="news-title">
+      <span class="lang-cn">OpenAI提议征收机器人税、四天工作制与全民财富基金</span>
+      <span class="lang-en">OpenAI Proposes Robot Taxes, Public Wealth Funds, and a Four-Day Workweek</span>
     </div>
+    <div class="news-keypoints">
+      <span class="lang-cn">OpenAI发布政策框架，提出机器人税、全民财富基金与四天工作周补贴，以应对"智能时代"的财富重构。报告融合左翼机制与资本主义框架，同时呼吁加强AI滥用防护和电力基础设施建设。</span>
+      <span class="lang-en">OpenAI released policy proposals outlining wealth and work reshaping in an "intelligence age," blending robot taxes, a Public Wealth Fund, and four-day workweek subsidies with safeguards against AI misuse and expanded electricity infrastructure.</span>
+    </div>
+    <div class="news-insight">
+      <span class="lang-cn">💡 洞察：OpenAI主动提出财富再分配方案，标志头部AI企业已从纯技术思维转向社会治理思维——这对整个行业政策走向具有风向标意义。</span>
+      <span class="lang-en">💡 Insight: OpenAI's proactive wealth redistribution proposals signal a shift from pure tech thinking to social governance — a significant indicator for the entire industry's policy direction.</span>
+    </div>
+    <a class="news-link" href="https://techcrunch.com/2026/04/06/openais-vision-for-the-ai-economy-public-wealth-funds-robot-taxes-and-a-four-day-work-week/" target="_blank"><span class="lang-cn">阅读原文 →</span><span class="lang-en">Read more →</span></a>
   </div>
 
-  <!-- News 2 -->
+  <!-- Card 2 -->
   <div class="news-card">
     <div class="card-top">
-      <img class="news-icon" src="https://jingjingshen-star.github.io/ai-news-digest/ai_icon_chip.png" alt="icon">
       <div class="meta-row">
-        <span class="category-tag cat-breakthrough">技术突破</span>
+        <span class="category-tag cat-product">🖥️ Products</span>
         <span class="source-badge">TechCrunch</span>
         <span class="date-badge">2026-04-02</span>
       </div>
     </div>
-    <div class="news-title-en">Microsoft Takes on AI Rivals with Three New Foundational Models</div>
-    <div class="news-section-label">Key Points</div>
-    <div class="news-keypoints">Microsoft AI released three MAI foundational models: MAI-Transcribe-1 (speech-to-text, 25 languages, 2.5x faster than Azure Fast), MAI-Voice-1 (60 seconds of audio generated per second), and MAI-Image-2 (image generation), developed by the MAI Superintelligence team led by Mustafa Suleyman. The company aims to undercut Google and OpenAI on price, available on Microsoft Foundry and MAI Playground.</div>
-    <div class="news-section-label">Insight</div>
-    <div class="news-insight">Microsoft deploying its own foundation models while maintaining the OpenAI partnership is a strategic hedge — it controls both the infrastructure layer and the application layer. By pricing below competitors, Microsoft signals a price war in foundation models is underway, potentially accelerating commoditization of large language models.</div>
-    <div class="bilingual-block">
-      <span class="lang-label cn">中文</span>
-      <div class="news-title-cn">微软发布三款MAI基础模型强势入局，价格战瞄准OpenAI与Google</div>
-      <div class="news-section-label">要点</div>
-      <div class="news-summary-cn">微软AI发布三款MAI基础模型：MAI-Transcribe-1（语音转写，25语言，速度2.5倍）、MAI-Voice-1（每秒生成60秒音频）、MAI-Image-2（图像生成）。由Mustafa Suleyman领衔的MAI Superintelligence团队开发，定位价格低于Google和OpenAI同类产品。</div>
-      <div class="news-section-label">洞察</div>
-      <div class="news-insight" style="background:#FFF8E1;border-left:3px solid #FF9800;">微软"自研+合作"双线并行是典型的战略对冲。主动打价格战表明基础模型 commoditization 进程将加速，行业格局面临重塑，OpenAI的定价权将被进一步削弱。</div>
+    <div class="news-title">
+      <span class="lang-cn">微软发布三款基础模型挑战Google与OpenAI</span>
+      <span class="lang-en">Microsoft Takes on AI Rivals with Three New Foundational Models</span>
     </div>
+    <div class="news-keypoints">
+      <span class="lang-cn">微软AI发布三款基础模型：MAI-Transcribe-1（支持25种语言转录）、MAI-Voice-1（每秒生成60秒音频）、MAI-Image-2（视频内容生成），剑指Google与OpenAI，以价格优势抢占市场。</span>
+      <span class="lang-en">Microsoft AI launched three foundational models — MAI-Transcribe-1 (25-language transcription), MAI-Voice-1 (60 seconds of audio per second), and MAI-Image-2 (video content) — undercutting Google and OpenAI on price via the MAI Superintelligence team.</span>
+    </div>
+    <div class="news-insight">
+      <span class="lang-cn">💡 洞察：推理成本高企已成行业规模化最大障碍（49%预算用于推理），微软的价格战策略直击痛点，未来基础模型市场将进入以成本效率为核心的竞争阶段。</span>
+      <span class="lang-en">💡 Insight: With high inference costs being the biggest barrier to scaling (49% of budgets spent on inference), Microsoft's cost-efficiency strategy targets the industry's core pain point — foundational model competition is shifting to cost leadership.</span>
+    </div>
+    <a class="news-link" href="https://techcrunch.com/2026/04/02/microsoft-takes-on-ai-rivals-with-three-new-foundational-models/" target="_blank"><span class="lang-cn">阅读原文 →</span><span class="lang-en">Read more →</span></a>
   </div>
 
-  <!-- News 3 -->
+  <!-- Card 3 -->
   <div class="news-card">
     <div class="card-top">
-      <img class="news-icon" src="https://jingjingshen-star.github.io/ai-news-digest/ai_icon_chart.png" alt="icon">
       <div class="meta-row">
-        <span class="category-tag cat-strategy">企业战略</span>
+        <span class="category-tag cat-trend">📊 Trends</span>
         <span class="source-badge">TechCrunch</span>
         <span class="date-badge">2026-03-25</span>
       </div>
     </div>
-    <div class="news-title-en">The AI Skills Gap Is Here — Power Users Are Pulling Ahead</div>
-    <div class="news-section-label">Key Points</div>
-    <div class="news-keypoints">Anthropic's research reveals AI has not yet eliminated jobs overall, but a significant skills gap is emerging: early adopters are gaining disproportionate value, potentially widening inequality. Key findings: AI adoption favors wealthy, high-income areas; entry-level white-collar roles face the most displacement risk; and the gap between AI power users and newcomers is widening measurably.</div>
-    <div class="news-section-label">Insight</div>
-    <div class="news-insight">The emergence of a measurable AI skills gap represents a new phase of digital divide — not access to technology, but mastery of it. As AI becomes a productivity multiplier, those who understand it early compound their advantage. This has profound implications for education, labor policy, and the distribution of economic gains from AI.</div>
-    <div class="bilingual-block">
-      <span class="lang-label cn">中文</span>
-      <div class="news-title-cn">Anthropic研究揭示AI技能鸿沟已出现：先行者优势正在扩大</div>
-      <div class="news-section-label">要点</div>
-      <div class="news-summary-cn">Anthropic研究显示：AI尚未大规模替代岗位，但技能鸿沟已真实显现。先行者正在获取超额价值，高收入地区获益更显著，初级白领岗位面临最大替代风险。AI熟练使用者与新手之间的差距正在可测量地扩大。</div>
-      <div class="news-section-label">洞察</div>
-      <div class="news-insight" style="background:#FFF8E1;border-left:3px solid #FF9800;">AI技能鸿沟的出现标志着"数字鸿沟2.0"时代的到来——这一次不是技术的可及性，而是对技术的驾驭深度。随着AI成为生产力的乘数变量，早期精通者的优势将持续复合，带来深远教育、劳动政策和AI红利分配影响。</div>
+    <div class="news-title">
+      <span class="lang-cn">Anthropic研究揭示：AI技能鸿沟正在形成，先行者优势加剧不平等</span>
+      <span class="lang-en">The AI Skills Gap Is Here, and Power Users Are Pulling Ahead</span>
     </div>
+    <div class="news-keypoints">
+      <span class="lang-cn">Anthropic研究显示，AI尚未大规模替代工作，但显著的技能鸿沟正在出现：早期采用者获取不成比例的价值，可能加剧不平等。入门级白领职位面临冲击，高收入地区优势进一步扩大。</span>
+      <span class="lang-en">Anthropic research reveals AI has not eliminated jobs overall, but a significant skills gap is emerging: early adopters gaining disproportionate value, potentially widening inequality, with entry-level white-collar roles most at risk.</span>
+    </div>
+    <div class="news-insight">
+      <span class="lang-cn">💡 洞察：AI不会让人失业，但"会用AI的人"会让"不会用的人"失业。技能差距将在未来2-3年内成为劳动力市场的核心矛盾。</span>
+      <span class="lang-en">💡 Insight: AI won't take jobs — but people who use AI well will outcompete those who don't. The skills gap will become the core contradiction in the labor market within 2-3 years.</span>
+    </div>
+    <a class="news-link" href="https://techcrunch.com/2026/03/25/the-ai-skills-gap-is-here-says-ai-company-and-power-users-are-pulling-ahead/" target="_blank"><span class="lang-cn">阅读原文 →</span><span class="lang-en">Read more →</span></a>
   </div>
 
-  <!-- News 4 -->
+  <!-- Card 4 -->
   <div class="news-card">
     <div class="card-top">
-      <img class="news-icon" src="https://jingjingshen-star.github.io/ai-news-digest/ai_icon_terminal.png" alt="icon">
       <div class="meta-row">
-        <span class="category-tag cat-trend">技术趋势</span>
+        <span class="category-tag cat-landscape">🔐 Security</span>
         <span class="source-badge">VentureBeat</span>
         <span class="date-badge">2026-03-30</span>
       </div>
     </div>
-    <div class="news-title-en">RSAC 2026: Five Agent Identity Frameworks Shipped — Three Critical Gaps Left Open</div>
-    <div class="news-section-label">Key Points</div>
-    <div class="news-keypoints">At RSA Conference 2026, five vendors launched agent identity frameworks (CrowdStrike, Cisco, Palo Alto, Microsoft, Cato CTRL). However, three critical gaps remain unaddressed: agents rewriting their own rules (self-modification); lack of trust verification in agent-to-agent handoffs; and "ghost agents" holding live credentials. Security experts warn these gaps leave enterprises vulnerable to real-world exploits.</div>
-    <div class="news-section-label">Insight</div>
-    <div class="news-insight">The gap between agent capability and agent security infrastructure is widening fast. As autonomous AI agents proliferate in enterprise environments, the security paradigm must shift from protecting human users to governing autonomous agents — a fundamentally different challenge that existing IAM frameworks were never designed to solve.</div>
-    <div class="bilingual-block">
-      <span class="lang-label cn">中文</span>
-      <div class="news-title-cn">RSAC 2026：五大智能体身份框架发布，却留下三大安全空白</div>
-      <div class="news-section-label">要点</div>
-      <div class="news-summary-cn">RSA Conference 2026上，CrowdStrike、Cisco、Palo Alto、Microsoft、Cato CTRL五大厂商发布智能体身份认证框架。但仍存三大空白：智能体自我改写规则（自修改问题）；智能体间交接缺乏信任验证；以及持有有效凭证的"幽灵智能体"。安全专家警告这些漏洞已造成真实威胁。</div>
-      <div class="news-section-label">洞察</div>
-      <div class="news-insight" style="background:#FFF8E1;border-left:3px solid #FF9800;">智能体能力与其安全基础设施之间的差距正在快速扩大。随着自主智能体在企业环境中的普及，安全范式必须从保护"人"转向治理"智能体"——这是一个完全不同的挑战，现有IAM框架根本无法应对。</div>
+    <div class="news-title">
+      <span class="lang-cn">RSA 2026：五大Agent身份框架发布，三大关键缺口未解决</span>
+      <span class="lang-en">RSAC 2026: Five Agent Identity Frameworks Shipped, Three Critical Gaps Left Open</span>
     </div>
+    <div class="news-keypoints">
+      <span class="lang-cn">RSA Conference 2026上，五家厂商推出Agent身份框架，但三个关键缺口仍未解决：Agent自行改写规则、Agent间交接缺乏信任验证、以及"幽灵Agent"持有活跃凭证。专家警告这些漏洞将使企业暴露于真实攻击风险。</span>
+      <span class="lang-en">At RSAC 2026, five vendors launched agent identity frameworks — but three gaps remain: agents rewriting their own rules, lack of trust verification in agent-to-agent handoffs, and ghost agents holding live credentials. Security experts warn enterprises face real-world exploit risks.</span>
+    </div>
+    <div class="news-insight">
+      <span class="lang-cn">💡 洞察：Agent经济正在到来，但安全基础设施严重滞后。现有IAM框架不足以验证Agent身份，这是企业大规模部署Agent前必须解决的前置问题。</span>
+      <span class="lang-en">💡 Insight: The agent economy is arriving, but security infrastructure is severely lagging. Existing IAM frameworks cannot verify agent identity — a prerequisite issue before enterprise-scale agent deployment.</span>
+    </div>
+    <a class="news-link" href="https://venturebeat.com/security/rsac-2026-agent-identity-frameworks-three-gaps/" target="_blank"><span class="lang-cn">阅读原文 →</span><span class="lang-en">Read more →</span></a>
   </div>
 
-  <!-- News 5 -->
+  <!-- Card 5 -->
   <div class="news-card">
     <div class="card-top">
-      <img class="news-icon" src="https://jingjingshen-star.github.io/ai-news-digest/ai_icon_robot.png" alt="icon">
       <div class="meta-row">
-        <span class="category-tag cat-trend">技术趋势</span>
+        <span class="category-tag cat-breakthrough">💰 Business</span>
         <span class="source-badge">VentureBeat</span>
         <span class="date-badge">2026-02-23</span>
       </div>
     </div>
-    <div class="news-title-en">AI Agents Delivering Real ROI — But 90% Struggle to Scale in Production</div>
-    <div class="news-section-label">Key Points</div>
-    <div class="news-keypoints">DigitalOcean's 2026 Currents report (1,100+ developers & CTOs): 67% of organizations using AI agents report productivity gains. However, only 10% are scaling agents in production — top blocker is high inference cost (49%). 52% are actively implementing AI; 46% deploying AI agents specifically. Top use cases: code generation (54%) and internal operations automation (49%). 44% now spend 76-100% of AI budget on inference.</div>
-    <div class="news-section-label">Insight</div>
-    <div class="news-insight">The 10% production scaling rate vs 67% reporting gains reveals a critical gap: AI agents work in demos and pilots but struggle in sustained, complex production environments. The inference cost problem is structural — it's not a bug but a feature of the current AI architecture. Solving this requires rethinking the economics of inference, not just optimizing models.</div>
-    <div class="bilingual-block">
-      <span class="lang-label cn">中文</span>
-      <div class="news-title-cn">67%报告AI智能体提升生产力，却仅10%实现规模化落地</div>
-      <div class="news-section-label">要点</div>
-      <div class="news-summary-cn">DigitalOcean 2026 Currents报告（1100+开发者与CTO）：67%使用AI智能体的组织报告生产力提升，但仅10%实现规模化生产。推理成本高是首要障碍（49%）；44%的企业将76-100%的AI预算花在推理上。主要用例：代码生成（54%）和内部运营自动化（49%）。</div>
-      <div class="news-section-label">洞察</div>
-      <div class="news-insight" style="background:#FFF8E1;border-left:3px solid #FF9800;">67%的增益与10%的规模化率之间的巨大鸿沟，揭示了AI落地的结构性困境：演示和试点阶段的成功难以转化为生产环境的持续运行。推理成本问题是架构性缺陷，而非可通过优化解决的小问题。</div>
+    <div class="news-title">
+      <span class="lang-cn">67%企业报告AI Agent带来ROI，但规模化生产仍是难题</span>
+      <span class="lang-en">AI Agents Delivering Real ROI: 67% Report Gains, But Scaling Remains Elusive</span>
     </div>
+    <div class="news-keypoints">
+      <span class="lang-cn">DigitalOcean 2026 Currents报告（1100+开发者/CTO）显示，67%使用AI Agent的组织报告了生产力提升，但仅有10%在生产环境规模化。推理成本高企是首要障碍（49%），44%受访者将76-100%的AI预算用于推理。</span>
+      <span class="lang-en">DigitalOcean's 2026 Currents report (1,100+ developers/CTOs): 67% of organizations using AI agents report productivity gains, but only 10% scale in production. High inference costs are the top blocker (49%), with 44% spending 76-100% of AI budgets on inference.</span>
+    </div>
+    <div class="news-insight">
+      <span class="lang-cn">💡 洞察：AI Agent的价值已获验证，但"最后一公里"的规模化问题才是决定这波AI浪潮实际影响力的关键。</span>
+      <span class="lang-en">💡 Insight: AI Agent value is validated, but the "last mile" scaling challenge determines whether this wave of AI will have real-world impact at scale.</span>
+    </div>
+    <a class="news-link" href="https://venturebeat.com/orchestration/ai-agents-are-delivering-real-roi-heres-what-1-100-developers-and-ctos" target="_blank"><span class="lang-cn">阅读原文 →</span><span class="lang-en">Read more →</span></a>
   </div>
 
-  <!-- News 6 -->
+  <!-- Domestic News -->
+  <div class="section-title" style="margin-top:48px">
+    <h2><span class="lang-cn">🇨🇳 国内动态</span><span class="lang-en">🇨🇳 China</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <!-- Card 6 -->
   <div class="news-card">
     <div class="card-top">
-      <img class="news-icon" src="https://jingjingshen-star.github.io/ai-news-digest/ai_icon_brain.png" alt="icon">
       <div class="meta-row">
-        <span class="category-tag cat-trend">技术趋势</span>
+        <span class="category-tag cat-trend">📊 趋势</span>
         <span class="source-badge">36氪 · 神译局</span>
         <span class="date-badge">2026-04-05</span>
       </div>
     </div>
-    <div class="news-title-en">Five Key AI and Data Science Trends for 2026: From Hype to Pragmatism</div>
-    <div class="news-section-label">Key Points</div>
-    <div class="news-keypoints">Five major trends for 2026 identified by 36kr based on global executive surveys: (1) Moving from pilot projects to scaled production; (2) Rise of agentic AI as a primary deployment pattern; (3) Data infrastructure reinvention and "small data" renaissance; (4) Responsible AI and governance as core competitive competencies; (5) Talent strategy transformation from "hiring" to "reskilling."</div>
-    <div class="news-section-label">Insight</div>
-    <div class="news-insight">The shift from "experimenting with AI" to "governing AI at scale" is the defining transition of 2026. The enterprises that thrive will be those that treat AI governance not as compliance overhead but as a competitive moat — the same way cybersecurity evolved from IT concern to board-level priority.</div>
-    <div class="bilingual-block">
-      <span class="lang-label cn">中文</span>
-      <div class="news-title-cn">36氪发布2026年AI与数据科学五大趋势：从概念喧嚣到务实落地</div>
-      <div class="news-section-label">要点</div>
-      <div class="news-summary-cn">36氪基于全球高管调研，确定2026年五大趋势：从试点走向规模化生产；代理式AI崛起成为主要部署形态；数据基础重塑与"小数据"复兴；负责任AI与治理成为核心竞争力；人才战略从"招聘"到"重塑"转型。</div>
-      <div class="news-section-label">洞察</div>
-      <div class="news-insight" style="background:#FFF8E1;border-left:3px solid #FF9800;">从"试验AI"到"治理AI"是2026年最核心的转折。能将AI治理视为竞争护城河而非合规负担的企业将胜出——正如网络安全从IT问题演变为董事会级战略资产。</div>
+    <div class="news-title">
+      <span class="lang-cn">2026年人工智能与数据科学的五大趋势</span>
+      <span class="lang-en">Five Major Trends in AI & Data Science for 2026</span>
     </div>
+    <div class="news-keypoints">
+      <span class="lang-cn">36氪基于全球高管调研确定2026年五大趋势：从试点走向规模化生产；代理式AI崛起；数据基础重塑与"小数据"复兴；负责任AI与治理成为核心竞争力；人才战略从"招聘"到"重塑"转型。</span>
+      <span class="lang-en">Based on a global executive survey, 36Kr identified five 2026 trends: moving from pilot to scaled production; rise of agentic AI; data infrastructure reshaping with "small data" revival; responsible AI as core competence; talent strategy shifting from "hiring" to "reskilling."</span>
+    </div>
+    <div class="news-insight">
+      <span class="lang-cn">💡 洞察：代理式AI（Agentic AI）崛起是今年最值得关注的技术转折点，中国企业在Agent框架和应用场景上的探索已与全球同步。</span>
+      <span class="lang-en">💡 Insight: The rise of Agentic AI is the most significant technology turning point this year; Chinese enterprises are exploring agent frameworks and application scenarios in sync with global trends.</span>
+    </div>
+    <a class="news-link" href="https://m.36kr.com/p/3728058030013572" target="_blank"><span class="lang-cn">阅读原文 →</span><span class="lang-en">Read more →</span></a>
   </div>
 
-  <!-- News 7 -->
+  <!-- Card 7 -->
   <div class="news-card">
     <div class="card-top">
-      <img class="news-icon" src="https://jingjingshen-star.github.io/ai-news-digest/ai_icon_chip.png" alt="icon">
       <div class="meta-row">
-        <span class="category-tag cat-breakthrough">技术突破</span>
+        <span class="category-tag cat-landscape">⚠️ 挑战</span>
         <span class="source-badge">36氪 · 神译局</span>
         <span class="date-badge">2026-04-03</span>
       </div>
     </div>
-    <div class="news-title-en">2026 AI Enterprise Trap: Why Most Companies Fall Into These Nine Pits</div>
-    <div class="news-section-label">Key Points</div>
-    <div class="news-keypoints">Gartner data reveals that out of every 50 AI investments, only 1 delivers transformative value, and only 20% produce measurable ROI — yet CEO expectations for AI-driven growth remain unrealistically high. Gartner's nine predictions for 2026: (1) AI layoffs outpace productivity gains; (2) Cultural misalignment blocks performance goals; (3) AI harms employee mental health; (4) AI-generated "work waste" drains productivity; (5) Progressive employers return hiring to human touch; (6) Internal corporate espionage risk increases; (7) Tech-to-trade career paths flourish; (8) Process experts unlock AI value; (9) Employees demand compensation for training their digital twins.</div>
-    <div class="news-section-label">Insight</div>
-    <div class="news-insight">The Gartner data is a sobering counter-narrative to the AI hype cycle. The 50-to-1 transformative ratio means most AI investments are essentially failed experiments dressed up as innovation. For leaders, the implication is clear: stop chasing AI for its own sake and start demanding rigorous proof of value before scaling.</div>
-    <div class="bilingual-block">
-      <span class="lang-label cn">中文</span>
-      <div class="news-title-cn">Gartner预警2026企业AI九大陷阱：投资50个仅1个产生变革价值</div>
-      <div class="news-section-label">要点</div>
-      <div class="news-summary-cn">Gartner数据：每50项AI投资中仅1项产生变革价值，仅20%产生可衡量回报，但CEO期望仍然拉满。九大预测：AI裁员速度快于生产力增益；文化失调阻碍绩效；AI损害员工心理健康；AI产生"工作垃圾"拖累生产力；内部企业间谍风险增加；流程专家解锁AI价值；员工要求为训练数字分身获得补偿等。</div>
-      <div class="news-section-label">洞察</div>
-      <div class="news-insight" style="background:#FFF8E1;border-left:3px solid #FF9800;">Gartner的数据是AI炒作周期的一剂清醒剂。50:1的变革率意味着大多数AI投资本质上是包装成创新的失败实验。对领导者而言，含义很明确：停止为AI而追AI，在规模化前先严格验证价值。</div>
+    <div class="news-title">
+      <span class="lang-cn">2026年AI困局：多数企业栽在这九大坑</span>
+      <span class="lang-en">2026 AI Predicament: Nine Major Pitfalls Where Most Enterprises Fall</span>
     </div>
+    <div class="news-keypoints">
+      <span class="lang-cn">Gartner数据显示，每50项AI投资中仅1项带来变革性价值。Gartner预测九大挑战：AI裁员速度快于生产力增益；文化失调阻碍绩效；AI损害员工心理健康；AI产生"工作垃圾"拖累生产力；内部企业间谍活动风险增加；流程专家解锁AI价值等。</span>
+      <span class="lang-en">Gartner data: only 1 in 50 AI investments delivers transformative value. Nine key predictions: AI layoffs outpacing productivity gains; cultural misalignment hindering performance; AI harming employee mental health; AI generating "work junk"; insider corporate espionage risks increasing; process experts unlocking AI value.</span>
+    </div>
+    <div class="news-insight">
+      <span class="lang-cn">💡 洞察：AI投资失败的主因往往不是技术，而是组织和文化。企业在追逐AI技术的同时，必须同步建立配套的组织变革能力。</span>
+      <span class="lang-en">💡 Insight: The primary cause of AI investment failure is often not technology, but organization and culture. Enterprises pursuing AI must simultaneously build organizational change capabilities.</span>
+    </div>
+    <a class="news-link" href="https://m.36kr.com/p/3728086488677256" target="_blank"><span class="lang-cn">阅读原文 →</span><span class="lang-en">Read more →</span></a>
   </div>
 
-  <!-- News 8 -->
+  <!-- Card 8 -->
   <div class="news-card">
     <div class="card-top">
-      <img class="news-icon" src="https://jingjingshen-star.github.io/ai-news-digest/ai_icon_robot.png" alt="icon">
       <div class="meta-row">
-        <span class="category-tag cat-landscape">行业格局</span>
+        <span class="category-tag cat-breakthrough">🚀 市场</span>
         <span class="source-badge">36氪研究院</span>
         <span class="date-badge">2026-03-23</span>
       </div>
     </div>
-    <div class="news-title-en">China's Embodied Intelligence Market Set to Break 1 Trillion Yuan in 2026</div>
-    <div class="news-section-label">Key Points</div>
-    <div class="news-keypoints">36kr Research Institute report: China's embodied intelligence market grew from 2,133 billion yuan (2018) to 9,150 billion yuan (2025), projected to exceed 1 trillion yuan in 2026. In 2025, there were 305+ financing events totaling 38+ billion yuan, with 600+ investment institutions participating. China leads globally in embodied intelligence. Applications are expanding into industrial, service, specialty, and transportation sectors, with future robots expected to become deployable general-purpose labor.</div>
-    <div class="news-section-label">Insight</div>
-    <div class="news-insight">The embodied intelligence market crossing the 1 trillion yuan threshold is a milestone in China's AI strategy. The 38+ billion yuan in annual financing reflects capital conviction that embodied AI — robots that can perceive, reason, and act in physical environments — will be the next major platform shift after cloud AI and edge AI.</div>
-    <div class="bilingual-block">
-      <span class="lang-label cn">中文</span>
-      <div class="news-title-cn">36氪研究院：2026年中国具身智能市场规模有望突破万亿元</div>
-      <div class="news-section-label">要点</div>
-      <div class="news-summary-cn">36氪研究院报告显示，中国具身智能市场规模从2018年2133亿元增至2025年9150亿元，2026年有望突破万亿元。2025年全年融资超305起，总额超380亿元，超600家机构参与。中国具身智能产业已处全球第一梯队，应用向工业、服务、特种、交通等领域加速渗透。</div>
-      <div class="news-section-label">洞察</div>
-      <div class="news-insight" style="background:#FFF8E1;border-left:3px solid #FF9800;">具身智能突破万亿元大关是中国AI战略的重要里程碑。380亿年融资规模印证资本对具身智能的强烈信心——能感知、推理并在物理环境中行动的机器人，将成为继云端AI、边缘AI之后的第三次平台级迁移。</div>
+    <div class="news-title">
+      <span class="lang-cn">36氪报告：这条AI赛道，2026年规模有望破万亿</span>
+      <span class="lang-en">36Kr Report: This AI Sector Poised to Surpass ¥1 Trillion in 2026</span>
+    </div>
+    <div class="news-keypoints">
+      <span class="lang-cn">36氪研究院报告显示，中国具身智能市场规模从2018年2133亿元增至2025年9150亿元，有望2026年突破万亿。2025年融资事件超305起，总额超380亿元，超600家投资机构参与，中国具身智能产业已处全球第一梯队。</span>
+      <span class="lang-en">36Kr Research shows China's embodied AI market grew from ¥213.3B (2018) to ¥915B (2025), projected to exceed ¥1 trillion in 2026. 2025 saw 305+ financing events worth ¥38B+ from 600+ investors; China's embodied AI is already in the global first tier.</span>
+    </div>
+    <div class="news-insight">
+      <span class="lang-cn">💡 洞察：具身智能是中国在AI领域最具差异化竞争优势的赛道之一，世界模型+数据闭环的突破将决定规模化落地的速度。</span>
+      <span class="lang-en">💡 Insight: Embodied AI is one of China's most differentiated competitive advantages in AI; breakthroughs in world models and data closed loops will determine the speed of scaled deployment.</span>
+    </div>
+    <a class="news-link" href="https://eu.36kr.com/zh/p/3735341158121733" target="_blank"><span class="lang-cn">阅读原文 →</span><span class="lang-en">Read more →</span></a>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p><span class="lang-cn">📜 <a href="history.html" style="color:#4A90D9">查看历史简报</a></span><span class="lang-en">📜 <a href="history.html" style="color:#4A90D9">View Archive</a></span></p>
+    <p style="margin-top:8px;opacity:0.6"><span class="lang-cn">由 OpenClaw AI News Digest 生成 · 2026年04月09日</span><span class="lang-en">Generated by OpenClaw AI News Digest · April 9, 2026</span></p>
+  </div>
+
+</div>
+
+<script>
+function toggleLang(en) {
+  if (en) {
+    document.body.classList.add('show-en');
+    document.querySelectorAll('.lang-toggle button')[0].classList.remove('active');
+    document.querySelectorAll('.lang-toggle button')[1].classList.add('active');
+  } else {
+    document.body.classList.remove('show-en');
+    document.querySelectorAll('.lang-toggle button')[0].classList.add('active');
+    document.querySelectorAll('.lang-toggle button')[1].classList.remove('active');
+  }
+}
+</script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+.inland-security-footer{position:fixed;z-index:10;bottom:0;right:0;width:fit-content;display:flex;justify-content:flex-end}
+.tooltip-container{position:relative}
+.trigger-content{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;padding:8px;background-color:transparent;border-radius:8px;cursor:pointer}
+.minimax-link{display:flex;align-items:center;cursor:pointer;font-weight:300;color:#adadad;text-decoration:none}
+.minimax-link:visited{color:#adadad}
+.minimax-link:hover{color:#666666}
+.tooltip-content{position:absolute;bottom:100%;right:0;display:none;flex-direction:column;align-items:center;gap:8px;padding:8px;padding-bottom:16px;font-size:12px;line-height:17px;background-color:#fafafa;border-radius:12px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.15);color:#171717}
+.tooltip-content::after{content:'';position:absolute;bottom:-8px;left:0;right:0;height:16px}
+.tooltip-container:hover .tooltip-content{display:flex}
+.info-section{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+.beian-link{display:flex;align-items:center;text-decoration:none;color:#171717}
+.beian-icon{width:14px;height:14px;margin-right:2px}
+.underline-text{color:#171717;text-decoration:underline}
+.underline-text:hover{color:#000000}
+@media(prefers-color-scheme:dark){.trigger-content{background-color:transparent}.minimax-link,.minimax-link:visited{color:#666666}.minimax-link:hover{color:#adadad}.tooltip-content{background-color:#262626;color:#ededed}.beian-link,.underline-text{color:#ededed}.underline-text:hover{color:#ffffff}}
+</style>
+<div class="inland-security-footer">
+  <div class="tooltip-container">
+    <div class="trigger-content">
+      <a href="https://www.minimaxi.com/" target="_blank" rel="noreferrer" class="minimax-link"><span>© 2026 MiniMax</span></a>
+    </div>
+    <div class="tooltip-content">
+      <section class="info-section"><span>上海稀宇科技有限公司</span></section>
+      <section class="info-section">
+        <a class="beian-link" href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31010402010179" target="_blank" rel="noreferrer"><img alt="beian-icon" src="https://cdn.hailuoai.com/hailuo-video-web/public_assets/223037d3-79fd-4db0-a456-749f38a6a14b.png" class="beian-icon"><span class="underline-text">沪公网安备31010402010179号</span></a>
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer" class="underline-text">沪ICP备2023003282号-38</a>
+      </section>
+      <section class="info-section"><span>模型名称：MiniMax</span><span>备案号：Shanghai-MiniMax-202505230046</span></section>
+      <section class="info-section">
+        <a href="https://agent.minimaxi.com/doc/zh/terms-of-service.html" target="_blank" rel="noreferrer" class="underline-text">用户协议</a>
+        <a href="https://agent.minimaxi.com/doc/zh/privacy-policy.html" target="_blank" rel="noreferrer" class="underline-text">隐私政策</a>
+      </section>
     </div>
   </div>
-
-  <div class="footer">
-    <p>AI 简报助手 · 每日追踪全球AI产业动态</p>
-    <p style="margin-top:6px">Generated by OpenClaw · <a href="https://github.com/jingjingshen-star/ai-news-digest">GitHub</a> · 2026-04-09</p>
-  </div>
-
 </div>
 </body>
 </html>
