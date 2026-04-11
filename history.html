@@ -3,58 +3,78 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 简报 · 历史存档</title>
+<title>历史简报 · AI News Archive</title>
 <style>
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f4f8; padding: 32px 16px; }
-  .container { max-width: 700px; margin: 0 auto; }
-  h1 { color: #0D2137; font-size: 24px; margin-bottom: 8px; }
-  p { color: #666; font-size: 14px; margin-bottom: 24px; }
-  .back { display: inline-block; margin-bottom: 20px; color: #4A90D9; text-decoration: none; font-size: 14px; }
-  .back:hover { text-decoration: underline; }
-  .archive-list { list-style: none; }
-  .archive-item {
-    background: #fff; border-radius: 10px; padding: 16px 20px; margin-bottom: 10px;
-    box-shadow: 0 2px 6px rgba(13,33,55,0.06); border-left: 4px solid #4A90D9;
-  }
-  .archive-item a { color: #0D2137; text-decoration: none; font-weight: 600; font-size: 15px; }
-  .archive-item a:hover { color: #4A90D9; }
-  .archive-meta { font-size: 12px; color: #888; margin-top: 4px; }
-  .lang-en { display: none; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f0f4f8; color: #1a1a2e; min-height: 100vh; }
+  .site-header { background: linear-gradient(135deg, #0D2137, #1a3a5c); padding: 40px 20px; text-align: center; }
+  .site-header h1 { color: #fff; font-size: 26px; margin-bottom: 8px; }
+  .site-header a { color: rgba(255,255,255,0.7); font-size: 14px; text-decoration: none; }
+  .container { max-width: 800px; margin: 0 auto; padding: 24px 16px 60px; }
+  .archive-item { background: #fff; border-radius: 10px; padding: 18px 22px; margin-bottom: 14px; border-left: 4px solid #4A90D9; display: flex; justify-content: space-between; align-items: center; }
+  .archive-item:hover { background: #f7f9fc; }
+  .archive-date { font-size: 12px; color: #888; margin-bottom: 4px; }
+  .archive-title { font-size: 15px; font-weight: 600; color: #0D2137; }
+  .archive-title a { color: #4A90D9; text-decoration: none; }
+  .archive-title a:hover { text-decoration: underline; }
+  .back-link { text-align: center; margin-top: 30px; }
+  .back-link a { color: #4A90D9; text-decoration: none; border: 2px solid #4A90D9; padding: 8px 24px; border-radius: 20px; font-size: 14px; }
+  .back-link a:hover { background: #4A90D9; color: #fff; }
+  .lang-toggle { display: flex; justify-content: center; gap: 10px; margin: 20px auto 0; }
+  .lang-btn { padding: 7px 22px; border: 2px solid #4A90D9; background: transparent; color: #4A90D9; border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: 600; }
   body.show-en .lang-cn { display: none; }
-  body.show-en .lang-en { display: block; }
-  .lang-toggle { display: flex; gap: 8px; margin: 20px 0; }
-  .lang-btn { border: 1px solid #4A90D9; background: transparent; color: #4A90D9; padding: 5px 16px; border-radius: 20px; cursor: pointer; font-size: 13px; }
-  .lang-btn.active { background: #4A90D9; color: #fff; }
+  body.show-en .lang-btn:nth-child(1) { background: transparent; color: #4A90D9; }
+  body.show-en .lang-btn:nth-child(2) { background: #4A90D9; color: #fff; }
+  .footer { text-align: center; font-size: 12px; color: #aaa; margin-top: 40px; padding-top: 20px; border-top: 1px solid #dde6f0; }
 </style>
 </head>
 <body>
-<div class="container">
-  <a class="back" href="index.html">← 返回今日简报 / Back to Today</a>
-  <div class="lang-toggle">
-    <button class="lang-btn active" onclick="setLang(false)">🇨🇳 中文</button>
-    <button class="lang-btn" onclick="setLang(true)">🌐 English</button>
-  </div>
-  <h1 class="lang-cn">📜 历史简报存档</h1>
-  <h1 class="lang-en" style="display:none">📜 News Digest Archive</h1>
-  <p class="lang-cn">共 18 期简报，持续更新中</p>
-  <p class="lang-en" style="display:none">18 issues archived</p>
-  <ul class="archive-list" id="archive-list"></ul>
+<div class="lang-toggle">
+  <button onclick="toggleLang(false)" class="lang-btn">中文</button>
+  <button onclick="toggleLang(true)" class="lang-btn" style="background:#4A90D9;color:#fff;">English</button>
+</div>
+<header class="site-header">
+  <h1 class="lang-cn">📜 全球AI动态简报 · 历史存档</h1>
+  <h1 class="lang-en" style="display:none;color:#fff;">📜 Global AI News Digest · Archive</h1>
+  <a href="index.html">← 返回最新简报 / Back to Latest</a>
+</header>
+<div class="container" id="archive-list"></div>
+<div class="back-link">
+  <a href="index.html">← 返回最新简报</a>
+</div>
+<div class="footer">
+  <p class="lang-cn">全球AI动态简报 · AI News Digest</p>
+  <p class="lang-en" style="display:none">Global AI News Digest</p>
 </div>
 <script>
-function setLang(en) {
-  document.body.classList.toggle('show-en', en);
-  document.querySelectorAll('.lang-btn')[0].classList.toggle('active', !en);
-  document.querySelectorAll('.lang-btn')[1].classList.toggle('active', en);
+function toggleLang(en) {
+  if (en) { document.body.classList.add('show-en'); }
+  else { document.body.classList.remove('show-en'); }
 }
-fetch('archive/archive.json').then(r=>r.json()).then(data=>{
-  const ul = document.getElementById('archive-list');
-  data.forEach(item=>{
-    const li = document.createElement('li');
-    li.className='archive-item';
-    li.innerHTML='<a href='+item.url+'>'+item.title_zh+'</a><div class="archive-meta"><span>'+item.date+'</span> · <span>'+item.title_en+'</span></div>';
-    ul.appendChild(li);
-  });
-}).catch(()=>{});
+async function loadArchive() {
+  try {
+    const res = await fetch('archive/archive.json');
+    const data = await res.json();
+    const container = document.getElementById('archive-list');
+    data.forEach(item => {
+      const date = item.date;
+      const titleZh = item.title_zh || item.title_en || '';
+      const titleEn = item.title_en || item.title_zh || '';
+      const url = item.url || 'index.html';
+      const html = `<div class="archive-item">
+        <div>
+          <div class="archive-date">${date}</div>
+          <div class="archive-title lang-cn"><a href="${url}">${titleZh}</a></div>
+          <div class="archive-title lang-en" style="display:none"><a href="${url}">${titleEn}</a></div>
+        </div>
+      </div>`;
+      container.innerHTML += html;
+    });
+  } catch(e) {
+    document.getElementById('archive-list').innerHTML = '<p style="text-align:center;color:#888;padding:40px;">历史存档加载中...</p>';
+  }
+}
+loadArchive();
 </script>
 </body>
 </html>
