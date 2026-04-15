@@ -49,10 +49,10 @@
   body:not(.show-en) .lang-btn:nth-child(2) { background: transparent; color: var(--tech-blue); }
 
   /* ── Bilingual toggle logic ── */
-  body.show-en .lang-cn { display: none !important; }
-  body.show-en .lang-en { display: block !important; }
-  body:not(.show-en) .lang-en { display: none !important; }
-  body:not(.show-en) .lang-cn { display: block !important; }
+  body.show-en .lang-cn  { display: none !important; }
+  body.show-en .lang-en  { display: block !important; }
+  body:not(.show-en) .lang-en  { display: none !important; }
+  body:not(.show-en) .lang-cn  { display: block !important; }
 
   /* ── Container ── */
   .container { max-width: 860px; margin: 0 auto; }
@@ -291,7 +291,7 @@
       </div>
       <div class="insight-body">
         <span class="lang-cn">本周的AI新闻勾勒出一个深刻变化：开源模型正在打破专有壁垒（Google Gemma 4换Apache 2.0），而主权AI正在成为国家战略（DeepSeek适配昇腾）。两者看似矛盾，实则并行不悖——开源降低技术门槛，主权AI确保地缘竞争力。<br><br>2026年真正的AI主线不是模型能力的军备竞赛，而是平台生态的争夺战——谁建立了最深的开发者生态，谁就掌握了AI时代的基础设施。</span>
-        <span class="lang-en" style="display:none">This week's AI news reveals a profound shift: open-source models are breaking proprietary barriers (Google Gemma 4 switches to Apache 2.0), while sovereign AI is becoming a national strategy (DeepSeek adapts Huawei Ascend). The two seem contradictory but run in parallel.<br><br>The real AI主线 of 2026 is not capability competition but platform ecosystem contention — whoever builds the deepest developer ecosystem controls AI-era infrastructure.</span>
+        <span class="lang-en" style="display:none">This week reveals a profound shift: open-source models are breaking proprietary barriers (Google Gemma 4 switches to Apache 2.0), while sovereign AI is becoming a national strategy (DeepSeek adapts Huawei Ascend). The real AI主线 of 2026 is not capability competition but platform ecosystem contention — whoever builds the deepest developer ecosystem controls AI-era infrastructure.</span>
       </div>
     </div>
   </div>
@@ -306,54 +306,53 @@
       </div>
     </div>
     <div class="news-card">
-  <div class="news-title">
-    <a href="https://techcrunch.com/2026/04/06/openais-vision-for-the-ai-economy-public-wealth-funds-robot-taxes-and-a-four-day-work-week/" target="_blank">OpenAI发布AI经济蓝图：全民财富基金、机器人税与四天工作制</a>
-  </div>
+  <div class="news-title lang-en" style="display:none"><a href="https://techcrunch.com/2026/04/06/openais-vision-for-the-ai-economy-public-wealth-funds-robot-taxes-and-a-four-day-work-week/" target="_blank">OpenAI's Vision for the AI Economy: Public Wealth Funds, Robot Taxes, and a Four-Day Workweek</a></div>
+  <div class="news-title lang-cn"><a href="https://techcrunch.com/2026/04/06/openais-vision-for-the-ai-economy-public-wealth-funds-robot-taxes-and-a-four-day-work-week/" target="_blank">OpenAI发布AI经济蓝图：全民财富基金、机器人税与四天工作制</a></div>
   <div class="news-meta"><span class="source-badge">TechCrunch</span> &nbsp; 2026-04-06</div>
-  <div class="news-summary"><strong>要点：</strong>OpenAI发布AI经济政策蓝图，提议将税负从劳动力转向资本，包括对机器人征税、建立全民AI财富基金、补贴四天工作制等。估值8520亿美元的OpenAI试图借此在AI监管博弈中抢占话语权。</div>
-  <div class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> OpenAI released a policy blueprint proposing to shift tax burdens from labor to capital, including robot taxes, a public AI wealth fund, and subsidies for four-day workweeks. The $852B company aims to shape the AI regulation debate.</div>
-  <div class="news-insight"><strong>洞察：</strong>OpenAI的政策蓝图本质上是AI巨头为自身合法性铺路的公关行动——它既倡导政府对AI利润征税，又承诺不影响股东回报。真正的全民受益框架需要超越企业自驱，建立独立的AI税收与分配机制。</div>
-  <div class="news-insight lang-en" style="display:none"><strong>Insight:</strong> OpenAI's policy blueprint is essentially a PR move by an AI giant to legitimize itself — advocating government taxes on AI profits while protecting shareholder returns. A true 'benefit all' framework requires independent mechanisms beyond corporate self-regulation.</div>
+  <div class="news-summary"><strong>Key Points:</strong> OpenAI released a policy blueprint proposing to shift tax burdens from labor to capital, including robot taxes, a public AI wealth fund, and subsidies for four-day workweeks. The $852B company aims to shape the AI regulation debate.</div>
+  <div class="news-summary lang-cn" style="display:none"><strong>要点：</strong>OpenAI发布AI经济政策蓝图，提议将税负从劳动力转向资本，包括对机器人征税、建立全民AI财富基金、补贴四天工作制等。估值8520亿美元的OpenAI试图借此在AI监管博弈中抢占话语权。</div>
+  <div class="news-insight"><strong>Insight:</strong> OpenAI's policy blueprint is essentially a PR move by an AI giant to legitimize itself — advocating government taxes on AI profits while protecting shareholder returns. A true 'benefit all' framework requires independent mechanisms beyond corporate self-regulation.</div>
+  <div class="news-insight lang-cn" style="display:none"><strong>洞察：</strong>OpenAI的政策蓝图本质上是AI巨头为自身合法性铺路的公关行动——它既倡导政府对AI利润征税，又承诺不影响股东回报。真正的全民受益框架需要超越企业自驱，建立独立的AI税收与分配机制。</div>
 </div>
+
 <div class="news-card">
-  <div class="news-title">
-    <a href="https://techcrunch.com/2026/04/02/microsoft-takes-on-ai-rivals-with-three-new-foundational-models/" target="_blank">微软发布MAI基础三件套：转写/语音/图像，挑战OpenAI和Google</a>
-  </div>
+  <div class="news-title lang-en" style="display:none"><a href="https://techcrunch.com/2026/04/02/microsoft-takes-on-ai-rivals-with-three-new-foundational-models/" target="_blank">Microsoft Releases MAI Foundational Trio: Transcription, Voice, and Image Models to Rival OpenAI and Google</a></div>
+  <div class="news-title lang-cn"><a href="https://techcrunch.com/2026/04/02/microsoft-takes-on-ai-rivals-with-three-new-foundational-models/" target="_blank">微软发布MAI基础三件套：转写/语音/图像，挑战OpenAI和Google</a></div>
   <div class="news-meta"><span class="source-badge">TechCrunch</span> &nbsp; 2026-04-02</div>
-  <div class="news-summary"><strong>要点：</strong>微软AI（MAI）发布三款基础模型：MAI-Transcribe-1（25语言转写，速度2.5倍于Azure）、MAI-Voice-1（语音生成）、MAI-Image-2（图像生成），定价显著低于Google和OpenAI。Mustafa Suleyman表示这是构建Humanist AI战略的一部分，同时重申与OpenAI的合作关系不变。</div>
-  <div class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> Microsoft AI (MAI) released three foundational models: MAI-Transcribe-1 (25-language transcription at 2.5x speed), MAI-Voice-1 (voice generation), MAI-Image-2 (image generation), priced significantly lower than Google and OpenAI.</div>
-  <div class="news-insight"><strong>洞察：</strong>微软双线战略：既持有OpenAI大笔股份，又自主研发竞品，形成两边下注格局。MAI基础模型低价策略意在抢占对成本敏感的开发者市场，打破只有OpenAI和Google才便宜的认知惯性。</div>
-  <div class="news-insight lang-en" style="display:none"><strong>Insight:</strong> Microsoft's dual strategy — holding stakes in OpenAI while independently developing competing products — creates a hedging structure. MAI's low-price strategy targets cost-sensitive developers and breaks the perception that only OpenAI and Google are affordable.</div>
+  <div class="news-summary"><strong>Key Points:</strong> Microsoft AI (MAI) released three foundational models: MAI-Transcribe-1 (25-language transcription at 2.5x speed), MAI-Voice-1 (voice generation), MAI-Image-2 (image generation), priced significantly lower than Google and OpenAI.</div>
+  <div class="news-summary lang-cn" style="display:none"><strong>要点：</strong>微软AI（MAI）发布三款基础模型：MAI-Transcribe-1（25语言转写，速度2.5倍于Azure）、MAI-Voice-1（语音生成）、MAI-Image-2（图像生成），定价显著低于Google和OpenAI。Mustafa Suleyman表示这是构建Humanist AI战略的一部分，同时重申与OpenAI的合作关系不变。</div>
+  <div class="news-insight"><strong>Insight:</strong> Microsoft's dual strategy — holding stakes in OpenAI while independently developing competing products — creates a hedging structure. MAI's low-price strategy targets cost-sensitive developers and breaks the perception that only OpenAI and Google are affordable.</div>
+  <div class="news-insight lang-cn" style="display:none"><strong>洞察：</strong>微软双线战略：既持有OpenAI大笔股份，又自主研发竞品，形成两边下注格局。MAI基础模型低价策略意在抢占对成本敏感的开发者市场，打破只有OpenAI和Google才便宜的认知惯性。</div>
 </div>
+
 <div class="news-card">
-  <div class="news-title">
-    <a href="https://venturebeat.com/technology/nvidia-launches-enterprise-ai-agent-platform-with-adobe-salesforce-sap-among/" target="_blank">英伟达GTC 2026发布企业AI Agent平台：Adobe、Salesforce、SAP等17家巨头加盟</a>
-  </div>
+  <div class="news-title lang-en" style="display:none"><a href="https://venturebeat.com/technology/nvidia-launches-enterprise-ai-agent-platform-with-adobe-salesforce-sap-among/" target="_blank">Nvidia Launches Enterprise AI Agent Platform at GTC 2026: Adobe, Salesforce, SAP Among 17 Major Adopters</a></div>
+  <div class="news-title lang-cn"><a href="https://venturebeat.com/technology/nvidia-launches-enterprise-ai-agent-platform-with-adobe-salesforce-sap-among/" target="_blank">英伟达GTC 2026发布企业AI Agent平台：Adobe、Salesforce、SAP等17家巨头加盟</a></div>
   <div class="news-meta"><span class="source-badge">VentureBeat</span> &nbsp; 2026-04-03</div>
-  <div class="news-summary"><strong>要点：</strong>英伟达在GTC 2026发布开源Agent Toolkit，Adobe、Salesforce、SAP、ServiceNow、西门子、CrowdStrike等17家企业宣布采用。平台包括Nemotron开源模型、AI-Q推理框架、OpenShell安全沙箱、cuOpt优化库。黄仁勋称企业软件业将演变为专业Agent平台。</div>
-  <div class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> Nvidia unveiled the open-source Agent Toolkit at GTC 2026, with 17 enterprises including Adobe, Salesforce, SAP, ServiceNow, Siemens, and CrowdStrike committing to adoption. Platform includes Nemotron open models, AI-Q reasoning framework, OpenShell security sandbox, and cuOpt optimization library.</div>
-  <div class="news-insight"><strong>洞察：</strong>英伟达的Agent Toolkit是教科书级别的平台战略：用开源软件吸引生态，用CUDA优化锁定硬件，让每一家使用开源Agent平台的企业都成为英伟达GPU的潜在买家。基础设施层免费，靠上层硬件盈利，这是比卖芯片更深的护城河。</div>
-  <div class="news-insight lang-en" style="display:none"><strong>Insight:</strong> Nvidia's Agent Toolkit is a textbook platform strategy: use open-source software to attract ecosystems, lock in hardware through CUDA optimization, and turn every enterprise using the open agent platform into a potential GPU buyer. 'Free infrastructure, monetize the hardware above' is a deeper moat than chip sales alone.</div>
+  <div class="news-summary"><strong>Key Points:</strong> Nvidia unveiled the open-source Agent Toolkit at GTC 2026, with 17 enterprises including Adobe, Salesforce, SAP, ServiceNow, Siemens, and CrowdStrike committing to adoption. Platform includes Nemotron open models, AI-Q reasoning framework, OpenShell security sandbox, and cuOpt optimization library.</div>
+  <div class="news-summary lang-cn" style="display:none"><strong>要点：</strong>英伟达在GTC 2026发布开源Agent Toolkit，Adobe、Salesforce、SAP、ServiceNow、西门子、CrowdStrike等17家企业宣布采用。平台包括Nemotron开源模型、AI-Q推理框架、OpenShell安全沙箱、cuOpt优化库。黄仁勋称企业软件业将演变为专业Agent平台。</div>
+  <div class="news-insight"><strong>Insight:</strong> Nvidia's Agent Toolkit is a textbook platform strategy: use open-source software to attract ecosystems, lock in hardware through CUDA optimization, and turn every enterprise using the open agent platform into a potential GPU buyer. 'Free infrastructure, monetize the hardware above' is a deeper moat than chip sales alone.</div>
+  <div class="news-insight lang-cn" style="display:none"><strong>洞察：</strong>英伟达的Agent Toolkit是教科书级别的平台战略：用开源软件吸引生态，用CUDA优化锁定硬件，让每一家使用开源Agent平台的企业都成为英伟达GPU的潜在买家。基础设施层免费，靠上层硬件盈利，这是比卖芯片更深的护城河。</div>
 </div>
+
 <div class="news-card">
-  <div class="news-title">
-    <a href="https://arstechnica.com/ai/2026/04/google-announces-gemma-4-open-ai-models-switches-to-apache-2-0-license/" target="_blank">Google发布Gemma 4开源模型：换用Apache 2.0许可证，开放程度史上最大</a>
-  </div>
+  <div class="news-title lang-en" style="display:none"><a href="https://arstechnica.com/ai/2026/04/google-announces-gemma-4-open-ai-models-switches-to-apache-2-0-license/" target="_blank">Google Releases Gemma 4 Open Models: Switches to Apache 2.0 License, Most Open Ever</a></div>
+  <div class="news-title lang-cn"><a href="https://arstechnica.com/ai/2026/04/google-announces-gemma-4-open-ai-models-switches-to-apache-2-0-license/" target="_blank">Google发布Gemma 4开源模型：换用Apache 2.0许可证，开放程度史上最大</a></div>
   <div class="news-meta"><span class="source-badge">Ars Technica</span> &nbsp; 2026-04-02</div>
-  <div class="news-summary"><strong>要点：</strong>Google发布Gemma 4四款开源模型，换用Apache 2.0许可证取代此前限制严格的Gemma许可证。26B MoE和31B可在单卡H100上运行，E2B/E4B专为手机和边缘设备优化，上下文窗口达256k/128k tokens，涵盖140种语言，支持本地function calling和代码生成。</div>
-  <div class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> Google released four Gemma 4 open models (2B/4B/26B MoE/31B dense), switching to Apache 2.0 license. 26B MoE and 31B run on a single H100 GPU, E2B/E4B are optimized for mobile/edge with context windows up to 256k/128k tokens across 140 languages, supporting local function calling and code generation.</div>
-  <div class="news-insight"><strong>洞察：</strong>Google此举是明智的开源战略转向——Apache 2.0彻底消除了开发者的顾虑，同时通过CUDA优化确保Gemma在自家硬件上运行最优。Gemma 4的本地化能力让隐私敏感场景不用云成为现实，对企业市场吸引力巨大。</div>
-  <div class="news-insight lang-en" style="display:none"><strong>Insight:</strong> Google's switch to Apache 2.0 is a smart open-source pivot — eliminating developer concerns while CUDA optimization ensures Gemma runs best on Nvidia hardware. Gemma 4's local processing makes 'privacy-sensitive without cloud' a reality, a huge draw for the enterprise market.</div>
+  <div class="news-summary"><strong>Key Points:</strong> Google released four Gemma 4 open models (2B/4B/26B MoE/31B dense), switching to Apache 2.0 license. 26B MoE and 31B run on a single H100 GPU, E2B/E4B are optimized for mobile/edge with context windows up to 256k/128k tokens across 140 languages, supporting local function calling and code generation.</div>
+  <div class="news-summary lang-cn" style="display:none"><strong>要点：</strong>Google发布Gemma 4四款开源模型，换用Apache 2.0许可证取代此前限制严格的Gemma许可证。26B MoE和31B可在单卡H100上运行，E2B/E4B专为手机和边缘设备优化，上下文窗口达256k/128k tokens，涵盖140种语言，支持本地function calling和代码生成。</div>
+  <div class="news-insight"><strong>Insight:</strong> Google's switch to Apache 2.0 is a smart open-source pivot — eliminating developer concerns while CUDA optimization ensures Gemma runs best on Nvidia hardware. Gemma 4's local processing makes 'privacy-sensitive without cloud' a reality, a huge draw for the enterprise market.</div>
+  <div class="news-insight lang-cn" style="display:none"><strong>洞察：</strong>Google此举是明智的开源战略转向——Apache 2.0彻底消除了开发者的顾虑，同时通过CUDA优化确保Gemma在自家硬件上运行最优。Gemma 4的本地化能力让隐私敏感场景不用云成为现实，对企业市场吸引力巨大。</div>
 </div>
+
 <div class="news-card">
-  <div class="news-title">
-    <a href="https://arstechnica.com/ai/2026/04/research-finds-ai-users-scarily-willing-to-surrender-their-cognition-to-llms/" target="_blank">研究揭示AI用户认知投降现象：错误AI答案接受率高达73%</a>
-  </div>
+  <div class="news-title lang-en" style="display:none"><a href="https://arstechnica.com/ai/2026/04/research-finds-ai-users-scarily-willing-to-surrender-their-cognition-to-llms/" target="_blank">Research Reveals 'Cognitive Surrender': AI Users Accept Faulty AI Reasoning 73% of the Time</a></div>
+  <div class="news-title lang-cn"><a href="https://arstechnica.com/ai/2026/04/research-finds-ai-users-scarily-willing-to-surrender-their-cognition-to-llms/" target="_blank">研究揭示AI用户认知投降现象：错误AI答案接受率高达73%</a></div>
   <div class="news-meta"><span class="source-badge">Ars Technica</span> &nbsp; 2026-04-03</div>
-  <div class="news-summary"><strong>要点：</strong>宾夕法尼亚大学研究显示，在1372名参与者、超9500次试验中，用户即使知道AI随机提供错误答案，仍有73.2%的时间选择接受。信任AI程度高的用户更易被误导，时间压力使纠正AI错误的倾向下降12%，激励可提升纠正率19%。</div>
-  <div class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> University of Pennsylvania research on 1,372 participants across 9,500+ trials shows users accepted faulty AI reasoning 73.2% of the time even when aware AI randomly provided wrong answers. High AI trust users were more misled; time pressure reduced correction by 12%; incentives increased correction by 19%.</div>
-  <div class="news-insight"><strong>洞察：</strong>认知投降是AI时代最大的隐性风险——人类正在系统性地放弃独立判断能力。73%的错误接受率意味着AI一旦出错，用户几乎无条件盲从。这不仅是个人认知问题，更将成为社会层面系统性风险的来源，急需在教育和治理层面提前布局。</div>
-  <div class="news-insight lang-en" style="display:none"><strong>Insight:</strong> 'Cognitive surrender' is the greatest hidden risk of the AI era — humans are systematically abandoning independent judgment. The 73% faulty acceptance rate means when AI errs, users almost unconditionally follow. This is not just an individual cognitive issue but a source of systemic societal risk requiring urgent education and governance responses.</div>
+  <div class="news-summary"><strong>Key Points:</strong> University of Pennsylvania research on 1,372 participants across 9,500+ trials shows users accepted faulty AI reasoning 73.2% of the time even when aware AI randomly provided wrong answers. High AI trust users were more misled; time pressure reduced correction by 12%; incentives increased correction by 19%.</div>
+  <div class="news-summary lang-cn" style="display:none"><strong>要点：</strong>宾夕法尼亚大学研究显示，在1372名参与者、超9500次试验中，用户即使知道AI随机提供错误答案，仍有73.2%的时间选择接受。信任AI程度高的用户更易被误导，时间压力使纠正AI错误的倾向下降12%，激励可提升纠正率19%。</div>
+  <div class="news-insight"><strong>Insight:</strong> 'Cognitive surrender' is the greatest hidden risk of the AI era — humans are systematically abandoning independent judgment. The 73% faulty acceptance rate means when AI errs, users almost unconditionally follow. This is not just an individual cognitive issue but a source of systemic societal risk requiring urgent education and governance responses.</div>
+  <div class="news-insight lang-cn" style="display:none"><strong>洞察：</strong>认知投降是AI时代最大的隐性风险——人类正在系统性地放弃独立判断能力。73%的错误接受率意味着AI一旦出错，用户几乎无条件盲从。这不仅是个人认知问题，更将成为社会层面系统性风险的来源，急需在教育和治理层面提前布局。</div>
 </div>
   </div>
 
@@ -367,44 +366,43 @@
       </div>
     </div>
     <div class="news-card">
-  <div class="news-title">
-    <a href="https://news.softunis.com/55813.html" target="_blank">DeepSeek V4大模型4月下旬发布：万亿参数、百万上下文、首批适配华为昇腾</a>
-  </div>
+  <div class="news-title lang-en" style="display:none"><a href="https://news.softunis.com/55813.html" target="_blank">DeepSeek V4 to Launch Late April: Trillion Parameters, Million-Token Context, Huawei Ascend Chip Support</a></div>
+  <div class="news-title lang-cn"><a href="https://news.softunis.com/55813.html" target="_blank">DeepSeek V4大模型4月下旬发布：万亿参数、百万上下文、首批适配华为昇腾</a></div>
   <div class="news-meta"><span class="source-badge">软盟资讯 / 量子位</span> &nbsp; 2026-04-10</div>
-  <div class="news-summary"><strong>要点：</strong>DeepSeek创始人梁文锋确认V4将于4月下旬发布，实现万亿参数、百万级上下文窗口，并首次深度适配华为昇腾等国产芯片，采用Apache 2.0协议开源，企业可自主部署。这是国产开源模型在核心技术自主可控上的重要一步。</div>
   <div class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> DeepSeek founder Liang Wenfeng confirmed V4 will launch in late April with trillion parameters, million-token context, and first deep optimization for Huawei Ascend domestic chips, adopting Apache 2.0 license for enterprise self-deployment. This marks a major step in core tech self-reliance.</div>
-  <div class="news-insight"><strong>洞察：</strong>DeepSeek V4适配华为昇腾的战略意义远超技术本身——在美国芯片出口管制背景下，国产AI模型与国产芯片的深度适配意味着中国AI产业第一次具备了全栈自主的可能性，这将深刻改变全球AI格局中的权力分布。</div>
+  <div class="news-summary"><strong>要点：</strong>DeepSeek创始人梁文锋确认V4将于4月下旬发布，实现万亿参数、百万级上下文窗口，并首次深度适配华为昇腾等国产芯片，采用Apache 2.0协议开源，企业可自主部署。这是国产开源模型在核心技术自主可控上的重要一步。</div>
   <div class="news-insight lang-en" style="display:none"><strong>Insight:</strong> DeepSeek V4's Huawei Ascend adaptation carries significance beyond technology — under US chip export controls, deep adaptation of domestic AI models with domestic chips gives China its first real possibility of 'full-stack self-reliance', which will profoundly reshape power distribution in the global AI landscape.</div>
+  <div class="news-insight"><strong>洞察：</strong>DeepSeek V4适配华为昇腾的战略意义远超技术本身——在美国芯片出口管制背景下，国产AI模型与国产芯片的深度适配意味着中国AI产业第一次具备了全栈自主的可能性，这将深刻改变全球AI格局中的权力分布。</div>
 </div>
+
 <div class="news-card">
-  <div class="news-title">
-    <a href="https://news.softunis.com/55813.html" target="_blank">五部门联合发布《人工智能拟人化互动服务管理暂行办法》</a>
-  </div>
+  <div class="news-title lang-en" style="display:none"><a href="https://news.softunis.com/55813.html" target="_blank">Five Chinese Ministries Jointly Issue Interim Regulations on AI Anthropomorphic Interactive Services</a></div>
+  <div class="news-title lang-cn"><a href="https://news.softunis.com/55813.html" target="_blank">五部门联合发布《人工智能拟人化互动服务管理暂行办法》</a></div>
   <div class="news-meta"><span class="source-badge">软盟资讯</span> &nbsp; 2026-04-10</div>
-  <div class="news-summary"><strong>要点：</strong>国家网信办、发改委、工信部、公安部、市场监管总局联合发布《人工智能拟人化互动服务管理暂行办法》，明确拟人化互动服务不得向未成年人提供虚拟亲密关系服务，要求服务提供者核验用户年龄并建立安全监测机制，自2026年7月15日起施行。</div>
   <div class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> China's five ministries jointly issued Interim Measures on AI Anthropomorphic Interactive Services, explicitly prohibiting virtual intimate relationship services for minors, requiring age verification and safety monitoring mechanisms, effective July 15, 2026.</div>
-  <div class="news-insight"><strong>洞察：</strong>这是全球首批针对AI拟人化互动的系统性监管规定。禁止向未成年人提供虚拟亲密关系，折射出政策制定者对AI情感依赖风险的深层担忧。7月15日的实施节点表明，给行业留出了约3个月的整改窗口，监管力度相对克制，但方向已明确。</div>
+  <div class="news-summary"><strong>要点：</strong>国家网信办、发改委、工信部、公安部、市场监管总局联合发布《人工智能拟人化互动服务管理暂行办法》，明确拟人化互动服务不得向未成年人提供虚拟亲密关系服务，要求服务提供者核验用户年龄并建立安全监测机制，自2026年7月15日起施行。</div>
   <div class="news-insight lang-en" style="display:none"><strong>Insight:</strong> This is among the world's first systematic regulations on AI anthropomorphic interaction. Prohibiting virtual intimate services for minors reflects policymakers' deep concerns about AI emotional dependency risks. The July 15 effective date gives the industry roughly 3 months to rectify, indicating relatively restrained but clearly directed regulatory intent.</div>
+  <div class="news-insight"><strong>洞察：</strong>这是全球首批针对AI拟人化互动的系统性监管规定。禁止向未成年人提供虚拟亲密关系，折射出政策制定者对AI情感依赖风险的深层担忧。7月15日的实施节点表明，给行业留出了约3个月的整改窗口，监管力度相对克制，但方向已明确。</div>
 </div>
+
 <div class="news-card">
-  <div class="news-title">
-    <a href="https://www.qbitai.com/2026" target="_blank">教育部等五部门启动'人工智能+教育'行动计划</a>
-  </div>
+  <div class="news-title lang-en" style="display:none"><a href="https://www.qbitai.com/2026" target="_blank">Five Ministries Launch 'AI + Education' Action Plan: AI Added to Teacher Certification</a></div>
+  <div class="news-title lang-cn"><a href="https://www.qbitai.com/2026" target="_blank">教育部等五部门启动'人工智能+教育'行动计划</a></div>
   <div class="news-meta"><span class="source-badge">量子位</span> &nbsp; 2026-04-10</div>
-  <div class="news-summary"><strong>要点：</strong>教育部等五部门联合印发《人工智能+教育行动计划》，提出构建人工智能全学段教育和全社会通识教育体系，并将人工智能纳入教师资格考试和认证内容，推动教育领域人机协作能力普及，标志着AI教育正式纳入国家顶层设计。</div>
   <div class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> China's Ministry of Education and four other ministries jointly issued the 'AI + Education' Action Plan, incorporating AI into teacher qualification examinations and certification, marking AI education's formal entry into national top-level design.</div>
-  <div class="news-insight"><strong>洞察：</strong>将AI纳入教师资格考试是标志性信号——AI素养不再是选修课，而是未来每一位教师的必修能力。这一政策若真正落地，将从根本上重塑中国教育体系中的人机协作模式，从源头提升全社会的AI适应力。</div>
+  <div class="news-summary"><strong>要点：</strong>教育部等五部门联合印发《人工智能+教育行动计划》，提出构建人工智能全学段教育和全社会通识教育体系，并将人工智能纳入教师资格考试和认证内容，推动教育领域人机协作能力普及，标志着AI教育正式纳入国家顶层设计。</div>
   <div class="news-insight lang-en" style="display:none"><strong>Insight:</strong> Incorporating AI into teacher certification is a landmark signal — AI literacy is no longer optional but a required competency for every future teacher. If fully implemented, this policy will fundamentally reshape human-AI collaboration in China's education system, building societal AI adaptability from the source.</div>
+  <div class="news-insight"><strong>洞察：</strong>将AI纳入教师资格考试是标志性信号——AI素养不再是选修课，而是未来每一位教师的必修能力。这一政策若真正落地，将从根本上重塑中国教育体系中的人机协作模式，从源头提升全社会的AI适应力。</div>
 </div>
+
 <div class="news-card">
-  <div class="news-title">
-    <a href="https://www.qbitai.com/2026" target="_blank">斯坦福AI报告2026：中美大模型已无差距，AI普及率历史性加速</a>
-  </div>
+  <div class="news-title lang-en" style="display:none"><a href="https://www.qbitai.com/2026" target="_blank">Stanford AI Report 2026: No Gap Between China and US LLMs, AI Adoption Accelerating Historically</a></div>
+  <div class="news-title lang-cn"><a href="https://www.qbitai.com/2026" target="_blank">斯坦福AI报告2026：中美大模型已无差距，AI普及率历史性加速</a></div>
   <div class="news-meta"><span class="source-badge">量子位</span> &nbsp; 2026-04-14</div>
-  <div class="news-summary"><strong>要点：</strong>斯坦福年度AI指数报告指出，中美两国在大模型能力上已无显著差距，中国开源模型在多项基准测试中表现优异；全球AI普及率正在历史性加速，新兴市场采用率增长尤为突出，AI从技术精英层向大众市场快速渗透。</div>
   <div class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> Stanford's annual AI Index Report finds no significant gap between China and US large model capabilities, with Chinese open-source models excelling in multiple benchmarks. Global AI adoption is accelerating historically, with particularly strong growth in emerging markets.</div>
-  <div class="news-insight"><strong>洞察：</strong>斯坦福报告确认了AI竞争格局的根本性变化：中美AI竞争已从追赶阶段进入并驾齐驱阶段。这意味着全球AI治理的二元格局正式形成，技术标准的竞争将越来越多地映射为地缘政治竞争的一部分。</div>
+  <div class="news-summary"><strong>要点：</strong>斯坦福年度AI指数报告指出，中美两国在大模型能力上已无显著差距，中国开源模型在多项基准测试中表现优异；全球AI普及率正在历史性加速，新兴市场采用率增长尤为突出，AI从技术精英层向大众市场快速渗透。</div>
   <div class="news-insight lang-en" style="display:none"><strong>Insight:</strong> Stanford's report confirms a fundamental shift in the AI competitive landscape: China-US AI competition has moved from 'catch-up' to 'neck-and-neck' stage. This formalizes the binary structure of global AI governance, with technology standard competition increasingly mapping onto geopolitical competition.</div>
+  <div class="news-insight"><strong>洞察：</strong>斯坦福报告确认了AI竞争格局的根本性变化：中美AI竞争已从追赶阶段进入并驾齐驱阶段。这意味着全球AI治理的二元格局正式形成，技术标准的竞争将越来越多地映射为地缘政治竞争的一部分。</div>
 </div>
   </div>
 
