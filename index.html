@@ -1,368 +1,429 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全球AI动态简报 · 2026年04月13日</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
-            background: linear-gradient(135deg, #0D2137 0%, #1a3554 60%, #0D2137 100%);
-            min-height: 100vh;
-            padding: 20px;
-            color: #e8f4fd;
-        }
-        body.show-en .lang-cn { display: none !important; }
-        body.show-en .lang-en { display: block !important; }
-        body:not(.show-en) .lang-en { display: none !important; }
-        body:not(.show-en) .lang-cn { display: block !important; }
-
-        .container { max-width: 900px; margin: 0 auto; }
-
-        .header {
-            text-align: center;
-            padding: 40px 20px 30px;
-            position: relative;
-        }
-        .header h1 {
-            font-size: 28px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 8px;
-            letter-spacing: 1px;
-        }
-        .header .subtitle {
-            font-size: 14px;
-            color: rgba(74,144,217,0.8);
-            margin-bottom: 4px;
-        }
-        .header .date {
-            font-size: 16px;
-            color: rgba(255,255,255,0.6);
-        }
-
-        .lang-switch {
-            display: flex; justify-content: center; gap: 10px; margin-bottom: 24px;
-        }
-        .lang-btn {
-            padding: 7px 22px;
-            border: 1.5px solid #4A90D9;
-            border-radius: 20px;
-            background: transparent;
-            color: #4A90D9;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .lang-btn:hover { background: rgba(74,144,217,0.15); }
-        body.show-en .lang-btn:nth-child(1) { background: transparent; color: #4A90D9; }
-        body.show-en .lang-btn:nth-child(2) { background: #4A90D9; color: #fff; }
-
-        .lang-btn-active { background: #4A90D9 !important; color: #fff !important; }
-
-        .section { margin-bottom: 36px; }
-        .section-title {
-            font-size: 17px;
-            font-weight: 600;
-            color: #4A90D9;
-            border-left: 3px solid #4A90D9;
-            padding-left: 12px;
-            margin-bottom: 16px;
-        }
-        .cards-grid { display: flex; flex-direction: column; gap: 14px; }
-        .news-card {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(74,144,217,0.25);
-            border-radius: 12px;
-            padding: 18px 20px;
-            transition: all 0.2s;
-            backdrop-filter: blur(8px);
-        }
-        .news-card:hover {
-            border-color: rgba(74,144,217,0.6);
-            background: rgba(255,255,255,0.09);
-            transform: translateX(3px);
-        }
-        .news-title { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 6px; }
-        .news-title a { color: #7ec3f8; text-decoration: none; }
-        .news-title a:hover { color: #a8d4ff; text-decoration: underline; }
-        .news-source { margin-bottom: 8px; }
-        .source-tag {
-            display: inline-block;
-            background: rgba(74,144,217,0.25);
-            color: #7ec3f8;
-            font-size: 11px;
-            padding: 2px 8px;
-            border-radius: 10px;
-            border: 1px solid rgba(74,144,217,0.4);
-        }
-        .date-tag { color: rgba(255,255,255,0.4); font-size: 11px; }
-        .news-summary { font-size: 13.5px; color: rgba(232,244,253,0.8); line-height: 1.7; margin-bottom: 8px; }
-        .news-insight {
-            font-size: 12.5px;
-            color: rgba(74,144,217,0.9);
-            background: rgba(74,144,217,0.08);
-            border-left: 2px solid #4A90D9;
-            padding: 6px 10px;
-            border-radius: 0 6px 6px 0;
-            line-height: 1.6;
-        }
-
-        .insight-block {
-            background: rgba(74,144,217,0.08);
-            border: 1px solid rgba(74,144,217,0.3);
-            border-radius: 14px;
-            padding: 24px;
-            margin-bottom: 30px;
-        }
-        .insight-block h3 {
-            font-size: 15px;
-            color: #4A90D9;
-            margin-bottom: 12px;
-            display: flex; align-items: center; gap: 6px;
-        }
-        .insight-block p { font-size: 13.5px; line-height: 1.8; color: rgba(232,244,253,0.85); }
-
-        .history-link {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(74,144,217,0.2);
-        }
-        .history-link a {
-            color: #4A90D9;
-            font-size: 13px;
-            text-decoration: none;
-        }
-        .history-link a:hover { text-decoration: underline; }
-
-        .footer {
-            text-align: center;
-            font-size: 11px;
-            color: rgba(255,255,255,0.3);
-            margin-top: 30px;
-            padding-bottom: 20px;
-        }
-    </style>
-    <script>
-    function toggleLang(en) {
-        if (en) { document.body.classList.add('show-en'); }
-        else { document.body.classList.remove('show-en'); }
-    }
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全球AI动态简报 · 2026年4月15日</title>
+<style>
+  :root {
+    --deep-blue: #0D2137;
+    --tech-blue: #4A90D9;
+    --ice-white: #F0F6FF;
+    --text-dark: #1A2332;
+    --text-muted: #5A6B7A;
+    --card-bg: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(135deg, #0D2137 0%, #1A3A5C 50%, #0D2137 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: var(--text-dark);
+  }
+  .container { max-width: 860px; margin: 0 auto; }
+  .hero {
+    background: linear-gradient(135deg, #0D2137 0%, #1A3A5C 100%);
+    border-radius: 20px;
+    padding: 40px 36px;
+    text-align: center;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .hero::before {
+    content: 'AI';
+    position: absolute;
+    font-size: 200px;
+    font-weight: 900;
+    color: rgba(74,144,217,0.06);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    letter-spacing: -10px;
+  }
+  .hero-icons {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('https://jingjingshen-star.github.io/ai-news-digest/ai_icon_neuron.png') no-repeat center center;
+    background-size: 200px;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+  .hero-date {
+    color: #7EB8E8;
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-sub {
+    color: #7EB8E8;
+    font-size: 15px;
+    position: relative;
+    z-index: 1;
+  }
+  .lang-switch {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .lang-btn {
+    padding: 8px 24px;
+    border: 2px solid var(--tech-blue);
+    border-radius: 20px;
+    background: transparent;
+    color: var(--tech-blue);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .lang-btn:hover { opacity: 0.8; }
+  body.show-en .lang-btn:nth-child(1) { background: transparent; color: var(--tech-blue); }
+  body.show-en .lang-btn:nth-child(2) { background: var(--tech-blue); color: #fff; }
+  body:not(.show-en) .lang-btn:nth-child(1) { background: var(--tech-blue); color: #fff; }
+  body:not(.show-en) .lang-btn:nth-child(2) { background: transparent; color: var(--tech-blue); }
+  .section { margin-bottom: 28px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .section-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--tech-blue);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--deep-blue);
+    padding: 8px 16px;
+    background: white;
+    border-radius: 8px;
+    border-left: 4px solid var(--tech-blue);
+    box-shadow: 0 2px 8px rgba(74,144,217,0.15);
+  }
+  .lang-en .section-title { border-left-color: #2ECC71; }
+  .news-card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    border: 1px solid rgba(74,144,217,0.12);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .news-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  }
+  .news-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .news-title.lang-en { display: none !important; }
+  .news-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .source-badge {
+    display: inline-block;
+    background: rgba(74,144,217,0.12);
+    color: var(--tech-blue);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 11px;
+  }
+  .news-summary {
+    font-size: 14px;
+    color: var(--text-dark);
+    line-height: 1.7;
+    margin-bottom: 8px;
+  }
+  .news-insight {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    background: rgba(74,144,217,0.06);
+    border-left: 3px solid var(--tech-blue);
+    padding: 8px 12px;
+    border-radius: 0 8px 8px 0;
+  }
+  /* English mode */
+  body.show-en .news-title.lang-cn { display: none !important; }
+  body.show-en .news-meta.lang-cn { display: none !important; }
+  body.show-en .news-summary.lang-cn { display: none !important; }
+  body.show-en .news-insight.lang-cn { display: none !important; }
+  body.show-en .news-title.lang-en { display: block !important; }
+  body.show-en .news-meta.lang-en { display: block !important; }
+  body.show-en .news-summary.lang-en { display: block !important; }
+  body.show-en .news-insight.lang-en { display: block !important; }
+  body.show-en .section-title { border-left-color: #2ECC71; }
+  body.show-en .hero h1 { color: #fff; }
+  .hero-title-cn { display: block; }
+  .hero-title-en { display: none; }
+  body.show-en .hero-title-cn { display: none; }
+  body.show-en .hero-title-en { display: block; }
+  body.show-en .hero-sub { color: #7EB8E8; }
+  .hero-date-en { display: none; }
+  body.show-en .hero-date { display: none; }
+  body.show-en .hero-date-en { display: block; color: #7EB8E8; font-size: 14px; letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; }
+  .lang-en { display: none; }
+  .history-link {
+    text-align: center;
+    margin-top: 28px;
+    padding: 20px;
+  }
+  .history-link a {
+    color: var(--tech-blue);
+    font-size: 13px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 24px;
+    border: 1.5px solid var(--tech-blue);
+    border-radius: 24px;
+    transition: all 0.2s;
+  }
+  .history-link a:hover {
+    background: rgba(74,144,217,0.1);
+  }
+  .footer {
+    text-align: center;
+    color: rgba(255,255,255,0.4);
+    font-size: 12px;
+    margin-top: 32px;
+    padding: 16px;
+  }
+  @media (max-width: 600px) {
+    .hero { padding: 28px 20px; }
+    .hero h1 { font-size: 22px; }
+    .news-card { padding: 16px; }
+  }
+</style>
 </head>
 <body>
 <div class="container">
 
-    <div class="header">
-        <div class="lang-switch">
-            <button class="lang-btn lang-btn-active" onclick="toggleLang(false)">中文</button>
-            <button class="lang-btn" onclick="toggleLang(true)">English</button>
-        </div>
-        <h1 class="lang-cn">全球AI动态简报</h1>
-        <h1 class="lang-en" style="display:none">Global AI News Digest</h1>
-        <p class="subtitle lang-cn">每日精选 · AI 行业前沿资讯</p>
-        <p class="subtitle lang-en" style="display:none">Daily AI Industry Intelligence</p>
-        <p class="date">2026年04月13日 · April 13, 2026</p>
+  <div class="hero">
+    <div class="hero-icons"></div>
+    <div class="hero-date lang-cn">Wednesday · April 15, 2026</div>
+    <div class="hero-date-en">周三 · 2026年4月15日</div>
+    <h1>
+      <span class="hero-title-cn">🌐 全球AI动态简报</span>
+      <span class="hero-title-en">🌐 Daily AI News Digest</span>
+    </h1>
+    <p class="hero-sub">
+      <span class="lang-cn">国际视野 · 国产动态 · 深度洞察</span>
+      <span class="lang-en" style="display:none">Global Perspective · Domestic Updates · Deep Insights</span>
+    </p>
+  </div>
+
+  <div class="lang-switch">
+    <button class="lang-btn" onclick="toggleLang(false)">🇨🇳 中文</button>
+    <button class="lang-btn" onclick="toggleLang(true)">🇺🇸 English</button>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">🌍</div>
+      <div class="section-title">
+        <span class="lang-cn">🌍 行业格局 · 国际动态</span>
+        <span class="lang-en" style="display:none">🌍 Industry Landscape · International</span>
+      </div>
+    </div>
+    
+    <div class="news-card">
+      <!-- English -->
+      <p class="news-title lang-en" style="display:none"><a href="https://techcrunch.com/2026/04/06/openais-vision-for-the-ai-economy-public-wealth-funds-robot-taxes-and-a-four-day-work-week/" target="_blank">OpenAI's Vision for the AI Economy: Public Wealth Funds, Robot Taxes, and a Four-Day Workweek</a></p>
+      <p class="news-meta lang-en" style="display:none"><span class="source-badge">TechCrunch</span> &nbsp; 2026-04-06</p>
+      <p class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> OpenAI released a policy blueprint proposing to shift tax burdens from labor to capital, including robot taxes, a public AI wealth fund, and subsidies for four-day workweeks. The $852B company aims to shape the AI regulation debate.</p>
+      <p class="news-insight lang-en" style="display:none"><strong>Insight:</strong> OpenAI's policy blueprint is essentially a PR move by an AI giant to legitimize itself — advocating government taxes on AI profits while protecting shareholder returns. A true 'benefit all' framework requires independent mechanisms beyond corporate self-regulation.</p>
+      <!-- Chinese -->
+      <p class="news-title lang-cn"><a href="https://techcrunch.com/2026/04/06/openais-vision-for-the-ai-economy-public-wealth-funds-robot-taxes-and-a-four-day-work-week/" target="_blank">OpenAI发布AI经济蓝图：全民财富基金、机器人税与四天工作制</a></p>
+      <p class="news-meta lang-cn"><span class="source-badge">TechCrunch</span> &nbsp; 2026-04-06</p>
+      <p class="news-summary lang-cn"><strong>要点：</strong>OpenAI发布AI经济政策蓝图，提议将税负从劳动力转向资本，包括对机器人征税、建立全民AI财富基金、补贴四天工作制等。估值8520亿美元的OpenAI试图借此在AI监管博弈中抢占话语权。</p>
+      <p class="news-insight lang-cn"><strong>洞察：</strong>OpenAI的政策蓝图本质上是AI巨头为自身合法性铺路的公关行动——它既倡导政府对AI利润征税，又承诺不影响股东回报。真正的全民受益框架需要超越企业自驱，建立独立的AI税收与分配机制。</p>
     </div>
 
-    <!-- 今日洞察 -->
-    <div class="insight-block">
-        <h3>📊 今日洞察 / Today's Insight</h3>
-        <p class="lang-cn">今日简报呈现三大趋势：<strong>（1）AI治理元年开启</strong>——OpenAI首提系统性AI经济方案，机器人税、全民基金进入公共讨论；<strong>（2）具身智能规模化临界</strong>——GEN-1达到99%生产可靠性，具身数据独角兽诞生，万亿市场从预期走向现实；<strong>（3）基础模型价格战白热化</strong>——Microsoft三路出击正面挑战OpenAI，苹果联手Gemini反击，Token日消耗超百亿折射算力军备竞赛持续升级。</p>
-        <p class="lang-en" style="display:none">Today's digest highlights three major trends: <strong>(1) AI Governance Era Begins</strong> — OpenAI publishes the first systematic AI economic blueprint, with robot taxes and public wealth funds entering public discourse; <strong>(2) Embodied AI Reaches Scale Threshold</strong> — GEN-1 hits 99% production reliability, the first embodied data unicorn is born, and the trillion-yuan market moves from projection to reality; <strong>(3) Foundational Model Price War Intensifies</strong> — Microsoft attacks OpenAI on three fronts, Apple partners with Gemini for counterattack, and 120 trillion daily tokens reflect an ever-escalating computing arms race.</p>
+    <div class="news-card">
+      <!-- English -->
+      <p class="news-title lang-en" style="display:none"><a href="https://techcrunch.com/2026/04/02/microsoft-takes-on-ai-rivals-with-three-new-foundational-models/" target="_blank">Microsoft Releases MAI Foundational Trio: Transcription, Voice, and Image Models to Rival OpenAI and Google</a></p>
+      <p class="news-meta lang-en" style="display:none"><span class="source-badge">TechCrunch</span> &nbsp; 2026-04-02</p>
+      <p class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> Microsoft AI (MAI) released three foundational models: MAI-Transcribe-1 (25-language transcription at 2.5x speed), MAI-Voice-1 (voice generation), MAI-Image-2 (image generation), priced significantly lower than Google and OpenAI.</p>
+      <p class="news-insight lang-en" style="display:none"><strong>Insight:</strong> Microsoft's dual strategy — holding stakes in OpenAI while independently developing competing products — creates a hedging structure. MAI's low-price strategy targets cost-sensitive developers and breaks the perception that only OpenAI and Google are affordable.</p>
+      <!-- Chinese -->
+      <p class="news-title lang-cn"><a href="https://techcrunch.com/2026/04/02/microsoft-takes-on-ai-rivals-with-three-new-foundational-models/" target="_blank">微软发布MAI基础三件套：转写/语音/图像，挑战OpenAI和Google</a></p>
+      <p class="news-meta lang-cn"><span class="source-badge">TechCrunch</span> &nbsp; 2026-04-02</p>
+      <p class="news-summary lang-cn"><strong>要点：</strong>微软AI（MAI）发布三款基础模型：MAI-Transcribe-1（25语言转写，速度2.5倍于Azure）、MAI-Voice-1（语音生成）、MAI-Image-2（图像生成），定价显著低于Google和OpenAI。Mustafa Suleyman表示这是构建Humanist AI战略的一部分，同时重申与OpenAI的合作关系不变。</p>
+      <p class="news-insight lang-cn"><strong>洞察：</strong>微软双线战略：既持有OpenAI大笔股份，又自主研发竞品，形成两边下注格局。MAI基础模型低价策略意在抢占对成本敏感的开发者市场，打破只有OpenAI和Google才便宜的认知惯性。</p>
     </div>
 
-    <!-- 行业格局 · International: Industry Landscape -->
-    <div class="section">
-        <h2 class="section-title">
-            <span class="lang-en" style="display:none">🌐 Industry Landscape</span>
-            <span class="lang-cn">🌐 行业格局</span>
-        </h2>
-        <div class="cards-grid">
-        <div class="news-card">
-            <!-- English version -->
-            <p class="news-title lang-en" style="display:none"><a href="https://techcrunch.com/2026/04/06/openais-vision-for-the-ai-economy-public-wealth-funds-robot-taxes-and-a-four-day-work-week/" target="_blank">OpenAI Proposes Robot Taxes, Public Wealth Funds, and Four-Day Workweek</a></p>
-            <p class="news-source lang-en" style="display:none"><span class="source-tag">TechCrunch</span> &nbsp;<span class="date-tag">2026-04-06</span></p>
-            <p class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> OpenAI released a blueprint for the AI economy, proposing to shift taxes from labor to capital, exploring robot taxes on AI-replaced jobs, establishing public wealth funds, expanding social safety nets, and encouraging four-day workweeks and enhanced retirement contributions.</p>
-            <p class="news-insight lang-en" style="display:none"><strong>Insight:</strong> This is the first time an AI giant has published a systematic AI economic governance blueprint, carrying profound policy implications. The robot tax concept, though controversial, reflects AI companies intent to actively shape rules rather than passively await legislation.</p>
-            <!-- Chinese version -->
-            <p class="news-title lang-cn"><a href="https://techcrunch.com/2026/04/06/openais-vision-for-the-ai-economy-public-wealth-funds-robot-taxes-and-a-four-day-work-week/" target="_blank">OpenAI提议征收机器人税、设立全民财富基金、推动四天工作制</a></p>
-            <p class="news-source lang-cn"><span class="source-tag">TechCrunch</span> &nbsp;<span class="date-tag">2026-04-06</span></p>
-            <p class="news-summary lang-cn"><strong>要点：</strong>OpenAI发布AI经济蓝图，主张将税收从劳动力转向资本，探讨对AI替代岗位征税；提议设立全民AI基金、扩大社会保障网络，推动企业支持四天工作周及提高退休金缴付比例，以应对AI大规模替代人类工作带来的社会冲击。</p>
-            <p class="news-insight lang-cn"><strong>洞察：</strong>这是AI巨头首次以白皮书形式提出系统性AI经济治理方案，具有深远政策信号意义。机器人税概念虽争议巨大，却反映了AI企业主动参与规则制定的意图——与其被动立法，不如主动设计未来。</p>
-        </div>
-        <div class="news-card">
-            <!-- English version -->
-            <p class="news-title lang-en" style="display:none"><a href="https://techcrunch.com/2026/04/02/microsoft-takes-on-ai-rivals-with-three-new-foundational-models/" target="_blank">Microsoft Releases Three Foundational AI Models, Taking On Google and OpenAI</a></p>
-            <p class="news-source lang-en" style="display:none"><span class="source-tag">TechCrunch</span> &nbsp;<span class="date-tag">2026-04-02</span></p>
-            <p class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> Microsoft AI released three foundational models covering text, voice, and image generation. Microsoft emphasizes a Humanist AI approach with cost advantages and deep Windows integration, while maintaining its strategic partnership with OpenAI.</p>
-            <p class="news-insight lang-en" style="display:none"><strong>Insight:</strong> Microsoft investing in OpenAI while developing competing models shows major tech firms are no longer betting on a single route but deploying across the entire AI value chain. Intensified competition in the foundational model layer will push the 2026 model pricing war into a white-hot phase.</p>
-            <!-- Chinese version -->
-            <p class="news-title lang-cn"><a href="https://techcrunch.com/2026/04/02/microsoft-takes-on-ai-rivals-with-three-new-foundational-models/" target="_blank">Microsoft发布MAI基础模型三件套，正面挑战Google和OpenAI</a></p>
-            <p class="news-source lang-cn"><span class="source-tag">TechCrunch</span> &nbsp;<span class="date-tag">2026-04-02</span></p>
-            <p class="news-summary lang-cn"><strong>要点：</strong>Microsoft AI发布三款基础模型：MAI-Transcribe-1（语音转文本）、MAI-Voice-1（语音生成）、MAI-Image-2（图像生成），覆盖文本、语音、图像全模态。微软强调人文主义AI路线，主打成本优势和深度整合Windows生态，尽管同时维持与OpenAI的战略合作。</p>
-            <p class="news-insight lang-cn"><strong>洞察：</strong>微软一边投资OpenAI，一边自研竞品，说明大厂已不再押注单一路线，而在整个AI价值链上全面布局。基础模型层的竞争加剧，将让2026年的模型价格战进入白热化阶段。</p>
-        </div>
-        </div>
+    <div class="news-card">
+      <!-- English -->
+      <p class="news-title lang-en" style="display:none"><a href="https://venturebeat.com/technology/nvidia-launches-enterprise-ai-agent-platform-with-adobe-salesforce-sap-among/" target="_blank">Nvidia Launches Enterprise AI Agent Platform at GTC 2026: Adobe, Salesforce, SAP Among 17 Major Adopters</a></p>
+      <p class="news-meta lang-en" style="display:none"><span class="source-badge">VentureBeat</span> &nbsp; 2026-04-03</p>
+      <p class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> Nvidia unveiled the open-source Agent Toolkit at GTC 2026, with 17 enterprises including Adobe, Salesforce, SAP, ServiceNow, Siemens, and CrowdStrike committing to adoption. Platform includes Nemotron open models, AI-Q reasoning framework, OpenShell security sandbox, and cuOpt optimization library.</p>
+      <p class="news-insight lang-en" style="display:none"><strong>Insight:</strong> Nvidia's Agent Toolkit is a textbook platform strategy: use open-source software to attract ecosystems, lock in hardware through CUDA optimization, and turn every enterprise using the open agent platform into a potential GPU buyer. 'Free infrastructure, monetize the hardware above' is a deeper moat than chip sales alone.</p>
+      <!-- Chinese -->
+      <p class="news-title lang-cn"><a href="https://venturebeat.com/technology/nvidia-launches-enterprise-ai-agent-platform-with-adobe-salesforce-sap-among/" target="_blank">英伟达GTC 2026发布企业AI Agent平台：Adobe、Salesforce、SAP等17家巨头加盟</a></p>
+      <p class="news-meta lang-cn"><span class="source-badge">VentureBeat</span> &nbsp; 2026-04-03</p>
+      <p class="news-summary lang-cn"><strong>要点：</strong>英伟达在GTC 2026发布开源Agent Toolkit，Adobe、Salesforce、SAP、ServiceNow、西门子、CrowdStrike等17家企业宣布采用。平台包括Nemotron开源模型、AI-Q推理框架、OpenShell安全沙箱、cuOpt优化库。黄仁勋称企业软件业将演变为专业Agent平台。</p>
+      <p class="news-insight lang-cn"><strong>洞察：</strong>英伟达的Agent Toolkit是教科书级别的平台战略：用开源软件吸引生态，用CUDA优化锁定硬件，让每一家使用开源Agent平台的企业都成为英伟达GPU的潜在买家。基础设施层免费，靠上层硬件盈利，这是比卖芯片更深的护城河。</p>
     </div>
 
-    <!-- 技术突破 · International: Tech Breakthrough -->
-    <div class="section">
-        <h2 class="section-title">
-            <span class="lang-en" style="display:none">⚡ Tech Breakthroughs</span>
-            <span class="lang-cn">⚡ 技术突破</span>
-        </h2>
-        <div class="cards-grid">
-        <div class="news-card">
-            <!-- English version -->
-            <p class="news-title lang-en" style="display:none"><a href="https://venturebeat.com/orchestration/new-framework-lets-ai-agents-rewrite-their-own-skills-without-retraining-the" target="_blank">Memento-Skills: AI Agents Rewrite Their Own Skills Without Retraining</a></p>
-            <p class="news-source lang-en" style="display:none"><span class="source-tag">VentureBeat</span> &nbsp;<span class="date-tag">2026-04-08</span></p>
-            <p class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> Researchers released Memento-Skills, enabling AI agents to self-improve via an external memory system without retraining the underlying LLM. Tested on GAIA and HLE benchmarks, task success rates improved from baseline to 80%.</p>
-            <p class="news-insight lang-en" style="display:none"><strong>Insight:</strong> AI capability ceilings are no longer determined solely by model parameters but by memory and experience accumulation mechanisms. If AI agents can learn from mistakes continuously, the AGI timeline could be significantly accelerated.</p>
-            <!-- Chinese version -->
-            <p class="news-title lang-cn"><a href="https://venturebeat.com/orchestration/new-framework-lets-ai-agents-rewrite-their-own-skills-without-retraining-the" target="_blank">Memento-Skills框架：AI智能体无需重新训练即可自主重写技能</a></p>
-            <p class="news-source lang-cn"><span class="source-tag">VentureBeat</span> &nbsp;<span class="date-tag">2026-04-08</span></p>
-            <p class="news-summary lang-cn"><strong>要点：</strong>研究人员发布Memento-Skills框架，让AI智能体可以在无需重新训练底层LLM的情况下，通过外部记忆系统自我更新技能。系统在GAIA和HLE基准测试中，任务成功率从基线提升至80%。</p>
-            <p class="news-insight lang-cn"><strong>洞察：</strong>AI能力的上限不再只取决于模型参数，而取决于记忆与经验积累机制。如果智能体能像人类一样从错误中持续学习，AGI时间表可能被大幅提前。</p>
-        </div>
-        <div class="news-card">
-            <!-- English version -->
-            <p class="news-title lang-en" style="display:none"><a href="https://arstechnica.com/ai/2026/04/generalists-new-physical-robotics-ai-brings-production-level-success-rates/" target="_blank">Generalist GEN-1 Robotics AI Hits 99% Production-Level Reliability</a></p>
-            <p class="news-source lang-en" style="display:none"><span class="source-tag">Ars Technica</span> &nbsp;<span class="date-tag">2026-04-06</span></p>
-            <p class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> Generalist released GEN-1, achieving 99% success rates on repetitive physical tasks at three times the speed of the previous generation. Trained on over 500,000 hours of human micro-movement data, it can recover from errors without explicit programming.</p>
-            <p class="news-insight lang-en" style="display:none"><strong>Insight:</strong> 99% reliability is the tipping point for commercial robotics. Before this, robots only work in controlled labs; at this level, they create economic value in real commercial settings. The mass production era of embodied AI has officially arrived.</p>
-            <!-- Chinese version -->
-            <p class="news-title lang-cn"><a href="https://arstechnica.com/ai/2026/04/generalists-new-physical-robotics-ai-brings-production-level-success-rates/" target="_blank">Generalist GEN-1物理AI达到99%生产级可靠性，机器人进入实用化时代</a></p>
-            <p class="news-source lang-cn"><span class="source-tag">Ars Technica</span> &nbsp;<span class="date-tag">2026-04-06</span></p>
-            <p class="news-summary lang-cn"><strong>要点：</strong>Generalist发布GEN-1物理AI系统，在折叠箱子、维修扫地机等重复性任务上达到99%成功率，速度是上一代产品的三倍。该系统通过数据手采集超50万小时人类微动作数据训练，可在无显式编程的情况下从错误中恢复。</p>
-            <p class="news-insight lang-cn"><strong>洞察：</strong>99%的可靠性是机器人商用的临界点——在此之前，机器人只能在受控实验室中工作；达到此标准后，机器人可以在真实商业场景中创造经济价值。具身智能的量产时代正式到来。</p>
-        </div>
-        </div>
+    <div class="news-card">
+      <!-- English -->
+      <p class="news-title lang-en" style="display:none"><a href="https://arstechnica.com/ai/2026/04/google-announces-gemma-4-open-ai-models-switches-to-apache-2-0-license/" target="_blank">Google Releases Gemma 4 Open Models: Switches to Apache 2.0 License, Most Open Ever</a></p>
+      <p class="news-meta lang-en" style="display:none"><span class="source-badge">Ars Technica</span> &nbsp; 2026-04-02</p>
+      <p class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> Google released four Gemma 4 open models (2B/4B/26B MoE/31B dense), switching to Apache 2.0 license. 26B MoE and 31B run on a single H100 GPU, E2B/E4B are optimized for mobile/edge with context windows up to 256k/128k tokens across 140 languages, supporting local function calling and code generation.</p>
+      <p class="news-insight lang-en" style="display:none"><strong>Insight:</strong> Google's switch to Apache 2.0 is a smart open-source pivot — eliminating developer concerns while CUDA optimization ensures Gemma runs best on Nvidia hardware. Gemma 4's local processing makes 'privacy-sensitive without cloud' a reality, a huge draw for the enterprise market.</p>
+      <!-- Chinese -->
+      <p class="news-title lang-cn"><a href="https://arstechnica.com/ai/2026/04/google-announces-gemma-4-open-ai-models-switches-to-apache-2-0-license/" target="_blank">Google发布Gemma 4开源模型：换用Apache 2.0许可证，开放程度史上最大</a></p>
+      <p class="news-meta lang-cn"><span class="source-badge">Ars Technica</span> &nbsp; 2026-04-02</p>
+      <p class="news-summary lang-cn"><strong>要点：</strong>Google发布Gemma 4四款开源模型，换用Apache 2.0许可证取代此前限制严格的Gemma许可证。26B MoE和31B可在单卡H100上运行，E2B/E4B专为手机和边缘设备优化，上下文窗口达256k/128k tokens，涵盖140种语言，支持本地function calling和代码生成。</p>
+      <p class="news-insight lang-cn"><strong>洞察：</strong>Google此举是明智的开源战略转向——Apache 2.0彻底消除了开发者的顾虑，同时通过CUDA优化确保Gemma在自家硬件上运行最优。Gemma 4的本地化能力让隐私敏感场景不用云成为现实，对企业市场吸引力巨大。</p>
     </div>
 
-    <!-- 企业战略 · International: Corporate Strategy -->
-    <div class="section">
-        <h2 class="section-title">
-            <span class="lang-en" style="display:none">💼 Corporate Strategy</span>
-            <span class="lang-cn">💼 企业战略</span>
-        </h2>
-        <div class="cards-grid">
-        <div class="news-card">
-            <!-- English version -->
-            <p class="news-title lang-en" style="display:none"><a href="https://www.wired.com/story/made-in-china-ai-research-is-starting-to-split-along-geopolitical-lines/" target="_blank">AI Research Deeply Entangled with Geopolitics: NeurIPS Restrictions Trigger Backlash</a></p>
-            <p class="news-source lang-en" style="display:none"><span class="source-tag">Wired</span> &nbsp;<span class="date-tag">2026-03-27</span></p>
-            <p class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> Top AI conference NeurIPS faced backlash after imposing restrictions on international participants due to geopolitical pressure. AI research is being forced to pick sides, threatening the global AI collaboration ecosystem.</p>
-            <p class="news-insight lang-en" style="display:none"><strong>Insight:</strong> When science loses neutrality, the greatest casualty is the pace of human AI advancement. Academic decoupling may be more dangerous than commercial decoupling as it directly impacts cutting-edge research. 2026 will be the key year for AI research Balkanization.</p>
-            <!-- Chinese version -->
-            <p class="news-title lang-cn"><a href="https://www.wired.com/story/made-in-china-ai-research-is-starting-to-split-along-geopolitical-lines/" target="_blank">AI研究与地缘政治深度交织：NeurIPS限制引发中国学者反弹</a></p>
-            <p class="news-source lang-cn"><span class="source-tag">Wired</span> &nbsp;<span class="date-tag">2026-03-27</span></p>
-            <p class="news-summary lang-cn"><strong>要点：</strong>顶级AI学术会议NeurIPS因地缘政治压力对国际参与者实施限制，引发中国学者强烈反弹。中国科学技术协会曾计划撤回资助并转向国内会议。AI研究正被迫选边站，全球AI协作体系面临撕裂风险。</p>
-            <p class="news-insight lang-cn"><strong>洞察：</strong>当科学失去中立性，最大的受害者是整个人类AI进步的速度。学术脱钩可能比商业脱钩更可怕，因为它直接影响最前沿的突破性研究。2026年将是AI科研巴尔干化的关键元年。</p>
-        </div>
-        </div>
+    <div class="news-card">
+      <!-- English -->
+      <p class="news-title lang-en" style="display:none"><a href="https://arstechnica.com/ai/2026/04/research-finds-ai-users-scarily-willing-to-surrender-their-cognition-to-llms/" target="_blank">Research Reveals 'Cognitive Surrender': AI Users Accept Faulty AI Reasoning 73% of the Time</a></p>
+      <p class="news-meta lang-en" style="display:none"><span class="source-badge">Ars Technica</span> &nbsp; 2026-04-03</p>
+      <p class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> University of Pennsylvania research on 1,372 participants across 9,500+ trials shows users accepted faulty AI reasoning 73.2% of the time even when aware AI randomly provided wrong answers. High AI trust users were more misled; time pressure reduced correction by 12%; incentives increased correction by 19%.</p>
+      <p class="news-insight lang-en" style="display:none"><strong>Insight:</strong> 'Cognitive surrender' is the greatest hidden risk of the AI era — humans are systematically abandoning independent judgment. The 73% faulty acceptance rate means when AI errs, users almost unconditionally follow. This is not just an individual cognitive issue but a source of systemic societal risk requiring urgent education and governance responses.</p>
+      <!-- Chinese -->
+      <p class="news-title lang-cn"><a href="https://arstechnica.com/ai/2026/04/research-finds-ai-users-scarily-willing-to-surrender-their-cognition-to-llms/" target="_blank">研究揭示AI用户认知投降现象：错误AI答案接受率高达73%</a></p>
+      <p class="news-meta lang-cn"><span class="source-badge">Ars Technica</span> &nbsp; 2026-04-03</p>
+      <p class="news-summary lang-cn"><strong>要点：</strong>宾夕法尼亚大学研究显示，在1372名参与者、超9500次试验中，用户即使知道AI随机提供错误答案，仍有73.2%的时间选择接受。信任AI程度高的用户更易被误导，时间压力使纠正AI错误的倾向下降12%，激励可提升纠正率19%。</p>
+      <p class="news-insight lang-cn"><strong>洞察：</strong>认知投降是AI时代最大的隐性风险——人类正在系统性地放弃独立判断能力。73%的错误接受率意味着AI一旦出错，用户几乎无条件盲从。这不仅是个人认知问题，更将成为社会层面系统性风险的来源，急需在教育和治理层面提前布局。</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">🏠</div>
+      <div class="section-title">
+        <span class="lang-cn">🏠 国内快讯 · 政策风向</span>
+        <span class="lang-en" style="display:none">🏠 China Focus · Policy & Industry</span>
+      </div>
+    </div>
+    
+    <div class="news-card">
+      <!-- English -->
+      <p class="news-title lang-en" style="display:none"><a href="https://news.softunis.com/55813.html" target="_blank">DeepSeek V4 to Launch Late April: Trillion Parameters, Million-Token Context, Huawei Ascend Chip Support</a></p>
+      <p class="news-meta lang-en" style="display:none"><span class="source-badge">软盟资讯 / 量子位</span> &nbsp; 2026-04-10</p>
+      <p class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> DeepSeek founder Liang Wenfeng confirmed V4 will launch in late April with trillion parameters, million-token context, and first deep optimization for Huawei Ascend domestic chips, adopting Apache 2.0 license for enterprise self-deployment. This marks a major step in core tech self-reliance.</p>
+      <p class="news-insight lang-en" style="display:none"><strong>Insight:</strong> DeepSeek V4's Huawei Ascend adaptation carries significance beyond technology — under US chip export controls, deep adaptation of domestic AI models with domestic chips gives China its first real possibility of 'full-stack self-reliance', which will profoundly reshape power distribution in the global AI landscape.</p>
+      <!-- Chinese -->
+      <p class="news-title lang-cn"><a href="https://news.softunis.com/55813.html" target="_blank">DeepSeek V4大模型4月下旬发布：万亿参数、百万上下文、首批适配华为昇腾</a></p>
+      <p class="news-meta lang-cn"><span class="source-badge">软盟资讯 / 量子位</span> &nbsp; 2026-04-10</p>
+      <p class="news-summary lang-cn"><strong>要点：</strong>DeepSeek创始人梁文锋确认V4将于4月下旬发布，实现万亿参数、百万级上下文窗口，并首次深度适配华为昇腾等国产芯片，采用Apache 2.0协议开源，企业可自主部署。这是国产开源模型在核心技术自主可控上的重要一步。</p>
+      <p class="news-insight lang-cn"><strong>洞察：</strong>DeepSeek V4适配华为昇腾的战略意义远超技术本身——在美国芯片出口管制背景下，国产AI模型与国产芯片的深度适配意味着中国AI产业第一次具备了全栈自主的可能性，这将深刻改变全球AI格局中的权力分布。</p>
     </div>
 
-    <!-- 国内动态 · Domestic: 行业格局 -->
-    <div class="section">
-        <h2 class="section-title">
-            <span class="lang-en" style="display:none">🇨🇳 Domestic: Industry Landscape</span>
-            <span class="lang-cn">🇨🇳 国内动态 · 行业格局</span>
-        </h2>
-        <div class="cards-grid">
-        <div class="news-card">
-            <!-- English version -->
-            <p class="news-title lang-en" style="display:none"><a href="https://eu.36kr.com/zh/p/3735341158121733" target="_blank">China Embodied AI Market Expected to Break 1 Trillion Yuan in 2026</a></p>
-            <p class="news-source lang-en" style="display:none"><span class="source-tag">36氪</span> &nbsp;<span class="date-tag">2026-03-23</span></p>
-            <p class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> 36Kr Research calculates China embodied AI market grew from 213.3B yuan in 2018 to 915B yuan in 2025, expected to exceed 1 trillion yuan in 2026. Applications are expanding into industrial, service, special, and transportation sectors.</p>
-            <p class="news-insight lang-en" style="display:none"><strong>Insight:</strong> The trillion moment for embodied AI is not just a market milestone but a strategic fulcrum in China global AI competition. When industrial robots become intelligent enough to replace assembly workers, the cost advantage of Chinese manufacturing will be fundamentally redefined.</p>
-            <!-- Chinese version -->
-            <p class="news-title lang-cn"><a href="https://eu.36kr.com/zh/p/3735341158121733" target="_blank">具身智能2026年市场规模预计突破万亿元，中国领跑全球第一梯队</a></p>
-            <p class="news-source lang-cn"><span class="source-tag">36氪</span> &nbsp;<span class="date-tag">2026-03-23</span></p>
-            <p class="news-summary lang-cn"><strong>要点：</strong>36氪研究院测算，中国具身智能市场规模已从2018年的2133亿元增长至2025年的9150亿元，2026年有望突破万亿元。应用持续向工业、服务、特种、交通出行等领域渗透，世界模型与数据闭环将推动具身智能转化为可规模部署的通用劳动力。</p>
-            <p class="news-insight lang-cn"><strong>洞察：</strong>具身智能的万亿时刻不只是市场规模的里程碑，更是中国在全球AI竞争中的战略支点。当工业机器人的智能化程度足以替代流水线工人，中国制造业的劳动力成本优势将被重新定义。</p>
-        </div>
-        <div class="news-card">
-            <!-- English version -->
-            <p class="news-title lang-en" style="display:none"><a href="https://www.ifanr.com/1659568" target="_blank">Apple WWDC 2026: Siri to Deeply Take Over iPhone, Full AI Counterattack</a></p>
-            <p class="news-source lang-en" style="display:none"><span class="source-tag">爱范儿</span> &nbsp;<span class="date-tag">2026-03-25</span></p>
-            <p class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> Apple WWDC 2026 will showcase major AI advances: Siri upgrading to a ChatGPT-like chatbot deeply integrated across iOS; next-gen Apple models built on Google Gemini; iOS 27 featuring new AI search tools and custom image generation.</p>
-            <p class="news-insight lang-en" style="display:none"><strong>Insight:</strong> Apple choosing Gemini over self-developed models shows AI capability has become the core variable in hardware differentiation. Mac natural advantage in local AI model adaptation could be Apple key card for overtaking in the AI era.</p>
-            <!-- Chinese version -->
-            <p class="news-title lang-cn"><a href="https://www.ifanr.com/1659568" target="_blank">苹果WWDC 2026定档：Siri将深度接管iPhone，AI战略全面反击</a></p>
-            <p class="news-source lang-cn"><span class="source-tag">爱范儿</span> &nbsp;<span class="date-tag">2026-03-25</span></p>
-            <p class="news-summary lang-cn"><strong>要点：</strong>苹果WWDC 2026将展示重大AI进展：Siri将升级为类ChatGPT聊天机器人，深度集成iOS各功能；下一代苹果基础模型将基于Google Gemini构建；iOS 27还将推出全新AI搜索工具和自定义图像生成功能，并为首款折叠iPhone做系统适配。</p>
-            <p class="news-insight lang-cn"><strong>洞察：</strong>苹果选择Gemini而非自研模型作为国行AI基底，说明AI能力已成为硬件差异化竞争的核心变量。Mac产品线在AI模型适配上的天然优势，可能是苹果在AI时代实现弯道超车的关键筹码。</p>
-        </div>
-        </div>
+    <div class="news-card">
+      <!-- English -->
+      <p class="news-title lang-en" style="display:none"><a href="https://news.softunis.com/55813.html" target="_blank">Five Chinese Ministries Jointly Issue Interim Regulations on AI Anthropomorphic Interactive Services</a></p>
+      <p class="news-meta lang-en" style="display:none"><span class="source-badge">软盟资讯</span> &nbsp; 2026-04-10</p>
+      <p class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> China's five ministries jointly issued Interim Measures on AI Anthropomorphic Interactive Services, explicitly prohibiting virtual intimate relationship services for minors, requiring age verification and safety monitoring mechanisms, effective July 15, 2026.</p>
+      <p class="news-insight lang-en" style="display:none"><strong>Insight:</strong> This is among the world's first systematic regulations on AI anthropomorphic interaction. Prohibiting virtual intimate services for minors reflects policymakers' deep concerns about AI emotional dependency risks. The July 15 effective date gives the industry roughly 3 months to rectify, indicating relatively restrained but clearly directed regulatory intent.</p>
+      <!-- Chinese -->
+      <p class="news-title lang-cn"><a href="https://news.softunis.com/55813.html" target="_blank">五部门联合发布《人工智能拟人化互动服务管理暂行办法》</a></p>
+      <p class="news-meta lang-cn"><span class="source-badge">软盟资讯</span> &nbsp; 2026-04-10</p>
+      <p class="news-summary lang-cn"><strong>要点：</strong>国家网信办、发改委、工信部、公安部、市场监管总局联合发布《人工智能拟人化互动服务管理暂行办法》，明确拟人化互动服务不得向未成年人提供虚拟亲密关系服务，要求服务提供者核验用户年龄并建立安全监测机制，自2026年7月15日起施行。</p>
+      <p class="news-insight lang-cn"><strong>洞察：</strong>这是全球首批针对AI拟人化互动的系统性监管规定。禁止向未成年人提供虚拟亲密关系，折射出政策制定者对AI情感依赖风险的深层担忧。7月15日的实施节点表明，给行业留出了约3个月的整改窗口，监管力度相对克制，但方向已明确。</p>
     </div>
 
-    <!-- 国内动态 · 技术突破 -->
-    <div class="section">
-        <h2 class="section-title">
-            <span class="lang-en" style="display:none">🇨🇳 Domestic: Tech &amp; Capital</span>
-            <span class="lang-cn">🇨🇳 国内动态 · 技术与资本</span>
-        </h2>
-        <div class="cards-grid">
-        <div class="news-card">
-            <!-- English version -->
-            <p class="news-title lang-en" style="display:none"><a href="https://finance.sina.cn/stock/jdts/2026-04-02/detail-inhtcfxv7711250.d.html?vt=4" target="_blank">120 Trillion Tokens Burned Daily: The Most Expensive Humblebrag in AI</a></p>
-            <p class="news-source lang-en" style="display:none"><span class="source-tag">新浪财经</span> &nbsp;<span class="date-tag">2026-04-02</span></p>
-            <p class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> Volcengine announced Doubao LLM daily token consumption exceeded 120 trillion, surpassing all other domestic LLMs combined. AI video creation and AI agent proliferation are twin engines of token growth. At market prices, this represents 300-500M yuan in daily GPU costs.</p>
-            <p class="news-insight lang-en" style="display:none"><strong>Insight:</strong> Token economics is disrupting AI business logic: from buying models to billing by breath, soaring token prices are reshaping LLM vendor cost structures. Whoever secures the cheapest computing will laugh last in this Token War.</p>
-            <!-- Chinese version -->
-            <p class="news-title lang-cn"><a href="https://finance.sina.cn/stock/jdts/2026-04-02/detail-inhtcfxv7711250.d.html?vt=4" target="_blank">每天烧120万亿Token：AI圈最贵的凡尔赛</a></p>
-            <p class="news-source lang-cn"><span class="source-tag">新浪财经</span> &nbsp;<span class="date-tag">2026-04-02</span></p>
-            <p class="news-summary lang-cn"><strong>要点：</strong>火山引擎公布豆包大模型日均Token消耗突破120万亿，超过国内其余大模型日耗总和。AI视频创作爆发和AI智能体加速普及是Token增长双引擎。按市场价格估算，国内AI每天Token消耗对应约3-5亿元GPU成本，全年或超千亿规模。</p>
-            <p class="news-insight lang-cn"><strong>洞察：</strong>Token经济学正在颠覆AI商业逻辑：从买断模型到按呼吸计费，Token价格暴涨正在重塑大模型厂商的成本结构。谁能拿到最便宜的算力，谁就能在这场Token战争中笑到最后。</p>
-        </div>
-        <div class="news-card">
-            <!-- English version -->
-            <p class="news-title lang-en" style="display:none"><a href="https://www.stcn.com/article/detail/3671490.html" target="_blank">DeepSeek Ranks 4th in Global AI Apps, Chinese AI Builds Differentiated Competitiveness</a></p>
-            <p class="news-source lang-en" style="display:none"><span class="source-tag">证券时报</span> &nbsp;<span class="date-tag">2026-03-11</span></p>
-            <p class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> a16z Top 100 Generative AI Consumer Apps ranking places DeepSeek at fourth. Global AI consumer market is forming three independent ecosystems. Chinese AI applications leverage scene adaptation capability as core competitiveness.</p>
-            <p class="news-insight lang-en" style="display:none"><strong>Insight:</strong> DeepSeek breaking into the global top 4 proves Chinese AI is no longer merely a follower. Scene adaptation rather than pure technical parameters is becoming the hidden standard for judging AI value.</p>
-            <!-- Chinese version -->
-            <p class="news-title lang-cn"><a href="https://www.stcn.com/article/detail/3671490.html" target="_blank">DeepSeek位列全球AI应用第四，中国AI出海构建差异化竞争力</a></p>
-            <p class="news-source lang-cn"><span class="source-tag">证券时报</span> &nbsp;<span class="date-tag">2026-03-11</span></p>
-            <p class="news-summary lang-cn"><strong>要点：</strong>a16z顶级100款生成式AI消费级应用榜单发布，DeepSeek位列第四。全球AI消费市场正形成欧美、中国、东南亚三大独立生态体系。中国AI应用以场景适配能力为核心竞争力，在通用对话、垂类工具、创意生成等多赛道出海成效显著。</p>
-            <p class="news-insight lang-cn"><strong>洞察：</strong>DeepSeek进全球前四，证明中国AI已不只是跟随者。场景适配而非单纯技术参数，正成为评判AI价值的隐性标准。中国AI出海的真正壁垒，不在算法，而在对细分场景的深度理解。</p>
-        </div>
-        </div>
+    <div class="news-card">
+      <!-- English -->
+      <p class="news-title lang-en" style="display:none"><a href="https://www.qbitai.com/2026" target="_blank">Five Ministries Launch 'AI + Education' Action Plan: AI Added to Teacher Certification</a></p>
+      <p class="news-meta lang-en" style="display:none"><span class="source-badge">量子位</span> &nbsp; 2026-04-10</p>
+      <p class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> China's Ministry of Education and four other ministries jointly issued the 'AI + Education' Action Plan, incorporating AI into teacher qualification examinations and certification, marking AI education's formal entry into national top-level design.</p>
+      <p class="news-insight lang-en" style="display:none"><strong>Insight:</strong> Incorporating AI into teacher certification is a landmark signal — AI literacy is no longer optional but a required competency for every future teacher. If fully implemented, this policy will fundamentally reshape human-AI collaboration in China's education system, building societal AI adaptability from the source.</p>
+      <!-- Chinese -->
+      <p class="news-title lang-cn"><a href="https://www.qbitai.com/2026" target="_blank">教育部等五部门启动'人工智能+教育'行动计划</a></p>
+      <p class="news-meta lang-cn"><span class="source-badge">量子位</span> &nbsp; 2026-04-10</p>
+      <p class="news-summary lang-cn"><strong>要点：</strong>教育部等五部门联合印发《人工智能+教育行动计划》，提出构建人工智能全学段教育和全社会通识教育体系，并将人工智能纳入教师资格考试和认证内容，推动教育领域人机协作能力普及，标志着AI教育正式纳入国家顶层设计。</p>
+      <p class="news-insight lang-cn"><strong>洞察：</strong>将AI纳入教师资格考试是标志性信号——AI素养不再是选修课，而是未来每一位教师的必修能力。这一政策若真正落地，将从根本上重塑中国教育体系中的人机协作模式，从源头提升全社会的AI适应力。</p>
     </div>
 
-    <!-- 国内动态 · 企业战略 -->
-    <div class="section">
-        <h2 class="section-title">
-            <span class="lang-en" style="display:none">🇨🇳 Domestic: Corporate Strategy</span>
-            <span class="lang-cn">🇨🇳 国内动态 · 企业战略</span>
-        </h2>
-        <div class="cards-grid">
-        <div class="news-card">
-            <!-- English version -->
-            <p class="news-title lang-en" style="display:none"><a href="https://finance.sina.com.cn/wm/2026-03-21/doc-inhruett5803245.shtml" target="_blank">Guanglun Intelligence Raises 1 Billion Yuan: World First Embodied Data Unicorn Born</a></p>
-            <p class="news-source lang-en" style="display:none"><span class="source-tag">新浪财经</span> &nbsp;<span class="date-tag">2026-03-21</span></p>
-            <p class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> Guanglun Intelligence completed a 1 billion yuan A++ and A+++ round, becoming the world first embodied data unicorn. Following Spring Festival Gala humanoid robot appearances, demand for embodied AI data has exploded, with massive data and cutting-edge simulation technology becoming core competitive barriers.</p>
-            <p class="news-insight lang-en" style="display:none"><strong>Insight:</strong> Embodied data is becoming a scarcer resource than algorithms. Without real-world physical interaction data, even the most powerful models struggle to truly understand the physical world. The birth of this embodied data unicorn signals the era where data infrastructure is more valuable than models themselves.</p>
-            <!-- Chinese version -->
-            <p class="news-title lang-cn"><a href="https://finance.sina.com.cn/wm/2026-03-21/doc-inhruett5803245.shtml" target="_blank">光轮智能完成10亿元融资：全球首个具身数据独角兽诞生</a></p>
-            <p class="news-source lang-cn"><span class="source-tag">新浪财经</span> &nbsp;<span class="date-tag">2026-03-21</span></p>
-            <p class="news-summary lang-cn"><strong>要点：</strong>光轮智能完成10亿元A++及A+++轮融资，成为全球首个具身数据独角兽。春晚人形机器人亮相后，具身智能数据需求爆发，海量数据和尖端仿真技术成为核心竞争壁垒。本轮融资距离其上一轮仅数周之隔。</p>
-            <p class="news-insight lang-cn"><strong>洞察：</strong>具身数据正在成为比算法更稀缺的资源。没有真实世界物理交互数据，再强的模型也难以真正理解物理世界。光轮智能的独角兽诞生，标志着数据基础设施比模型本身更值钱的时代已来。</p>
-        </div>
-        </div>
+    <div class="news-card">
+      <!-- English -->
+      <p class="news-title lang-en" style="display:none"><a href="https://www.qbitai.com/2026" target="_blank">Stanford AI Report 2026: No Gap Between China and US LLMs, AI Adoption Accelerating Historically</a></p>
+      <p class="news-meta lang-en" style="display:none"><span class="source-badge">量子位</span> &nbsp; 2026-04-14</p>
+      <p class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> Stanford's annual AI Index Report finds no significant gap between China and US large model capabilities, with Chinese open-source models excelling in multiple benchmarks. Global AI adoption is accelerating historically, with particularly strong growth in emerging markets.</p>
+      <p class="news-insight lang-en" style="display:none"><strong>Insight:</strong> Stanford's report confirms a fundamental shift in the AI competitive landscape: China-US AI competition has moved from 'catch-up' to 'neck-and-neck' stage. This formalizes the binary structure of global AI governance, with technology standard competition increasingly mapping onto geopolitical competition.</p>
+      <!-- Chinese -->
+      <p class="news-title lang-cn"><a href="https://www.qbitai.com/2026" target="_blank">斯坦福AI报告2026：中美大模型已无差距，AI普及率历史性加速</a></p>
+      <p class="news-meta lang-cn"><span class="source-badge">量子位</span> &nbsp; 2026-04-14</p>
+      <p class="news-summary lang-cn"><strong>要点：</strong>斯坦福年度AI指数报告指出，中美两国在大模型能力上已无显著差距，中国开源模型在多项基准测试中表现优异；全球AI普及率正在历史性加速，新兴市场采用率增长尤为突出，AI从技术精英层向大众市场快速渗透。</p>
+      <p class="news-insight lang-cn"><strong>洞察：</strong>斯坦福报告确认了AI竞争格局的根本性变化：中美AI竞争已从追赶阶段进入并驾齐驱阶段。这意味着全球AI治理的二元格局正式形成，技术标准的竞争将越来越多地映射为地缘政治竞争的一部分。</p>
     </div>
+  </div>
 
-    <div class="history-link">
-        <a href="history.html">📜 查看历史简报 / View Archive</a>
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">💡</div>
+      <div class="section-title">
+        <span class="lang-cn">💡 今日洞察</span>
+        <span class="lang-en" style="display:none">💡 Today's Insights</span>
+      </div>
     </div>
+    <div class="news-card">
+      <p class="news-title lang-cn"><strong>开源生态与主权AI：双轨并行的全球AI新秩序</strong></p>
+      <p class="news-title lang-en" style="display:none"><strong>Open Ecosystem and Sovereign AI: A Dual-Track Global AI Order</strong></p>
+      <p class="news-summary lang-cn"><strong>要点：</strong>本周的AI新闻勾勒出一个深刻变化：开源模型正在打破专有壁垒（Google Gemma 4换Apache 2.0），而主权AI正在成为国家战略（DeepSeek适配昇腾）。两者看似矛盾，实则并行不悖——开源降低技术门槛，主权AI确保地缘竞争力。</p>
+      <p class="news-summary lang-en" style="display:none"><strong>Key Points:</strong> This week's AI news reveals a profound shift: open-source models are breaking proprietary barriers (Google Gemma 4 switches to Apache 2.0), while sovereign AI is becoming a national strategy (DeepSeek adapts Huawei Ascend). The two seem contradictory but run in parallel — open source lowers barriers while sovereign AI ensures geopolitical competitiveness.</p>
+      <p class="news-insight lang-cn"><strong>洞察：</strong>2026年真正的AI主线不是模型能力的军备竞赛，而是平台生态的争夺战——谁建立了最深的开发者生态，谁就掌握了AI时代的基础设施。英伟达用开源Agent Toolkit锁定软件栈，中国用开源模型+国产芯片组合打造自主生态，两条路径的终点都是生态控制权。</p>
+      <p class="news-insight lang-en" style="display:none"><strong>Insight:</strong> The real AI主线 of 2026 is not capability competition but platform ecosystem contention — whoever builds the deepest developer ecosystem controls AI-era infrastructure. Nvidia locks software stack with open Agent Toolkit; China builds self-reliant ecosystem with open models + domestic chips. Both paths lead to ecosystem control.</p>
+    </div>
+  </div>
 
-    <div class="footer">
-        <p class="lang-cn">由 AI 简报助手生成 · 每工作日早9:00自动更新</p>
-        <p class="lang-en" style="display:none">Generated by AI News Assistant · Auto-updated weekdays at 9:00 AM</p>
-    </div>
+  <div class="history-link">
+    <a href="history.html">
+      <span class="lang-cn">📜 查看历史简报</span>
+      <span class="lang-en" style="display:none">📜 View Archive</span>
+    </a>
+  </div>
 
 </div>
+
+<div class="footer">
+  <span class="lang-cn">AI 简报助手 · 每日 09:00 自动更新 · 数据来源：TechCrunch / VentureBeat / Ars Technica / 量子位 / 36氪 / 软盟资讯</span>
+  <span class="lang-en" style="display:none">AI News Digest · Auto-updated daily at 09:00 · Sources: TechCrunch / VentureBeat / Ars Technica / 量子位 / 36氪 / Softunis</span>
+</div>
+
+<script>
+function toggleLang(en) {
+  if (en) { document.body.classList.add('show-en'); }
+  else { document.body.classList.remove('show-en'); }
+}
+</script>
 </body>
 </html>

@@ -1,80 +1,535 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>历史简报 · AI News Archive</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f0f4f8; color: #1a1a2e; min-height: 100vh; }
-  .site-header { background: linear-gradient(135deg, #0D2137, #1a3a5c); padding: 40px 20px; text-align: center; }
-  .site-header h1 { color: #fff; font-size: 26px; margin-bottom: 8px; }
-  .site-header a { color: rgba(255,255,255,0.7); font-size: 14px; text-decoration: none; }
-  .container { max-width: 800px; margin: 0 auto; padding: 24px 16px 60px; }
-  .archive-item { background: #fff; border-radius: 10px; padding: 18px 22px; margin-bottom: 14px; border-left: 4px solid #4A90D9; display: flex; justify-content: space-between; align-items: center; }
-  .archive-item:hover { background: #f7f9fc; }
-  .archive-date { font-size: 12px; color: #888; margin-bottom: 4px; }
-  .archive-title { font-size: 15px; font-weight: 600; color: #0D2137; }
-  .archive-title a { color: #4A90D9; text-decoration: none; }
-  .archive-title a:hover { text-decoration: underline; }
-  .back-link { text-align: center; margin-top: 30px; }
-  .back-link a { color: #4A90D9; text-decoration: none; border: 2px solid #4A90D9; padding: 8px 24px; border-radius: 20px; font-size: 14px; }
-  .back-link a:hover { background: #4A90D9; color: #fff; }
-  .lang-toggle { display: flex; justify-content: center; gap: 10px; margin: 20px auto 0; }
-  .lang-btn { padding: 7px 22px; border: 2px solid #4A90D9; background: transparent; color: #4A90D9; border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: 600; }
-  body.show-en .lang-cn { display: none; }
-  body.show-en .lang-btn:nth-child(1) { background: transparent; color: #4A90D9; }
-  body.show-en .lang-btn:nth-child(2) { background: #4A90D9; color: #fff; }
-  .footer { text-align: center; font-size: 12px; color: #aaa; margin-top: 40px; padding-top: 20px; border-top: 1px solid #dde6f0; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>历史简报 - AI News Digest</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      min-height: 100vh;
+      padding: 40px;
+      color: #fff;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .back-btn {
+      padding: 8px 16px;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.8);
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .back-btn:hover {
+      background: rgba(0,210,255,0.2);
+      border-color: #00d2ff;
+      color: #00d2ff;
+    }
+    .header h1 {
+      font-size: 24px;
+      background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .lang-toggle { display: flex; gap: 8px; }
+    .lang-btn {
+      padding: 8px 16px;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      background: transparent;
+      color: rgba(255,255,255,0.6);
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .lang-btn.active {
+      background: rgba(0,210,255,0.2);
+      color: #00d2ff;
+      border-color: #00d2ff;
+    }
+    
+    .search-box {
+      background: rgba(255,255,255,0.95);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    .search-box h2 {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 12px;
+    }
+    .search-inputs {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .search-inputs input {
+      flex: 1;
+      min-width: 200px;
+      padding: 12px 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .search-inputs input:focus {
+      outline: none;
+      border-color: #00d2ff;
+    }
+    .search-inputs button {
+      padding: 12px 24px;
+      background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+    .search-inputs button:hover {
+      opacity: 0.9;
+    }
+    
+    .date-group {
+      background: rgba(255,255,255,0.95);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+    .date-header {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e88e5;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #eee;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .news-category { margin-bottom: 20px; }
+    .news-category:last-child { margin-bottom: 0; }
+    .news-category-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .news-item {
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .news-item:last-child { border-bottom: none; }
+    .news-item .title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a1a2e;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .news-item .meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      flex-wrap: wrap;
+    }
+    .news-item .source { color: #1e88e5; font-weight: 500; }
+    .news-item .date-tag { background: #e8f5e9; color: #2e7d32; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
+    .news-item .link { color: #666; text-decoration: none; }
+    .news-item .link:hover { text-decoration: underline; }
+    
+    .no-results {
+      text-align: center;
+      padding: 60px 20px;
+      color: rgba(255,255,255,0.6);
+      font-size: 16px;
+    }
+    
+    .footer { text-align: center; color: rgba(255,255,255,0.6); font-size: 14px; margin-top: 40px; }
+    
+    .zh { display: block; }
+    .en { display: none; }
+    body.show-en .zh { display: none; }
+    body.show-en .en { display: block; }
+  </style>
 </head>
 <body>
-<div class="lang-toggle">
-  <button onclick="toggleLang(false)" class="lang-btn">中文</button>
-  <button onclick="toggleLang(true)" class="lang-btn" style="background:#4A90D9;color:#fff;">English</button>
-</div>
-<header class="site-header">
-  <h1 class="lang-cn">📜 全球AI动态简报 · 历史存档</h1>
-  <h1 class="lang-en" style="display:none;color:#fff;">📜 Global AI News Digest · Archive</h1>
-  <a href="index.html">← 返回最新简报 / Back to Latest</a>
-</header>
-<div class="container" id="archive-list"></div>
-<div class="back-link">
-  <a href="index.html">← 返回最新简报</a>
-</div>
-<div class="footer">
-  <p class="lang-cn">全球AI动态简报 · AI News Digest</p>
-  <p class="lang-en" style="display:none">Global AI News Digest</p>
-</div>
-<script>
-function toggleLang(en) {
-  if (en) { document.body.classList.add('show-en'); }
-  else { document.body.classList.remove('show-en'); }
-}
-async function loadArchive() {
-  try {
-    const res = await fetch('archive/archive.json');
-    const data = await res.json();
-    const container = document.getElementById('archive-list');
-    data.forEach(item => {
-      const date = item.date;
-      const titleZh = item.title_zh || item.title_en || '';
-      const titleEn = item.title_en || item.title_zh || '';
-      const url = item.url || 'index.html';
-      const html = `<div class="archive-item">
-        <div>
-          <div class="archive-date">${date}</div>
-          <div class="archive-title lang-cn"><a href="${url}">${titleZh}</a></div>
-          <div class="archive-title lang-en" style="display:none"><a href="${url}">${titleEn}</a></div>
+  <div class="container">
+    <div class="header">
+      <div class="header-left">
+        <a href="index.html" class="back-btn">← 返回今日</a>
+        <h1>📜 历史简报</h1>
+      </div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="toggleLang(false)">中文</button>
+        <button class="lang-btn" onclick="toggleLang(true)">En</button>
+      </div>
+    </div>
+    
+    <div class="search-box">
+      <h2 class="zh">🔍 搜索历史新闻</h2>
+      <h2 class="en">🔍 Search Historical News</h2>
+      <div class="search-inputs">
+        <input type="text" id="keywordInput" placeholder="输入关键词搜索..." class="zh">
+        <input type="text" id="keywordInputEn" placeholder="Search by keyword..." class="en">
+        <input type="date" id="dateInput">
+        <button onclick="searchNews()" class="zh">搜索</button>
+        <button onclick="searchNews()" class="en">Search</button>
+        <button onclick="clearSearch()" class="zh">清除</button>
+        <button onclick="clearSearch()" class="en">Clear</button>
+      </div>
+    </div>
+    
+    <div id="results"></div>
+    
+    <div class="footer">
+      由OpenClaw AI News Digest生成
+    </div>
+  </div>
+
+  <script>
+    let archiveData = [];
+    
+    // Load archive data
+    async function loadArchive() {
+      try {
+        const response = await fetch('archive/archive.json');
+        const data = await response.json();
+        archiveData = data;
+        displayResults(archiveData);
+      } catch (e) {
+        document.getElementById('results').innerHTML = '<div class="no-results">暂无历史记录</div>';
+      }
+    }
+    
+    function toggleLang(en) {
+      if (en) {
+        document.body.classList.add('show-en');
+        document.querySelectorAll('.lang-btn')[0].classList.remove('active');
+        document.querySelectorAll('.lang-btn')[1].classList.add('active');
+      } else {
+        document.body.classList.remove('show-en');
+        document.querySelectorAll('.lang-btn')[0].classList.add('active');
+        document.querySelectorAll('.lang-btn')[1].classList.remove('active');
+      }
+    }
+    
+    function searchNews() {
+      const isEn = document.body.classList.contains('show-en');
+      const keyword = (isEn ? document.getElementById('keywordInputEn') : document.getElementById('keywordInput')).value.toLowerCase();
+      const date = document.getElementById('dateInput').value;
+      
+      let results = archiveData;
+      
+      if (keyword) {
+        results = results.filter(item => {
+          const title = isEn ? item.title_en : item.title_zh;
+          return title.toLowerCase().includes(keyword);
+        });
+      }
+      
+      if (date) {
+        results = results.filter(item => item.date === date);
+      }
+      
+      displayResults(results);
+    }
+    
+    function clearSearch() {
+      document.getElementById('keywordInput').value = '';
+      document.getElementById('keywordInputEn').value = '';
+      document.getElementById('dateInput').value = '';
+      displayResults(archiveData);
+    }
+    
+    function displayResults(data) {
+      if (!data || data.length === 0) {
+        document.getElementById('results').innerHTML = '<div class="no-results">未找到匹配结果</div>';
+        return;
+      }
+      
+      // Group by date
+      const grouped = {};
+      data.forEach(item => {
+        if (!grouped[item.date]) grouped[item.date] = [];
+        grouped[item.date].push(item);
+      });
+      
+      // Sort dates descending
+      const sortedDates = Object.keys(grouped).sort((a, b) => new Date(b) - new Date(a));
+      
+      let html = '';
+      sortedDates.forEach(date => {
+        const items = grouped[date];
+        const intl = items.filter(i => i.category === 'international');
+        const cn = items.filter(i => i.category === 'china');
+        
+        const dateObj = new Date(date);
+        const dateStr = isZh() ? 
+          `${dateObj.getFullYear()}年${dateObj.getMonth()+1}月${dateObj.getDate()}日` : 
+          dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        
+        html += `<div class="date-group">
+          <div class="date-header">📅 ${dateStr}</div>`;
+        
+        if (intl.length > 0) {
+          html += `<div class="news-category">
+            <div class="news-category-title">${isZh() ? '🌍 国际动态' : '🌍 International'}</div>`;
+          intl.forEach(item => {
+            html += renderNewsItem(item);
+          });
+          html += `</div>`;
+        }
+        
+        if (cn.length > 0) {
+          html += `<div class="news-category">
+            <div class="news-category-title">${isZh() ? '🇨🇳 国内动态' : '🇨🇳 China'}</div>`;
+          cn.forEach(item => {
+            html += renderNewsItem(item);
+          });
+          html += `</div>`;
+        }
+        
+        html += `</div>`;
+      });
+      
+      document.getElementById('results').innerHTML = html;
+    }
+    
+    function renderNewsItem(item) {
+      const isZh = document.body.classList.contains('show-en') ? false : true;
+      const title = isZh ? item.title_zh : item.title_en;
+      const linkText = isZh ? '原文链接' : 'Link';
+      
+      return `<div class="news-item">
+        <div class="title">${title}</div>
+        <div class="meta">
+          <span class="source">${item.source}</span>
+          <a class="link" href="${item.url}" target="_blank">${linkText}</a>
         </div>
       </div>`;
-      container.innerHTML += html;
-    });
-  } catch(e) {
-    document.getElementById('archive-list').innerHTML = '<p style="text-align:center;color:#888;padding:40px;">历史存档加载中...</p>';
+    }
+    
+    function isZh() {
+      return !document.body.classList.contains('show-en');
+    }
+    
+    // Initialize
+    loadArchive();
+  </script>
+
+<style>
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.inland-security-footer {
+  position: fixed;
+  z-index: 10;
+  bottom: 0;
+  right: 0;
+  width: fit-content;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.tooltip-container {
+  position: relative;
+}
+
+.trigger-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background-color: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.minimax-link {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 300;
+  color: #adadad;
+  text-decoration: none;
+}
+
+.minimax-link:visited {
+  color: #adadad;
+}
+
+.minimax-link:hover {
+  color: #666666;
+}
+
+.tooltip-content {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  padding-bottom: 16px; /* 8px 内容间距 + 8px 用于鼠标移动的透明区域 */
+  font-size: 12px;
+  line-height: 17px;
+  background-color: #fafafa;
+  border-radius: 12px;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  color: #171717;
+}
+
+/* 创建透明的连接区域，让鼠标可以平滑移动到 tooltip */
+.tooltip-content::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+  height: 16px;
+}
+
+.tooltip-container:hover .tooltip-content {
+  display: flex;
+}
+
+.info-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.beian-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #171717;
+}
+
+.beian-icon {
+  width: 14px;
+  height: 14px;
+  margin-right: 2px;
+}
+
+.underline-text {
+  color: #171717;
+  text-decoration: underline;
+}
+
+.underline-text:hover {
+  color: #000000;
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+  .trigger-content {
+    background-color: transparent;
+  }
+
+  .minimax-link,
+  .minimax-link:visited {
+    color: #666666;
+  }
+
+  .minimax-link:hover {
+    color: #adadad;
+  }
+
+  .tooltip-content {
+    background-color: #262626;
+    color: #ededed;
+  }
+
+  .beian-link,
+  .underline-text {
+    color: #ededed;
+  }
+
+  .underline-text:hover {
+    color: #ffffff;
   }
 }
-loadArchive();
-</script>
+
+</style>
+<div class="inland-security-footer">
+  <div class="tooltip-container">
+    <div class="trigger-content">
+      <a href="https://www.minimaxi.com/" target="_blank" rel="noreferrer" class="minimax-link">
+        <span>© 2026 MiniMax</span>
+      </a>
+    </div>
+    <div class="tooltip-content">
+      <section class="info-section">
+        <span>上海稀宇科技有限公司</span>
+      </section>
+
+      <section class="info-section">
+        <a class="beian-link" href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31010402010179" target="_blank" rel="noreferrer">
+          <img alt="hailuo-beian-icon" src="https://cdn.hailuoai.com/hailuo-video-web/public_assets/223037d3-79fd-4db0-a456-749f38a6a14b.png" class="beian-icon">
+          <span class="underline-text">沪公网安备31010402010179号</span>
+        </a>
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer" class="underline-text">
+          沪ICP备2023003282号-38
+        </a>
+      </section>
+
+      <section class="info-section">
+        <span>模型名称：MiniMax</span>
+        <span>备案号：Shanghai-MiniMax-202505230046</span>
+      </section>
+
+      <section class="info-section">
+        <a href="https://agent.minimaxi.com/doc/zh/terms-of-service.html" target="_blank" rel="noreferrer" class="underline-text">
+          用户协议
+        </a>
+        <a href="https://agent.minimaxi.com/doc/zh/privacy-policy.html" target="_blank" rel="noreferrer" class="underline-text">
+          隐私政策
+        </a>
+      </section>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
