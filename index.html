@@ -35,13 +35,23 @@
   .footer a { color: #4A90D9; text-decoration: none; }
   .footer a:hover { text-decoration: underline; }
   .lang-en { display: none; }
-  body.show-en .lang-cn { display: none; }
-  body.show-en .lang-en { display: block; }
+  body.show-en .lang-cn { display: none;  !important }
+  body.show-en .lang-en { display: block;  !important }
   body.show-en .lang-btn:first-child { background: transparent; color: #4A90D9; }
   body.show-en .lang-btn:last-child { background: #4A90D9; color: #fff; }
 </style>
 <script>
-function toggleLang(en) { if (en) { document.body.classList.add('show-en'); } else { document.body.classList.remove('show-en'); } }
+function toggleLang(en) {
+  if (en) {
+    document.body.classList.add('show-en');
+    document.querySelectorAll('.lang-cn').forEach(function(el){ el.style.display='none'; });
+    document.querySelectorAll('.lang-en').forEach(function(el){ el.style.display=''; });
+  } else {
+    document.body.classList.remove('show-en');
+    document.querySelectorAll('.lang-en').forEach(function(el){ el.style.display='none'; });
+    document.querySelectorAll('.lang-cn').forEach(function(el){ el.style.display=''; });
+  }
+} else { document.body.classList.remove('show-en'); } }
 </script>
 </head>
 <body>
